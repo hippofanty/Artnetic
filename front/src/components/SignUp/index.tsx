@@ -1,1 +1,8 @@
-// Регистрация
+
+export const Signup = () => {
+  return (
+    <>
+    signup
+    </>
+  )
+}
