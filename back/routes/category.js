@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   res.json({ categories });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const works = await Work.find({ category: req.params.id });
   res.json({ works });
 });
