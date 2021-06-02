@@ -1,3 +1,4 @@
+
 import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -8,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import DropdownCategories from './DropdownCategories'
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,11 +28,18 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: "Allura",
       fontSize: '32px'
     },
+
     link: {
       textDecoration: "none",
       color: "white",
     },
-  })
+  }),
+
+    profileButton: {
+      color: 'white',
+    }
+  }),
+
 );
 
 export const Header = () => {
@@ -51,6 +60,7 @@ export const Header = () => {
           <Typography variant="h6" className={classes.title}><Link to='/'>Artistic</Link>
             
           </Typography>
+
           <DropdownCategories />
           <Button color="inherit">
             <Link to="/login" className={classes.link}>
@@ -62,6 +72,11 @@ export const Header = () => {
               Signup
             </Link>
           </Button>
+
+          <Button color="inherit">Login</Button>
+          <Button color="inherit">Signup</Button>
+          <Button color="inherit" className={classes.profileButton}><Link to="/profile">Profile</Link></Button>
+
         </Toolbar>
       </AppBar>
     </div>
