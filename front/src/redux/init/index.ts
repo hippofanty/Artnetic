@@ -18,12 +18,54 @@ export interface Work {
   image: string;
   user: string;
 }
-
+export interface User {
+  id: string,
+  email: string,
+  username: string,
+  // role: string,
+  token: string,
+}
 export interface State {
   works: Work[];
+  user: User;
+  isAuth: boolean;
+}
+
+// export interface State {
+//   user: User;
+//   isAuth: boolean,
+// }
+
+export const initialState: State = {
+  user: {
+    id: '',
+    email: '',
+    username: '',
+    // role: '',
+    token: '',
+  },
+  isAuth: false,
+  // TS просил добавить строку
+  works: [],
+  //
+
+  // categories: [],
+  // orders: [],
+  // works: [],
+  // loader: true,
 }
 
 export const initialStateCategories: State = {
+  // TS просил добавить след-щие строки
+  user: {
+    id: '',
+    email: '',
+    username: '',
+    // role: '',
+    token: '',
+  },
+  isAuth: false,
+  // 
   works: [],
 };
 

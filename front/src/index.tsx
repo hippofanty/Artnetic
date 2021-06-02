@@ -1,29 +1,32 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import { BrowserRouter } from "react-router-dom";
-import { composeWithDevTools } from "redux-devtools-extension";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { createStore, applyMiddleware } from "redux";
-import { Provider } from "react-redux";
-import { rootReducer } from "./redux/reducers/rootReducer";
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { rootReducer } from './redux/reducers/rootReducer';
+import { initialState } from './redux/init/index';
 
-import thunk from "redux-thunk";
+// Для проверки работоспособности, потом удалить
+// import { userReducer } from "./redux/reducers/userReducer";
+
+import thunk from 'redux-thunk';
 
 const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+	rootReducer,
+	// initialState,
+	composeWithDevTools(applyMiddleware(thunk))
 );
 
-
-
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+	<React.StrictMode>
+		<Provider store={store}>
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
+		</Provider>
+	</React.StrictMode>,
+	document.getElementById('root')
 );

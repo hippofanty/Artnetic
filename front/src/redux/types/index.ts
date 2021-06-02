@@ -3,6 +3,19 @@ import {  Work } from "../init";
 
 export enum Types {
   GET_CATEGORIES = "GET_CATEGORIES",
+  SET_USER = 'SET_USER',
+  UNSET_USER = 'UNSET_USER',
+}
+
+export interface SetUserAction {
+  type: Types.SET_USER;
+  payload: {
+    id: string,
+    email: string,
+    username: string,
+    // role: string,
+    token: string,
+  };
 }
 export interface getWorksAction {
   type: Types.GET_CATEGORIES;
@@ -10,6 +23,7 @@ export interface getWorksAction {
 }
 export type Actions =
   | getWorksAction
+  | SetUserAction
 
 
 

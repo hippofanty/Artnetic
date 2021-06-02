@@ -14,7 +14,7 @@ function serializeUser(user) {
     id: user.id,
     username: user.username,
     email: user.email,
-    role: user.role,
+    // role: user.role,
   };
 }
 
@@ -42,13 +42,12 @@ router
           username,
           email,
           password: hashPassword,
-          role,
+          // role,
         });
         const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' });
         const newUser = serializeUser(user);
 
-        return res.json({
-          message: "User was created",
+        return res.sendStatus(200).json({
           newUser,
           token,
         });
@@ -84,7 +83,7 @@ router
         const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' });
         const existedUser = serializeUser(user);
 
-        return res.json({
+        return res.sendStatus(200).json({
           existedUser,
           token,
         });
