@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    link: {
+      textDecoration: 'none',
+      color: 'white',
+    },
   }),
 );
 
@@ -39,8 +43,8 @@ export const Header = () => {
           <Typography variant="h6" className={classes.title}>
             Artistic
           </Typography>
-          <Button color="inherit"><Link to='/login'>Login</Link></Button>
-          <Button color="inherit"><Link to='/signup'>Signup</Link></Button>
+          <Button color="inherit"><Link to='/login' className={classes.link}>Login</Link></Button>
+          <Button color="inherit"><Link to='/signup' className={classes.link}>Signup</Link></Button>
         </Toolbar>
       </AppBar>
     </div>
