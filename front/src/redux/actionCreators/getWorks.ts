@@ -8,11 +8,11 @@ export const getWorksAC =
 
     const response = await fetch(`/api/v1/categories/${category}`)
     const result = await response.json();
-    console.log(result, 'result');
+    console.log(result.works, 'result');
     
 
     dispatch({
       type: Types.GET_CATEGORIES,
-      payload: result, //не categories
+      payload: result.works, //не categories
     });
   };

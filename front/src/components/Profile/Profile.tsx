@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { Paper } from '@material-ui/core';
 import { Information } from './Information/Information';
+import { Button } from '@material-ui/core'
+import {useState} from 'react'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -62,12 +64,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
+
 // Экспорт компонента
 export default function Profile() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-
+  const [showForm, setShowForm] = useState<boolean>(false);
+  // onClick={showForm}
+  
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
@@ -108,7 +113,8 @@ export default function Profile() {
           Мои заказы
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Мои произведения
+          Мои произведения<br></br>
+          <Button>Опубликовать свою работу</Button>
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
           Арендовано у меня
