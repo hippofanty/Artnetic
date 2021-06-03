@@ -8,6 +8,13 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
 import DropdownCategories from './DropdownCategories';
+import { useDispatch, useSelector } from 'react-redux';
+import { rootState, UserState } from '../../redux/init';
+import { logout } from '../../redux/actionCreators/userActions';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Icon from '@material-ui/core/Icon';
+import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -31,14 +38,24 @@ const useStyles = makeStyles((theme: Theme) =>
 			textDecoration: 'none',
 			color: 'white',
 		},
-		profileButton: {
-			color: 'white',
-		},
 	})
 );
 
 export const Header = () => {
 	const classes = useStyles();
+	const userLoggedIn = useSelector(
+		(state: rootState) => state.userState.isAuth
+	);
+	const getUsername = useSelector(
+		(state: rootState) => state.userState.user.username
+	);
+	const dispatch = useDispatch();
+	console.log(userLoggedIn);
+
+	const logoutHandler = () => {
+		dispatch(logout());
+		localStorage.removeItem('token');
+	};
 
 	return (
 		<div className={classes.root}>
@@ -57,26 +74,40 @@ export const Header = () => {
 					</Typography>
 
 					<DropdownCategories />
-					<Button color="inherit">
-						<Link to="/login" className={classes.link}>
-							Login
-						</Link>
-					</Button>
-					<Button color="inherit">
-						<Link to="/signup" className={classes.link}>
-							Signup
-						</Link>
-					</Button>
 
-					<Button color="inherit">
-						<Link to="/login">Login</Link>
-					</Button>
-					<Button color="inherit">
-						<Link to="/signup">Signup</Link>
-					</Button>
-					<Button color="inherit" className={classes.profileButton}>
-						<Link to="/profile">Profile</Link>
-					</Button>
+					{userLoggedIn ? (
+						<>
+							<Button startIcon={<AccountCircleIcon />} color="inherit">
+								<Link to="/profile" className={classes.link}>
+									{getUsername}
+								</Link>
+							</Button>
+							<IconButton
+								color="inherit"
+								size="medium"
+								aria-label="logout"
+								onClick={() => logoutHandler()}
+							>
+								<ExitToAppOutlinedIcon />
+							</IconButton>
+						</>
+					) : (
+						<>
+							<IconButton color="inherit" aria-label="login"></IconButton>
+							<Link to="/login" className={classes.link}>
+								<Button
+									color="inherit"
+									startIcon={<OpenInBrowserIcon />}
+									size="large"
+								>
+									Login
+								</Button>
+							</Link>
+							<Link to="/signup" className={classes.link}>
+								<Button color="inherit">Signup</Button>
+							</Link>
+						</>
+					)}
 				</Toolbar>
 			</AppBar>
 		</div>

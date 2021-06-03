@@ -6,6 +6,6 @@ import { combineReducers } from "redux";
 
 export const rootReducer=combineReducers({
   works: categoriesReducer,
-  user: userReducer,
+  userState: userReducer,
 })
 

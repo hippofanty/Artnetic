@@ -14,8 +14,16 @@ export interface SetUserAction {
     email: string,
     username: string,
     // role: string,
-    token: string,
   };
+}
+
+export interface UnsetUserAction {
+  type: Types.UNSET_USER;
+  payload: {
+    id: string,
+    email: string,
+    username: string,
+  }
 }
 export interface getWorksAction {
   type: Types.GET_CATEGORIES;
@@ -24,6 +32,7 @@ export interface getWorksAction {
 export type Actions =
   | getWorksAction
   | SetUserAction
+  | UnsetUserAction
 
 
 
