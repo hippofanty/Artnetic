@@ -108,7 +108,6 @@ export const Header = () => {
 							</Link>
 						</>
 					)}
-
 				</Toolbar>
 			</AppBar>
 		</div>

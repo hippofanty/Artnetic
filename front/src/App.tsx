@@ -16,9 +16,9 @@ function App() {
 				headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			const result = await response.json();
-			const { id, username, email } = result.existedUser;
+			const { id, username, email, role } = result.existedUser;
 			// const { token } = result; // либо result.token
-			dispatch(refreshUser(id, username, email));
+			dispatch(refreshUser(id, username, email, role));
 		} catch (e) {
 			localStorage.removeItem('token');
 		}

@@ -1,12 +1,13 @@
 import {
 	Button,
-	Checkbox,
 	createStyles,
 	FormControlLabel,
 	FormGroup,
 	Grid,
 	makeStyles,
 	Paper,
+	Radio,
+	RadioGroup,
 	TextField,
 	Theme,
 } from '@material-ui/core';
@@ -45,11 +46,9 @@ export const Signup = () => {
 	const [username, setUsername] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [checked, setChecked] = useState({
-		astist: false,
-		customer: false,
-	});
-	console.log(username, email, password);
+	const [role, setRole] = useState('');
+
+	console.log(username, email, password, role);
 
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -57,12 +56,12 @@ export const Signup = () => {
 	const SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		console.log('IS WORKED');
 		e.preventDefault();
-		dispatch(signup(username, email, password));
+		dispatch(signup(username, email, password, role));
 		history.push('/');
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setChecked({ ...checked, [event.target.name]: event.target.checked });
+		setRole((event.target as HTMLInputElement).value);
 	};
 
 	return (
@@ -106,26 +105,23 @@ export const Signup = () => {
 							/>
 
 							<FormGroup row>
-								<FormControlLabel
-									control={
-										<Checkbox
-											checked={checked.astist}
-											onChange={handleChange}
-											name="astist"
-										/>
-									}
-									label="Я артист"
-								/>
-								<FormControlLabel
-									control={
-										<Checkbox
-											checked={checked.customer}
-											onChange={handleChange}
-											name="customer"
-										/>
-									}
-									label="Я заказчик"
-								/>
+								<RadioGroup
+									aria-label="userRole"
+									name="userRole"
+									value={role}
+									onChange={handleChange}
+								>
+									<FormControlLabel
+										value="Artist"
+										control={<Radio />}
+										label="Artist"
+									/>
+									<FormControlLabel
+										value="Customer"
+										control={<Radio />}
+										label="Customer"
+									/>
+								</RadioGroup>
 							</FormGroup>
 
 							<Button

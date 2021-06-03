@@ -14,7 +14,7 @@ function serializeUser(user) {
     id: user.id,
     username: user.username,
     email: user.email,
-    // role: user.role,
+    role: user.role,
   };
 }
 
@@ -42,7 +42,7 @@ router
           username,
           email,
           password: hashPassword,
-          // role,
+          role,
         });
         const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '30m' });
         const newUser = serializeUser(user);

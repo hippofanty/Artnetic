@@ -19,7 +19,7 @@ export interface User {
   id: string,
   email: string,
   username: string,
-  // role: string,
+  role: string,
   // token: string,
 }
 // export interface State {
@@ -52,7 +52,7 @@ export const initialUserState = {
     id: '',
     email: '',
     username: '',
-    // role: '',
+    role: '',
   },
   isAuth: false,
   // categories: [],
