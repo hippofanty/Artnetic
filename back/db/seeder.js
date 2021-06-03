@@ -2,18 +2,7 @@ const dbConnect = require('./config');
 const Category = require('./models/category.model');
 
 const categories = [
-  'Живопись',
-  'Графика',
-  'Объект',
-  'Фотография',
-  'Коллаж',
-  'Видео',
-  'Принты',
-  'Абстракция',
-  'Пейзаж',
-  'Портрет',
-  'Скульптура',
-  'Иное',
+  'fineArt', 'graphics', 'abstraction', 'sculptures', 'other', 'all'
 ];
 
 const seeder = () => {

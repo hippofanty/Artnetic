@@ -10,7 +10,7 @@ function App() {
 	return (
 		<div>
 			<Header />
-      <Profile/>
+      
 			<React.Fragment>
 				<CssBaseline />
 				<Container fixed>

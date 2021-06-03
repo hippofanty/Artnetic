@@ -18,10 +18,12 @@ router.get('/:name', async (req, res) => {
 			const works = await Work.find().populate([category, user]);
 			return res.json({ works });
 		}
-		const works = await Work.find({ category: req.params.id }).populate([
-			category,
-			user,
-		]);
+		// const works = await Work.find({ category: req.params.id }).populate([
+		// 	category,
+		// 	user,
+		// ]);
+    const works = await Work.find({ category: req.params.id });
+    console.log(works);
 		return res.json({ works });
 	} catch (error) {
 		console.log(error);

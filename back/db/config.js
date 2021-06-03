@@ -8,6 +8,7 @@ const options = {
   useUnifiedTopology: true,
   poolSize: 10,
   bufferMaxEntries: 0,
+
 };
 
 const dbConnectionURL = process.env.DB_URL;
@@ -15,7 +16,8 @@ async function dbConnect() {
   await mongoose.connect(dbConnectionURL, options, (err) => {
     if (err) return console.log(err);
 
-    console.log('Success connected to mongo');
+    console.log('Success connected to mongo!!');
   });
 }
 module.exports = dbConnect;
+//'mongodb://localhost:27017/art'   

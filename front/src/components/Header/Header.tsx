@@ -68,12 +68,6 @@ export const Header = () => {
 						</Link>
 					</Button>
 
-					<Button color="inherit">
-						<Link to="/login">Login</Link>
-					</Button>
-					<Button color="inherit">
-						<Link to="/signup">Signup</Link>
-					</Button>
 					<Button color="inherit" className={classes.profileButton}>
 						<Link to="/profile">Profile</Link>
 					</Button>

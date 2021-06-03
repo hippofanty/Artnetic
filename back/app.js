@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const mongoose = require('mongoose')
 const express = require('express');
 const logger = require('morgan');
 const path = require('path');
@@ -27,5 +27,4 @@ const port = process.env.PORT ?? 3001;
 app.listen(port, () => {
   console.log("Сервер работает");
 });
-
 module.exports = app;
