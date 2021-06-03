@@ -13,7 +13,7 @@ export interface SetUserAction {
     id: string,
     email: string,
     username: string,
-    // role: string,
+    role: string,
   };
 }
 
@@ -23,6 +23,7 @@ export interface UnsetUserAction {
     id: string,
     email: string,
     username: string,
+    role:string,
   }
 }
 export interface getWorksAction {
