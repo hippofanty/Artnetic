@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { Paper } from '@material-ui/core';
+import { Information } from './Information/Information';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -48,6 +49,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     // width: 800,
     minWidth: 600,
   },
+
+  tabs: {
+    width: 600,
+  },
+
+  avatar: {
+    width: 225,
+    padding: 5,
+    display: 'flex',
+    justifyContent: 'space-around',
+  }
 }));
 
 // Экспорт компонента
@@ -88,8 +100,9 @@ export default function Profile() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Информация профиля
-          <Paper variant="outlined" square ><img src="https://www.kinonews.ru/insimgs/2019/newsimg/newsimg87089.jpg" alt="" /></Paper>
+          <Paper className={classes.avatar} variant="outlined" square ><img src="https://www.kinonews.ru/insimgs/2019/newsimg/newsimg87089.jpg" alt="" />
+          </Paper>
+          <Information />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           Мои заказы
