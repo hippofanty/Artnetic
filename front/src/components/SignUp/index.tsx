@@ -1,6 +1,9 @@
 import {
 	Button,
+	Checkbox,
 	createStyles,
+	FormControlLabel,
+	FormGroup,
 	Grid,
 	makeStyles,
 	Paper,
@@ -28,25 +31,38 @@ const useStyles = makeStyles((theme: Theme) =>
 		sumbBut: {
 			marginTop: '25px',
 		},
+		signupForm: {
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'stretch',
+		},
 	})
 );
 
 export const Signup = () => {
 	const classes = useStyles();
 
-  const [username, setUsername] = useState<string>('');
+	const [username, setUsername] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-  console.log(username, email, password)
+	const [checked, setChecked] = useState({
+		astist: false,
+		customer: false,
+	});
+	console.log(username, email, password);
 
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const SubmitHandler = (e : React.FormEvent<HTMLFormElement>) => {
-    console.log('IS WORKED');
-    e.preventDefault();
-		dispatch(signup( username, email, password));
+	const SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+		console.log('IS WORKED');
+		e.preventDefault();
+		dispatch(signup(username, email, password));
 		history.push('/');
+	};
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setChecked({ ...checked, [event.target.name]: event.target.checked });
 	};
 
 	return (
@@ -60,9 +76,8 @@ export const Signup = () => {
 						justify="center"
 						alignItems="center"
 					>
-						<Grid item xs={3}>
-							{/* <Paper className={classes.paper}> */}
-              <TextField
+						<Grid item xs={6} className="signupForm">
+							<TextField
 								id="standard-basic"
 								type="text"
 								label="Username"
@@ -89,15 +104,38 @@ export const Signup = () => {
 									setPassword(e.target.value)
 								}
 							/>
+
+							<FormGroup row>
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={checked.astist}
+											onChange={handleChange}
+											name="astist"
+										/>
+									}
+									label="Я артист"
+								/>
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={checked.customer}
+											onChange={handleChange}
+											name="customer"
+										/>
+									}
+									label="Я заказчик"
+								/>
+							</FormGroup>
+
 							<Button
-                type="submit"
+								type="submit"
 								variant="outlined"
 								color="primary"
 								className={classes.sumbBut}
 							>
 								Login
 							</Button>
-							{/* </Paper> */}
 						</Grid>
 					</Grid>
 				</div>

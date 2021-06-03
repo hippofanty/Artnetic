@@ -1,15 +1,22 @@
-import { initialState, State } from '../init';
+import { initialUserState, UserState } from '../init';
 import { Actions, Types } from '../types';
 
 export const userReducer = (
-	state: State = initialState,
+	state: UserState = initialUserState,
 	action: Actions
-): State => {
+): UserState => {
   switch (action.type) {
     case Types.SET_USER:
       return {
         ...state,
         user: action.payload,
+        isAuth: true,
+      }
+    case Types.UNSET_USER:
+      return {
+        ...state,
+        user: action.payload,
+        isAuth: false,
       }
     default:
       return state;

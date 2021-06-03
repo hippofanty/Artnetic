@@ -44,10 +44,10 @@ router
           password: hashPassword,
           // role,
         });
-        const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '30m' });
         const newUser = serializeUser(user);
 
-        return res.sendStatus(200).json({
+        return res.status(200).json({
           newUser,
           token,
         });
@@ -80,27 +80,28 @@ router
         if (!isValidPassword) {
           return res.status(400).json({ message: 'Invalid password' });
         }
-        const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '30m' });
         const existedUser = serializeUser(user);
 
-        return res.sendStatus(200).json({
+        return res.status(200).json({
           existedUser,
           token,
         });
       } catch (e) {
         console.log(e)
-        return res.send({message: "Server error"})
+        return res.json({message: "Server error"})
       }
     });
 
 router
-  .route('/auth', tokenCheck, async (req, res) => {
+  .route('/auth')
+  .get(tokenCheck, async (req, res) => {
     try {
       const user = await User.findOne({ _id: req.user.id });
-      const token = jwt.sign({ id: user.id}, secretKey, { expiresIn: '1h' });
+      const token = jwt.sign({ id: user.id}, secretKey, { expiresIn: '30m' });
       const existedUser = serializeUser(user);
 
-      return res.json({
+      return res.status(200).json({
         existedUser,
         token,
       });
