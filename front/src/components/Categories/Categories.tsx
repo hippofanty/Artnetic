@@ -14,7 +14,7 @@ export const Categories = () => {
     
     dispatch(getWorksAC(category));
 
-  }, [dispatch])
+  }, [category, dispatch])
   return (
     <>
     <h1>{category}</h1>
