@@ -34,13 +34,13 @@ function App() {
 
 			<React.Fragment>
 				<CssBaseline />
-				<Container fixed>
+				{/* <Container fixed> */}
 					{/* <Typography
 						component="div"
 						style={{ backgroundColor: '#cfe8fc', height: '100vh' }}
 					/> */}
 					<Main />
-				</Container>
+				{/* </Container> */}
 			</React.Fragment>
 		</div>
 	);

@@ -5,7 +5,7 @@ import {
 	FormGroup,
 	Grid,
 	makeStyles,
-	Paper,
+	// Paper,
 	Radio,
 	RadioGroup,
 	TextField,
@@ -15,6 +15,10 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { signup } from '../../redux/actionCreators/userActions';
+import { Props } from '../Login/index';
+
+import Paper from '@material-ui/core/Paper';
+
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -26,21 +30,25 @@ const useStyles = makeStyles((theme: Theme) =>
 			textAlign: 'center',
 			color: theme.palette.text.secondary,
 		},
-		form: {
-			width: '100ch',
-		},
+		// form: {
+		// 	width: '100ch',
+		// },
 		sumbBut: {
 			marginTop: '25px',
 		},
 		signupForm: {
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'stretch',
+      display: 'flex',
+      flexDirection: 'column',
+      alignContent: 'center',
+      justifyContent: 'center',
 		},
+    formTitle: {
+      fontSize: '22px',
+    }
 	})
 );
 
-export const Signup = () => {
+export const Signup = ({setModal}: Props) => {
 	const classes = useStyles();
 
 	const [username, setUsername] = useState<string>('');
@@ -57,6 +65,7 @@ export const Signup = () => {
 		console.log('IS WORKED');
 		e.preventDefault();
 		dispatch(signup(username, email, password, role));
+    setModal();
 		history.push('/');
 	};
 
@@ -66,7 +75,7 @@ export const Signup = () => {
 
 	return (
 		<Paper className={classes.paper}>
-			<form className={classes.form} onSubmit={(e) => SubmitHandler(e)}>
+			<form  onSubmit={(e) => SubmitHandler(e)}>
 				<div className={classes.root}>
 					<Grid
 						container
@@ -74,8 +83,9 @@ export const Signup = () => {
 						direction="column"
 						justify="center"
 						alignItems="center"
-					>
-						<Grid item xs={6} className="signupForm">
+					> 
+            <Grid item xs={12}><span className={classes.formTitle}>Please, register your account!</span></Grid>
+						<Grid item xs={12} className={classes.signupForm}>
 							<TextField
 								id="standard-basic"
 								type="text"
@@ -130,7 +140,7 @@ export const Signup = () => {
 								color="primary"
 								className={classes.sumbBut}
 							>
-								Login
+								Register
 							</Button>
 						</Grid>
 					</Grid>
