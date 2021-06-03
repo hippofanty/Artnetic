@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {useParams} from 'react-router-dom'
 import { getWorksAC } from '../../redux/actionCreators/getWorks'
@@ -6,11 +7,14 @@ import { getWorksAC } from '../../redux/actionCreators/getWorks'
     category: string
   }
 export const Categories = () => {
+  const dispatch = useDispatch()
   
   const { category } = useParams<ParamTypes>()
+  useEffect(() => {
+    
+    dispatch(getWorksAC(category));
 
-  const dispatch = useDispatch()
-  dispatch(getWorksAC(category));
+  }, [dispatch])
   return (
     <>
     <h1>{category}</h1>

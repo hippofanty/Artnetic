@@ -6,7 +6,7 @@ export const getWorksAC =
   (category: Category): ThunkAction<void, rootState, unknown, getWorksAction> =>
   async (dispatch) => {
 
-    const response = await fetch(`/categories/${category}`)
+    const response = await fetch(`/api/v1/categories/${category}`)
     const result = await response.json();
     console.log(result, 'result');
     
