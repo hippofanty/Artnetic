@@ -3,10 +3,17 @@ export type Category = string;
 export interface Work {
   title: string;
   description: string;
-  category: string;
+  category: {
+    name: string;
+  };
   price: number;
   image: string;
-  user: string;
+  user: {
+    role: string;
+    username: string;
+    email: string;
+    password: string;
+  };
 }
 export interface User {
   id: string,
@@ -26,10 +33,17 @@ export interface UserState {
   user: User;
   isAuth: boolean;
 }
+export interface WorksState {
+  works: Work[];
+}
 
 // тип для просмотра полей стора в useSelector()
+// export interface rootState {
+//   works: Work[];
+//   userState: UserState;
+// }
 export interface rootState {
-  works: Work[];
+  works: WorksState;
   userState: UserState;
 }
 
@@ -48,15 +62,6 @@ export const initialUserState = {
 }
 
 export const initialStateCategories = {
-  // TS просил добавить след-щие строки
-  user: {
-    id: '',
-    email: '',
-    username: '',
-    // role: '',
-  },
-  isAuth: false,
-  // 
   works: [],
 };
 

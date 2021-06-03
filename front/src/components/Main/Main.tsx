@@ -23,7 +23,7 @@ export const Main = () => {
           <Signup />
         </Route>
         <Route exact path="/profile">
-        <Profile />
+          <Profile />
         </Route>
         {/* <Route exact path="/secret">
           {loggedIn ? <Redirect to="/" /> : <div>Секретная страничка</div>}
