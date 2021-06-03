@@ -1,13 +1,3 @@
-// export const initialStore = {
-//   user: {
-//     id: '',
-//     isAuth: true
-//   },
-//   categories: [],
-//   orders: [],
-//   works: [],
-//   loader: true,
-// }
 export type Category = string;
 
 export interface Work {
@@ -23,46 +13,47 @@ export interface User {
   email: string,
   username: string,
   // role: string,
-  token: string,
+  // token: string,
 }
-export interface State {
-  works: Work[];
+// export interface State {
+//   works: Work[];
+//   user: User;
+//   isAuth: boolean;
+// }
+
+// тип для userReducer
+export interface UserState {
   user: User;
   isAuth: boolean;
 }
 
-// export interface State {
-//   user: User;
-//   isAuth: boolean,
-// }
+// тип для просмотра полей стора в useSelector()
+export interface rootState {
+  works: Work[];
+  userState: UserState;
+}
 
-export const initialState: State = {
+export const initialUserState = {
   user: {
     id: '',
     email: '',
     username: '',
     // role: '',
-    token: '',
   },
   isAuth: false,
-  // TS просил добавить строку
-  works: [],
-  //
-
   // categories: [],
   // orders: [],
   // works: [],
   // loader: true,
 }
 
-export const initialStateCategories: State = {
+export const initialStateCategories = {
   // TS просил добавить след-щие строки
   user: {
     id: '',
     email: '',
     username: '',
     // role: '',
-    token: '',
   },
   isAuth: false,
   // 

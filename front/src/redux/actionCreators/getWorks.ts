@@ -1,9 +1,9 @@
 import { getWorksAction, Types } from "../types/index";
-import { Category, State } from "../init";
+import { Category, rootState } from "../init";
 import { ThunkAction } from "redux-thunk";
 
 export const getWorksAC =
-  (category: Category): ThunkAction<void, State, unknown, getWorksAction> =>
+  (category: Category): ThunkAction<void, rootState, unknown, getWorksAction> =>
   async (dispatch) => {
 
     const response = await fetch(`/categories/${category}`)
