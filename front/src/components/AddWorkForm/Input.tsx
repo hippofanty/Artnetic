@@ -13,9 +13,4 @@ export const Input = forwardRef((props, ref) => {
     </>
   );
 });
-// export const Input = ({ label, register, required }: InputProps) => (
-//   <>
-//     <label>{label}</label>
-//     <input {...register(label, { required })} />
-//   </>
-// );
+
