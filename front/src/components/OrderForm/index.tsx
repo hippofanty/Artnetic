@@ -23,7 +23,11 @@ import { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { rootState } from '../../redux/init';
 
-export const OrderForm = () => {
+interface OrderProps {
+  setPrice: number,
+}
+
+export const OrderForm = ({setPrice}: OrderProps) => {
   const getUsername = useSelector(
 		(state: rootState) => state.userState.user.username
 	);
@@ -181,7 +185,7 @@ export const OrderForm = () => {
 									</Grid>
 								))}
 								<Grid item xs={12} style={{ marginTop: 16 }}></Grid>
-                <Grid item xs={12} style={{ marginTop: 16, textAlign: 'center'}}><span>Цена: 4500 руб</span></Grid>
+                <Grid item xs={12} style={{ marginTop: 16, textAlign: 'center'}}><span>Цена: {setPrice} руб</span></Grid>
                 <Grid item xs={12} style={{ marginTop: 16 }}></Grid>
 								<Grid item xs={12} style={{ marginTop: 16 , display: 'flex'}} justify="center">
 									<Button

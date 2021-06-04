@@ -15,6 +15,10 @@ import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 import { ModalDialog } from '../ModalDialog/index';
+import { Container } from '@material-ui/core';
+import DropdownAboutUs from './DropdownAboutUs';
+import DropdownProfileIcon from './DropdownProfileIcon';
+import ArtLogo from '/ArtneticLogo.png';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -22,9 +26,8 @@ const useStyles = makeStyles((theme: Theme) =>
 			flexGrow: 1,
 		},
 		navbar: {
-			backgroundColor: '#ec8b83',
+			backgroundColor: '#fafafa',
 		},
-
 		menuButton: {
 			marginRight: theme.spacing(2),
 		},
@@ -33,16 +36,28 @@ const useStyles = makeStyles((theme: Theme) =>
 			fontFamily: 'Allura',
 			fontSize: '32px',
 		},
-
+		navTextColor: {
+			color: '#000000',
+		},
 		link: {
 			textDecoration: 'none',
-			color: 'white',
+		},
+		navRightSide: {
+			display: 'flex',
+			flexDirection: 'row',
+			alignItems: 'center',
+		},
+		logo: {
+			width: '40px',
+		},
+		navInnerContainer: {
+			flexGrow: 1,
 		},
 	})
 );
 
 export const Header = () => {
-  const history = useHistory();
+	const history = useHistory();
 	const classes = useStyles();
 	const userLoggedIn = useSelector(
 		(state: rootState) => state.userState.isAuth
@@ -56,79 +71,109 @@ export const Header = () => {
 	const logoutHandler = () => {
 		dispatch(logout());
 		localStorage.removeItem('token');
-    history.push('/');
+		history.push('/');
 	};
 
-  // для модалки
+	// для модалки
 	const [openModal, setModalState] = useState(false);
-  const [loginBut, setLoginBut] = useState(false);
-  const [signupBut, setSignupBut] = useState(false);
+	const [loginBut, setLoginBut] = useState(false);
+	const [signupBut, setSignupBut] = useState(false);
 
-  const toggleModal = () => {
-    setModalState(!openModal);
-    setLoginBut(false);
-    setSignupBut(false);
-  }
-  //
+	const toggleModal = () => {
+		setModalState(!openModal);
+		setLoginBut(false);
+		setSignupBut(false);
+	};
+	//
 
-  const isLoginBut = () => setLoginBut(true);
-  const isSignupBut = () => setSignupBut(true);
+	const isLoginBut = () => setLoginBut(true);
+	const isSignupBut = () => setSignupBut(true);
 
 	return (
 		<div className={classes.root}>
 			<AppBar position="static" className={classes.navbar}>
-				<Toolbar>
-					<IconButton
-						edge="start"
-						className={classes.menuButton}
-						color="inherit"
-						aria-label="menu"
-					>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant="h6" className={classes.title}>
-						<Link to="/">Artistic</Link>
-					</Typography>
-
-					<DropdownCategories />
-
-					{userLoggedIn ? (
-						<>
-							<Link to="/profile" className={classes.link}>
-								<Button startIcon={<AccountCircleIcon />} color="inherit">
-									{getUsername}
-								</Button>
-							</Link>
-							<IconButton
-								color="inherit"
-								size="medium"
-								aria-label="logout"
-								onClick={() => logoutHandler()}
-							>
-								<ExitToAppOutlinedIcon />
-							</IconButton>
-						</>
-					) : (
-						<>
-							<IconButton color="inherit" aria-label="login"></IconButton>
-							{/* <Link to="/login" className={classes.link}> */}
-								<Button
+				<Container fixed className={classes.navTextColor}>
+					<Toolbar>
+						<div className={classes.navInnerContainer}>
+							<Link to="/">
+								<IconButton
+									edge="start"
+									className={classes.menuButton}
 									color="inherit"
-									startIcon={<OpenInBrowserIcon />}
-									size="large"
-									onClick={() => { toggleModal(); isLoginBut()}}
+									aria-label="menu"
 								>
-									Log in
-								</Button>
-							{/* </Link> */}
-							{/* <Link to="/signup" className={classes.link}> */}
-								<Button color="inherit" size="large" onClick={() => {toggleModal(); isSignupBut()}}>Sign up</Button>
-							{/* </Link> */}
-						</>
-					)}
-				</Toolbar>
+									<img
+										alt="ArtneticLogo"
+										src="./ArtneticLogo.png"
+										className={classes.logo}
+									/>
+								</IconButton>
+							</Link>
+						</div>
+
+						<div className={classes.navRightSide}>
+							<DropdownCategories />
+							<DropdownAboutUs />
+							<Link to="#" className={classes.link}>
+								<Button size="large">Artists</Button>
+							</Link>
+
+							{userLoggedIn ? (
+								<>
+									<DropdownProfileIcon
+										logoutHandler={() => logoutHandler()}
+										getUsername={getUsername}
+									/>
+									{/* <Link to="/profile" className={classes.link}>
+										<Button startIcon={<AccountCircleIcon />}>
+											{getUsername}
+										</Button>
+									</Link>
+									<IconButton
+										color="inherit"
+										size="medium"
+										aria-label="logout"
+										onClick={() => logoutHandler()}
+									>
+										<ExitToAppOutlinedIcon />
+									</IconButton> */}
+								</>
+							) : (
+								<>
+									<IconButton color="inherit" aria-label="login"></IconButton>
+									<Button
+										color="inherit"
+										startIcon={<OpenInBrowserIcon />}
+										size="large"
+										onClick={() => {
+											toggleModal();
+											isLoginBut();
+										}}
+									>
+										Log in
+									</Button>
+									<Button
+										color="inherit"
+										size="large"
+										onClick={() => {
+											toggleModal();
+											isSignupBut();
+										}}
+									>
+										Sign up
+									</Button>
+								</>
+							)}
+						</div>
+					</Toolbar>
+				</Container>
 			</AppBar>
-      <ModalDialog isOpen={openModal} onClose={toggleModal} showLogin={loginBut} showSignup={signupBut} />
+			<ModalDialog
+				isOpen={openModal}
+				onClose={toggleModal}
+				showLogin={loginBut}
+				showSignup={signupBut}
+			/>
 		</div>
 	);
 };
