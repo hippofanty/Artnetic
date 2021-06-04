@@ -1,4 +1,3 @@
-import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,11 +8,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
 import DropdownCategories from './DropdownCategories';
 import { useDispatch, useSelector } from 'react-redux';
-import { rootState, UserState } from '../../redux/init';
+import { rootState} from '../../redux/init';
 import { logout } from '../../redux/actionCreators/userActions';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Icon from '@material-ui/core/Icon';
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 
 const useStyles = makeStyles((theme: Theme) =>

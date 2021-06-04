@@ -25,6 +25,7 @@ export const Main = () => {
         <Route exact path="/profile">
           <Profile />
         </Route>
+
         {/* <Route exact path="/secret">
           {loggedIn ? <Redirect to="/" /> : <div>Секретная страничка</div>}
         </Route> */}

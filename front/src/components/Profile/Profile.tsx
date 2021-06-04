@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,7 +9,7 @@ import Box from '@material-ui/core/Box';
 import { Paper } from '@material-ui/core';
 import { Information } from './Information/Information';
 import { Button } from '@material-ui/core'
-import {useState} from 'react'
+import {AddWorkForm} from '../AddWorkForm/AddWorkForm'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -71,7 +71,7 @@ export default function Profile() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [showForm, setShowForm] = useState<boolean>(false);
-  // onClick={showForm}
+
   
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -114,7 +114,9 @@ export default function Profile() {
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           Мои произведения<br></br>
-          <Button>Опубликовать свою работу</Button>
+          <Button onClick={()=>setShowForm(!showForm)}>Опубликовать свою работу</Button><br></br>
+          <AddWorkForm />
+
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
           Арендовано у меня
