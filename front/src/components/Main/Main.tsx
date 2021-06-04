@@ -5,6 +5,7 @@ import { AboutUsMain } from "../AboutUsMain/AboutUsMain";
 import { Login } from "../Login";
 import { Signup } from "../SignUp";
 import Profile from "../Profile/Profile";
+import { Work } from "../Work/Work";
 
 export const Main = () => {
   return (
@@ -24,6 +25,9 @@ export const Main = () => {
         </Route>
         <Route exact path="/profile">
           <Profile />
+        </Route>
+        <Route exact path="/categories/works/:id">
+          <Work />
         </Route>
         {/* <Route exact path="/secret">
           {loggedIn ? <Redirect to="/" /> : <div>Секретная страничка</div>}

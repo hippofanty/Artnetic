@@ -32,9 +32,9 @@ router.get('/:name', async (req, res) => {
 	}
 });
 
-router.get('/:id', async (req, res) => {
-	const works = await Work.find({ category: req.params.id });
-	res.json({ works });
+router.get('/works/:id', async (req, res) => {
+	const work = await Work.findOne({ _id: req.params.id }).populate(['category', 'user']);
+	res.json({ work });
 });
 
 module.exports = router;

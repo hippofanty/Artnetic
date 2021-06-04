@@ -1,6 +1,9 @@
 export type Category = string;
 
+export type Id = string;
+
 export interface Work {
+  _id: string;
   title: string;
   description: string;
   category: {
@@ -37,6 +40,11 @@ export interface WorksState {
   works: Work[];
 }
 
+// тип для workReducer
+export interface OneWorkState {
+  work: Work;
+}
+
 // тип для просмотра полей стора в useSelector()
 // export interface rootState {
 //   works: Work[];
@@ -45,6 +53,7 @@ export interface WorksState {
 export interface rootState {
   works: WorksState;
   userState: UserState;
+  work: OneWorkState;
 }
 
 export const initialUserState = {
@@ -65,3 +74,21 @@ export const initialStateCategories = {
   works: [],
 };
 
+export const initialStateWork = {
+  work: {
+    _id: '',
+    title: '',
+    description: '',
+    category: {
+      name: '',
+    },
+    price: 0,
+    image: '',
+    user: {
+      role: '',
+      username: '',
+      email: '',
+      password: '',
+    },
+  },
+}
