@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Main } from './components/Main/Main';
-import Profile from './components/Profile/Profile';
 import { refreshUser } from './redux/actionCreators/userActions';
 
 function App() {
