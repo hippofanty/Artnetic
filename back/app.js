@@ -9,6 +9,7 @@ const app = express();
 const cors = require('cors');
 
 const categoryRouter = require('./routes/category');
+const worksRouter = require('./routes/works');
 const authRouter = require('./routes/auth');
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(logger('dev'));
 
 app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/works', worksRouter);
 app.use('/api/v1/auth', authRouter);
 
 dbConnect();
