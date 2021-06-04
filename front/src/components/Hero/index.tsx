@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ReactPlayer from 'react-player';
 import heroVideo from '../../Athens.mp4';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -29,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
 		color: 'white',
 		borderColor: 'white',
 	},
+  link: {
+    textDecoration: 'none',
+  },
 }));
 
 export const Hero = () => {
@@ -54,14 +58,21 @@ export const Hero = () => {
 					color="#fff"
 				>
 					<Typography variant="h3" component="h1" className={classes.title}>
-						<Box display="flex" flexDirection="column" alignItems="center" className="unica-one">
+						<Box
+							display="flex"
+							flexDirection="column"
+							alignItems="center"
+							className="unica-one"
+						>
 							<span className="font-80">ARTNETIC</span>
-							<span >ART RENTAL AND SALES FOR CREATIVE PEOPLE</span>
+							<span>ART RENTAL AND SALES FOR CREATIVE PEOPLE</span>
 						</Box>
 					</Typography>
-					<Button variant="outlined" className={classes.heroBut} size="large">
-						BROWSE ARTWORK
-					</Button>
+					<Link to="/categories/all" className={classes.link}>
+						<Button variant="outlined" className={classes.heroBut} size="large">
+							BROWSE ARTWORK
+						</Button>
+					</Link>
 				</Box>
 			</div>
 		</section>

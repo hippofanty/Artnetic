@@ -79,7 +79,7 @@ export default function CardItem({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  console.log(category);
   return (
     <Card className={classes.root}>
       <CardHeader

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export default function DropdownCategories() {
+export default function DropdownAboutUs() {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -40,9 +40,9 @@ export default function DropdownCategories() {
 				aria-haspopup="true"
 				onClick={handleClick}
 				className={classes.link}
-        size="large"
+				size="large"
 			>
-				Категории
+				О нас
 			</Button>
 			<Menu
 				id="simple-menu"
@@ -52,37 +52,21 @@ export default function DropdownCategories() {
 				onClose={handleClose}
 				anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
 				transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        getContentAnchorEl={null}
+				getContentAnchorEl={null}
 			>
 				<MenuItem onClick={handleClose}>
-					<Link to="/categories/all" className={classes.linkDrop}>
-						Все категории
-					</Link>
-				</MenuItem>
-				<Divider />
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/fineArt" className={classes.linkDrop}>
-						Живопись
+					<Link to="#" className={classes.linkDrop}>
+						О нас
 					</Link>
 				</MenuItem>
 				<MenuItem onClick={handleClose}>
-					<Link to="/categories/graphics" className={classes.linkDrop}>
-						Графика
+					<Link to="#" className={classes.linkDrop}>
+						Клиенты
 					</Link>
 				</MenuItem>
 				<MenuItem onClick={handleClose}>
-					<Link to="/categories/abstraction" className={classes.linkDrop}>
-						Абстракция
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/sculptures" className={classes.linkDrop}>
-						Скульптура
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/other" className={classes.linkDrop}>
-						Иное
+					<Link to="#" className={classes.linkDrop}>
+						Контакты
 					</Link>
 				</MenuItem>
 			</Menu>

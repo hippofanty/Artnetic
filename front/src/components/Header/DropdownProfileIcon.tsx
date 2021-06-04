@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -21,7 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export default function DropdownCategories() {
+interface Props {
+  logoutHandler: () => void,
+  getUsername: string,
+}
+
+export default function DropdownProfileIcon({logoutHandler, getUsername}: Props) {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -41,8 +47,9 @@ export default function DropdownCategories() {
 				onClick={handleClick}
 				className={classes.link}
         size="large"
+        startIcon={<AccountCircleIcon />}
 			>
-				Категории
+				{getUsername}
 			</Button>
 			<Menu
 				id="simple-menu"
@@ -55,35 +62,13 @@ export default function DropdownCategories() {
         getContentAnchorEl={null}
 			>
 				<MenuItem onClick={handleClose}>
-					<Link to="/categories/all" className={classes.linkDrop}>
-						Все категории
+					<Link to="/profile" className={classes.linkDrop}>
+						Профиль
 					</Link>
 				</MenuItem>
 				<Divider />
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/fineArt" className={classes.linkDrop}>
-						Живопись
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/graphics" className={classes.linkDrop}>
-						Графика
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/abstraction" className={classes.linkDrop}>
-						Абстракция
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/sculptures" className={classes.linkDrop}>
-						Скульптура
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/other" className={classes.linkDrop}>
-						Иное
-					</Link>
+				<MenuItem onClick={() => {handleClose(); logoutHandler()}}>
+						Log out
 				</MenuItem>
 			</Menu>
 		</div>
