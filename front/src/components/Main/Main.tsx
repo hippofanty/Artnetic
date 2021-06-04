@@ -7,6 +7,7 @@ import { Signup } from '../SignUp';
 import Profile from '../Profile/Profile';
 import { Hero } from '../Hero';
 import { Container } from '@material-ui/core';
+import { Work } from "../Work/Work";
 
 export const Main = () => {
 	return (
@@ -29,6 +30,9 @@ export const Main = () => {
 					<Route exact path="/profile">
 						<Profile />
 					</Route>
+          <Route exact path="/categories/works/:id">
+            <Work />
+          </Route>
 				</Container>
 				{/* <Route exact path="/secret">
           {loggedIn ? <Redirect to="/" /> : <div>Секретная страничка</div>}
