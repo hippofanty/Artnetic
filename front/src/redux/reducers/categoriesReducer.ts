@@ -6,6 +6,7 @@ export const categoriesReducer = ( state: WorksState = initialStateCategories, a
   switch (action.type) {
     case Types.GET_CATEGORIES:
       return {
+        ...state,
         works: action.payload
       };
     default:

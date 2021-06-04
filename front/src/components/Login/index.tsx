@@ -7,7 +7,7 @@ import {
 	TextField,
 	Theme,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../redux/actionCreators/userActions';
@@ -21,17 +21,26 @@ const useStyles = makeStyles((theme: Theme) =>
 			padding: theme.spacing(6),
 			textAlign: 'center',
 			color: theme.palette.text.secondary,
+
 		},
-		form: {
-			width: '100ch',
-		},
+		// form: {
+		// 	width: '100ch',
+		// },
 		sumbBut: {
 			marginTop: '25px',
 		},
+    formTitle: {
+      fontSize: '22px',
+      
+    }
 	})
 );
 
-export const Login = () => {
+export interface Props {
+  setModal: () => void,
+}
+
+export const Login = ({setModal}:Props) => {
 	const classes = useStyles();
 
 	const [email, setEmail] = useState<string>('');
@@ -43,12 +52,14 @@ export const Login = () => {
 	const SubmitHandler = (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 		dispatch(login(email, password));
+    setModal();
 		history.push('/');
 	};
 
 	return (
 		<Paper className={classes.paper}>
-			<form className={classes.form} onSubmit={(e) => SubmitHandler(e)}>
+			{/* <form className={classes.form} onSubmit={(e) => SubmitHandler(e)}> */}
+      <form onSubmit={(e) => SubmitHandler(e)}>
 				<div className={classes.root}>
 					<Grid
 						container
@@ -57,7 +68,8 @@ export const Login = () => {
 						justify="center"
 						alignItems="center"
 					>
-						<Grid item xs={3}>
+            <Grid item xs={12}><span className={classes.formTitle}>Please, log in to your account!</span></Grid>
+						<Grid item xs={6}>
 							{/* <Paper className={classes.paper}> */}
 							<TextField
 								id="standard-basic"
