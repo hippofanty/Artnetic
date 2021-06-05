@@ -7,6 +7,24 @@ import { useSelector } from "react-redux";
 import { rootState } from "../../redux/init";
 import Grid from "@material-ui/core/Grid";
 import { MySelect } from "./Select";
+//@ts-ignore
+import { Image } from "cloudinary-react";
+import { useState } from "react";
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			
+		},
+    input: {
+      marginRight: '20px',
+    },
+    formDiv: {
+      display: 'flex',
+    }
+	})
+);
 
 type Inputs = {
   nameDisabled: undefined;
@@ -22,16 +40,21 @@ type Inputs = {
     role: string;
   };
 };
-
+type Props = {
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+}
 const schema = yup.object().shape({
   title: yup.string().required("title is a required field"),
   description: yup.string().required("description is a required field"),
   price: yup.string().required("price is a required field"),
 });
 
-export function AddWorkForm() {
+export function AddWorkForm({ setShowForm }:Props) {
+  console.log(setShowForm);
+  
+  const classes = useStyles();
   const user = useSelector((state: rootState) => state.userState.user);
-
+  const [url, setUrl] = useState("");
   const {
     register,
     handleSubmit,
@@ -41,56 +64,73 @@ export function AddWorkForm() {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-    
+    console.log(setShowForm, 'sdcfsdf');
+
     const formData = new FormData();
+    console.log(data.image, "data-img");
     if (data.image) {
-      console.log(data.image, 'dataimage');
+      console.log(data.image, "dataimage");
 
-        //@ts-ignore
-        formData.append("file", data.image[0]);
+      //@ts-ignore
+      formData.append("file", data.image[0]);
+      //@ts-ignore
+      console.log(formData, "formData1");
 
+      formData.append("upload_preset", "ewojqqyg");
+      //@ts-ignore
+      console.log(formData, "formData2");
+      // formData.append("cloud_name", "dcvhz3sqn");
+      // console.log(formData, 'formDat3');
+
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dcvhz3sqn/image/upload",
+        {
+          method: "post",
+          //@ts-ignore
+          body: formData,
+        }
+      );
+      const result = await response.json();
+      console.log(result, "result");
+      setUrl(result.url);
     }
+    console.log(url, "url", typeof url);
+
     data.user = user;
-    console.log(formData.get('file'));
-    const image = data.image;
 
-    const resp = await fetch("/api/v1/works", {
+    data.image = url;
+    fetch("/api/v1/works", {
       method: "POST",
-
-      body: formData,
-   });
-   const {filename} = await resp.json();
-   console.log('filename', filename);
-   
-   data.image = filename;
-   const result = await fetch("/api/v1/works", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      data,
-    }),
-  })
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data,
+      }),
+    });
+    console.log(setShowForm, 'sfdfsdfjlsdjfjdl');
+    
+    setShowForm(false);
   };
 
   return (
-    <div style={{ padding: 16, margin: "auto", maxWidth: 480 }}>
+    <>
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-        <Grid container alignItems="flex-start" justify="center" spacing={2}>
-
-          {/* <Input label="title" {...register("title", { required: true })} />
+        <div className={classes.formDiv}>
+          <Input label="title" {...register("title", { required: true })} className={classes.input} />
           <Input
             label="description"
             {...register("description", { required: true })}
+            className={classes.input}
           />
           <Input
+           className={classes.input}
             type="number"
             label="price"
             {...register("price", { required: true })}
-          /> */}
+          />
           <MySelect
+           className={classes.input}
             options={[
               { label: "fineArt", value: "fineArt" },
               { label: "sculptures", value: "sculptures" },
@@ -100,17 +140,26 @@ export function AddWorkForm() {
             ]}
             {...register("category", { required: true })}
           />
-          <br></br>
 
-          <input type="file" {...register("image")} />
+          <input type="file" {...register("image")}  className={classes.input}/>
 
           {errors.title && <span>This field is required</span>}
           {errors.description && <span>This field is required</span>}
           {errors.price && <span>This field is required</span>}
           <br></br>
           <MyButton type="submit" />
-        </Grid>
+          </div>
       </form>
-    </div>
+          {url && (
+            <Image
+              cloudName="dcvhz3sqn"
+              publicId={url}
+              width="150"
+              height="150"
+              crop="fit"
+              quality="80"
+            />
+          )}
+          </>
   );
 }

@@ -115,7 +115,7 @@ export default function Profile() {
         <TabPanel value={value} index={2} dir={theme.direction}>
           Мои произведения<br></br>
           <Button onClick={()=>setShowForm(!showForm)}>Опубликовать свою работу</Button><br></br>
-          <AddWorkForm />
+          {showForm && <AddWorkForm setShowForm={setShowForm} />}
 
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
