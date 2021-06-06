@@ -35,7 +35,7 @@ export const Categories = () => {
   }, [category, dispatch]);
   return (
     <>
-      <h1 className={classes.header}>{category}</h1>
+      <h1 className={classes.header}>{category === 'all' ? 'All categories': category === 'fineArt' ? 'Fine art' : category}</h1>
       <Container className={classes.container}>
         {worksState.map((item) => (
           <CardItem

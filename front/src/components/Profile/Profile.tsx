@@ -128,7 +128,7 @@ export default function Profile() {
           ) : (
             <Button
               onClick={() => setShowForm(!showForm)}
-              style={{ marginBottom: "30px" }}
+              style={{ margin: '30px auto' }}
             >
               <CancelPresentationIcon style={{ fontSize: "30px" }}>
                 add_circle
