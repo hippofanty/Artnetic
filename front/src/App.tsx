@@ -1,4 +1,4 @@
-import { Container, CssBaseline } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import './App.css';

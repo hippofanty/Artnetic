@@ -5,25 +5,59 @@ import { MyButton } from "./MyButton";
 import * as yup from "yup";
 import { useSelector } from "react-redux";
 import { rootState } from "../../redux/init";
-import Grid from "@material-ui/core/Grid";
 import { MySelect } from "./Select";
-//@ts-ignore
-import { Image } from "cloudinary-react";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Description } from "./Description";
+import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
+import Divider from '@material-ui/core/Divider';
 import { useState } from "react";
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			
-		},
+  createStyles({
+    root: {},
     input: {
-      marginRight: '20px',
+      marginRight: "20px",
+      flexBasis: "500px",
+      marginBottom: "40px",
     },
     formDiv: {
-      display: 'flex',
-    }
-	})
+      display: "flex",
+      flexWrap: "wrap",
+      flexDirection: "column",
+    },
+    description: {
+      marginBottom: "40px",
+      flexBasis: "500px",
+      marginRight: "30px",
+    },
+    select: {
+      marginLeft: '50px'
+    },
+    fileUploadInput: {},
+    fileUploadBtn: {
+      backgroundColor: "black",
+      width: "150px",
+      marginTop: '30px'
+    },
+    titlePrice: {
+      display: "flex",
+    },
+    descrCat: {
+      display: "flex",
+    },
+    fileInput: {
+      display: "none",
+      color: 'green'
+    },
+    customFileUpload: {
+      border: "1px solid #ccc",
+      borderRadius: "5px",
+      display: "inline-block",
+      padding: "6px 12px",
+      cursor: "pointer",
+    },
+  })
 );
 
 type Inputs = {
@@ -42,19 +76,21 @@ type Inputs = {
 };
 type Props = {
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 const schema = yup.object().shape({
   title: yup.string().required("title is a required field"),
   description: yup.string().required("description is a required field"),
   price: yup.string().required("price is a required field"),
 });
 
-export function AddWorkForm({ setShowForm }:Props) {
-  console.log(setShowForm);
+export function AddWorkForm({ setShowForm }: Props) {
+  const [uploaded, setUploaded] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   
   const classes = useStyles();
   const user = useSelector((state: rootState) => state.userState.user);
-  const [url, setUrl] = useState("");
+  let url = "";
+
   const {
     register,
     handleSubmit,
@@ -63,21 +99,19 @@ export function AddWorkForm({ setShowForm }:Props) {
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(setShowForm, 'sdcfsdf');
 
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    
+    setLoading(true)
     const formData = new FormData();
-    console.log(data.image, "data-img");
     if (data.image) {
       console.log(data.image, "dataimage");
 
       //@ts-ignore
       formData.append("file", data.image[0]);
-      //@ts-ignore
-      console.log(formData, "formData1");
 
       formData.append("upload_preset", "ewojqqyg");
-      //@ts-ignore
+
       console.log(formData, "formData2");
       // formData.append("cloud_name", "dcvhz3sqn");
       // console.log(formData, 'formDat3');
@@ -86,19 +120,18 @@ export function AddWorkForm({ setShowForm }:Props) {
         "https://api.cloudinary.com/v1_1/dcvhz3sqn/image/upload",
         {
           method: "post",
-          //@ts-ignore
+
           body: formData,
         }
       );
       const result = await response.json();
-      console.log(result, "result");
-      setUrl(result.url);
+      console.log(result, result.url, "result");
+      url = result.url;
     }
-    console.log(url, "url", typeof url);
-
     data.user = user;
 
     data.image = url;
+
     fetch("/api/v1/works", {
       method: "POST",
       headers: {
@@ -108,58 +141,80 @@ export function AddWorkForm({ setShowForm }:Props) {
         data,
       }),
     });
-    console.log(setShowForm, 'sfdfsdfjlsdjfjdl');
-    
+
     setShowForm(false);
+   
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" style={{marginBottom: '15px'}}>
         <div className={classes.formDiv}>
-          <Input label="title" {...register("title", { required: true })} className={classes.input} />
-          <Input
-            label="description"
-            {...register("description", { required: true })}
-            className={classes.input}
-          />
-          <Input
-           className={classes.input}
-            type="number"
-            label="price"
-            {...register("price", { required: true })}
-          />
-          <MySelect
-           className={classes.input}
-            options={[
-              { label: "fineArt", value: "fineArt" },
-              { label: "sculptures", value: "sculptures" },
-              { label: "abstraction", value: "abstraction" },
-              { label: "graphics", value: "graphics" },
-              { label: "other", value: "other" },
-            ]}
-            {...register("category", { required: true })}
-          />
-
-          <input type="file" {...register("image")}  className={classes.input}/>
-
-          {errors.title && <span>This field is required</span>}
-          {errors.description && <span>This field is required</span>}
-          {errors.price && <span>This field is required</span>}
-          <br></br>
-          <MyButton type="submit" />
+          <div className={classes.titlePrice}>
+            <Input
+              label="title"
+              {...register("title", { required: true })}
+              className={classes.input}
+              />
+              {errors.title && <span>This field is required</span>}
+            <Input
+              className={classes.input}
+              type="number"
+              label="price"
+              {...register("price", { required: true })}
+              />
+              {errors.price && <span>This field is required</span>}
           </div>
-      </form>
-          {url && (
-            <Image
-              cloudName="dcvhz3sqn"
-              publicId={url}
-              width="150"
-              height="150"
-              crop="fit"
-              quality="80"
+          <div className={classes.descrCat}>
+            <Description
+              // label="description"
+              {...register("description", { required: true })}
+              className={classes.description}
+              />
+            <MySelect
+              className={classes.select}
+              options={[
+                { label: "Живопись", value: "fineArt" },
+                { label: "Скульптуры", value: "sculptures" },
+                { label: "Абстракция", value: "abstraction" },
+                { label: "Графика", value: "graphics" },
+                { label: "Иное", value: "other" },
+              ]}
+              {...register("category", { required: true })}
+              />
+            {errors.category && <span>This field is required</span>}
+          </div>
+              {errors.description && <span style={{marginBottom: '20px'}}>Field 'Description' is required</span>}
+
+          <label
+            className={classes.customFileUpload}
+            style={{ width: "230px" }}
+          >
+            <input
+              type="file"
+              onInput={()=>setUploaded(true)}
+              {...register("image", {required: true})}
+              className={classes.fileInput}
+              style={{backgroundColor: 'deeppink', display: 'none'}}
             />
-          )}
-          </>
+            <div style={{display: 'flex'}}>
+              <PhotoLibraryIcon />
+              <span
+                style={{
+                  marginLeft: "15px",
+                }}
+              >
+                Upload photo
+              </span>
+              {uploaded && <DoneAllIcon />}
+            </div>
+          </label>
+
+          <br></br>
+          <MyButton type="submit" className={classes.fileUploadBtn} loading={loading}/>
+        </div>
+      </form>
+      <Divider />
+    </>
   );
 }

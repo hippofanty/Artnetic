@@ -7,7 +7,7 @@ import {
 	TextField,
 	Theme,
 } from '@material-ui/core';
-import React, { ReactNode, useState } from 'react';
+import React, {  useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../redux/actionCreators/userActions';

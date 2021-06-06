@@ -1,7 +1,6 @@
 import { Form } from 'react-final-form';
 import {
 	TextField,
-	Checkboxes,
 	Radios,
 	Select,
 	DatePicker,
@@ -36,7 +35,7 @@ export const OrderForm = ({setPrice}: OrderProps) => {
 		(state: rootState) => state.userState.user.email
 	);
 
-  const getCategoryWorks = useSelector((state: rootState) => state.works?.works)
+  // const getCategoryWorks = useSelector((state: rootState) => state.works?.works)
 
   interface FormType {
     firstName?: string;
@@ -53,19 +52,19 @@ export const OrderForm = ({setPrice}: OrderProps) => {
 		console.log('Hi');
 	};
 
-	const validate = (values: FormType) => {
-		const errors: FormType = {};
-		if (!values.firstName) {
-			errors.firstName = 'Required';
-		}
-		if (!values.lastName) {
-			errors.lastName = 'Required';
-		}
-		if (!values.email) {
-			errors.email = 'Required';
-		}
-		return errors;
-	};
+	// const validate = (values: FormType) => {
+	// 	const errors: FormType = {};
+	// 	if (!values.firstName) {
+	// 		errors.firstName = 'Required';
+	// 	}
+	// 	if (!values.lastName) {
+	// 		errors.lastName = 'Required';
+	// 	}
+	// 	if (!values.email) {
+	// 		errors.email = 'Required';
+	// 	}
+	// 	return errors;
+	// };
 
 
 	const formFields: CustomField[] = [

@@ -1,5 +1,4 @@
 import { Container, makeStyles, Theme } from '@material-ui/core';
-import { title } from 'process';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -42,6 +41,7 @@ export const Categories = () => {
           <CardItem
             id={item._id}
             category={item.category}
+            image={item.image}
             description={item.description}
             price={item.price}
             title={item.title}

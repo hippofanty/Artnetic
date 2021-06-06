@@ -10,6 +10,8 @@ import { Paper } from '@material-ui/core';
 import { Information } from './Information/Information';
 import { Button } from '@material-ui/core'
 import {AddWorkForm} from '../AddWorkForm/AddWorkForm'
+import Icon from '@material-ui/core/Icon';
+import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -113,8 +115,9 @@ export default function Profile() {
           Мои заказы
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Мои произведения<br></br>
-          <Button onClick={()=>setShowForm(!showForm)}>Опубликовать свою работу</Button><br></br>
+
+          {!showForm ? <Button onClick={()=>setShowForm(!showForm)} style={{marginBottom: '30px'}}><Icon style={{ fontSize: "70px" }}>add_circle</Icon></Button>  : <Button onClick={()=>setShowForm(!showForm)} style={{marginBottom: '30px'}}><CancelPresentationIcon style={{ fontSize: "30px" }}>add_circle</CancelPresentationIcon></Button>}
+<br></br>
           {showForm && <AddWorkForm setShowForm={setShowForm} />}
 
         </TabPanel>

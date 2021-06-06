@@ -57,6 +57,7 @@ interface CardProps {
   category: {
     name: string;
   };
+  image: string;
   description: string;
   price: number;
   title: string;
@@ -68,6 +69,7 @@ interface CardProps {
 export default function CardItem({
   id,
   category,
+  image,
   description,
   price,
   title,
@@ -85,7 +87,7 @@ export default function CardItem({
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            А
           </Avatar>
         }
         action={
@@ -98,15 +100,13 @@ export default function CardItem({
       />
       <CardMedia
         className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
+        image={image}
+        title={title}
       />
       <CardContent>
+
         <Typography variant="body2" color="textSecondary" component="p">
-          {description}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Price: <b>{price}</b>
+          Price per day starts from:<br /> <b>{price} rub</b> / {(price/72.86).toFixed()}$ / {(price/88.65).toFixed()}€
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -130,7 +130,7 @@ export default function CardItem({
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>
-            Нужно ли выпадающее описание? {description}
+            {description}
           </Typography>
         </CardContent>
       </Collapse>
