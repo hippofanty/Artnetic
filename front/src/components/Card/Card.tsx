@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -14,11 +14,10 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { rootState } from "../../redux/init";
-import Settings from "./Settings";
+
+import {Settings} from "./Settings";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -8,6 +8,13 @@ export const myWorksReducer = ( state: MyWorksState = initialStateMyWorks, actio
         ...state,
         myWorks: action.payload
       };
+      case Types.DELETE_WORK: 
+
+      const updatedWorks = state.myWorks.filter(works => works._id !== action.payload)
+      return {
+        ...state,
+        myWorks: updatedWorks,
+      }
     default:
       return state;
   }

@@ -9,6 +9,13 @@ export const categoriesReducer = ( state: WorksState = initialStateCategories, a
         ...state,
         works: action.payload
       };
+      case Types.DELETE_WORK: 
+
+      const updatedWorks = state.works.filter(works => works._id !== action.payload)
+      return {
+        ...state,
+        works: updatedWorks,
+      }
     default:
       return state;
   }

@@ -30,4 +30,15 @@ router.post('/',async (req, res) => {
 	}
 });
 
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+	try {
+    const works = await Work.findOneAndDelete({ _id: id });
+    return res.status(200).json({ status: 'removed' });
+	} catch (error) {
+		console.log(error);
+    return res.sendStatus(400);
+	}
+});
+
 module.exports = router;
