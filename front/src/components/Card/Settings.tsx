@@ -5,6 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useSelector } from "react-redux";
 import { rootState } from "../../redux/init";
+import { Link } from "react-router-dom";
 
 interface SettingsProps {
   pictureid: string;
@@ -44,7 +45,7 @@ export default function Settings({ ...props }: SettingsProps) {
             <MenuItem onClick={handleClose}>Edit</MenuItem>
           </>
         ) : (
-          <MenuItem onClick={handleClose}>Details</MenuItem>
+          <Link to={`works/${props.pictureid}`}><MenuItem onClick={handleClose}>Details</MenuItem></Link>
         )}
       </Menu>
     </div>
