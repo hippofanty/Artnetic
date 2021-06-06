@@ -6,6 +6,7 @@ export enum Types {
   SET_USER = 'SET_USER',
   UNSET_USER = 'UNSET_USER',
   GET_WORK = "GET_WORK",
+  GET_MY_WORKS = 'GET_MY_WORKS'
 }
 
 export interface SetUserAction {
@@ -31,6 +32,10 @@ export interface getWorksAction {
   type: Types.GET_CATEGORIES;
   payload: Work[];
 }
+export interface getMyWorksAction {
+  type: Types.GET_MY_WORKS;
+  payload: Work[];
+}
 
 export interface getOneWorkAction {
   type: Types.GET_WORK;
@@ -42,6 +47,7 @@ export type Actions =
   | SetUserAction
   | UnsetUserAction
   | getOneWorkAction
+  | getMyWorksAction
 
 
 

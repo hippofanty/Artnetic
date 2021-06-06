@@ -4,6 +4,19 @@ const Category = require('../db/models/category.model');
 const Work = require('../db/models/work.model');
 const User = require('../db/models/user.model');
 
+
+router.get('/:id',async (req, res) => {
+	try {
+    const { id } = req.params;
+		
+    const works = await Work.find({user: id});
+		return res.status(200).json({works});
+	} catch (error) {
+		console.log(error);
+    return res.sendStatus(400);
+	}
+});
+
 router.post('/',async (req, res) => {
 	try {
 		console.log(req.body);

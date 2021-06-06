@@ -12,6 +12,9 @@ import { Button } from '@material-ui/core'
 import {AddWorkForm} from '../AddWorkForm/AddWorkForm'
 import Icon from '@material-ui/core/Icon';
 import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
+import { MyWorks } from '../MyWorks/MyWorks';
+import { useSelector } from 'react-redux';
+import { rootState } from '../../redux/init';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -73,7 +76,7 @@ export default function Profile() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [showForm, setShowForm] = useState<boolean>(false);
-
+  const myWorksState = useSelector((state: rootState) => state.myWorks.myWorks);
   
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -119,7 +122,7 @@ export default function Profile() {
           {!showForm ? <Button onClick={()=>setShowForm(!showForm)} style={{marginBottom: '30px'}}><Icon style={{ fontSize: "70px" }}>add_circle</Icon></Button>  : <Button onClick={()=>setShowForm(!showForm)} style={{marginBottom: '30px'}}><CancelPresentationIcon style={{ fontSize: "30px" }}>add_circle</CancelPresentationIcon></Button>}
 <br></br>
           {showForm && <AddWorkForm setShowForm={setShowForm} />}
-
+          <MyWorks />
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
           Арендовано у меня
