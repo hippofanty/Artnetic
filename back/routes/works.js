@@ -9,7 +9,8 @@ router.get('/:id',async (req, res) => {
 	try {
     const { id } = req.params;
 		
-    const works = await Work.find({user: id});
+    const works = await Work.find({user: id}).populate(['category', 'user']);
+    
 		return res.status(200).json({works});
 	} catch (error) {
 		console.log(error);

@@ -24,13 +24,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const MyWorks = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const getUserID = useSelector((state: rootState) => state.userState.user.id);
-  const myWorksState = useSelector((state: rootState) => state.myWorks.myWorks);
-  console.log(myWorksState, "myworksstate", typeof myWorksState);
+  const myWorksState = useSelector((state: rootState) => state.myWorks.myWorks);  
 
   useEffect(() => {
     dispatch(getMyWorksAC(getUserID));
-  }, [getUserID, dispatch]);
+  }, [dispatch, getUserID]);
 
   return (
     <>

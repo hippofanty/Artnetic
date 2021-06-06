@@ -12,6 +12,7 @@ export interface Work {
   price: number;
   image: string;
   user: {
+    _id: string;
     role: string;
     username: string;
     email: string;
@@ -92,6 +93,7 @@ export const initialStateWork = {
     price: 0,
     image: '',
     user: {
+      _id: "",
       role: '',
       username: '',
       email: '',

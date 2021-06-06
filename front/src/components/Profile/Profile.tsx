@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
-import SwipeableViews from 'react-swipeable-views';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { Paper } from '@material-ui/core';
-import { Information } from './Information/Information';
-import { Button } from '@material-ui/core'
-import {AddWorkForm} from '../AddWorkForm/AddWorkForm'
-import Icon from '@material-ui/core/Icon';
-import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
-import { MyWorks } from '../MyWorks/MyWorks';
-import { useSelector } from 'react-redux';
-import { rootState } from '../../redux/init';
+import React, { useState } from "react";
+import SwipeableViews from "react-swipeable-views";
+import { makeStyles, Theme, useTheme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import { Paper } from "@material-ui/core";
+import { Information } from "./Information/Information";
+import { Button } from "@material-ui/core";
+import { AddWorkForm } from "../AddWorkForm/AddWorkForm";
+import Icon from "@material-ui/core/Icon";
+import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
+import { MyWorks } from "../MyWorks/MyWorks";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -46,7 +44,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: any) {
   return {
     id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
 
@@ -64,11 +62,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   avatar: {
     width: 225,
     padding: 5,
-    display: 'flex',
-    justifyContent: 'space-around',
-  }
+    display: "flex",
+    justifyContent: "space-around",
+  },
 }));
-
 
 // Экспорт компонента
 export default function Profile() {
@@ -76,8 +73,7 @@ export default function Profile() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [showForm, setShowForm] = useState<boolean>(false);
-  const myWorksState = useSelector((state: rootState) => state.myWorks.myWorks);
-  
+
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
@@ -105,12 +101,16 @@ export default function Profile() {
         </Tabs>
       </AppBar>
       <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Paper className={classes.avatar} variant="outlined" square ><img src="https://www.kinonews.ru/insimgs/2019/newsimg/newsimg87089.jpg" alt="" />
+          <Paper className={classes.avatar} variant="outlined" square>
+            <img
+              src="https://www.kinonews.ru/insimgs/2019/newsimg/newsimg87089.jpg"
+              alt=""
+            />
           </Paper>
           <Information />
         </TabPanel>
@@ -118,9 +118,24 @@ export default function Profile() {
           Мои заказы
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-
-          {!showForm ? <Button onClick={()=>setShowForm(!showForm)} style={{marginBottom: '30px'}}><Icon style={{ fontSize: "70px" }}>add_circle</Icon></Button>  : <Button onClick={()=>setShowForm(!showForm)} style={{marginBottom: '30px'}}><CancelPresentationIcon style={{ fontSize: "30px" }}>add_circle</CancelPresentationIcon></Button>}
-<br></br>
+          {!showForm ? (
+            <Button
+              onClick={() => setShowForm(!showForm)}
+              style={{ marginBottom: "30px" }}
+            >
+              <Icon style={{ fontSize: "70px" }}>add_circle</Icon>
+            </Button>
+          ) : (
+            <Button
+              onClick={() => setShowForm(!showForm)}
+              style={{ marginBottom: "30px" }}
+            >
+              <CancelPresentationIcon style={{ fontSize: "30px" }}>
+                add_circle
+              </CancelPresentationIcon>
+            </Button>
+          )}
+          <br></br>
           {showForm && <AddWorkForm setShowForm={setShowForm} />}
           <MyWorks />
         </TabPanel>
