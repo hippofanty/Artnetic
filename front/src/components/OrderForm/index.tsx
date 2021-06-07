@@ -1,7 +1,6 @@
 import { Form } from 'react-final-form';
 import {
 	TextField,
-	Checkboxes,
 	Radios,
 	Select,
 	DatePicker,
@@ -16,6 +15,8 @@ import {
 	CssBaseline,
 	MenuItem,
 	GridSize,
+  makeStyles,
+  Theme
 } from '@material-ui/core';
 
 import DateFnsUtils from '@date-io/date-fns';
@@ -23,7 +24,20 @@ import { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { rootState } from '../../redux/init';
 
-export const OrderForm = () => {
+interface OrderProps {
+  setPrice: number,
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+  sendButt: {
+    color: 'white',
+    backgroundColor: 'black',
+  }
+}));
+
+export const OrderForm = ({setPrice}: OrderProps) => {
+  const classes = useStyles();
+
   const getUsername = useSelector(
 		(state: rootState) => state.userState.user.username
 	);
@@ -32,7 +46,7 @@ export const OrderForm = () => {
 		(state: rootState) => state.userState.user.email
 	);
 
-  const getCategoryWorks = useSelector((state: rootState) => state.works?.works)
+  // const getCategoryWorks = useSelector((state: rootState) => state.works?.works)
 
   interface FormType {
     firstName?: string;
@@ -49,19 +63,19 @@ export const OrderForm = () => {
 		console.log('Hi');
 	};
 
-	const validate = (values: FormType) => {
-		const errors: FormType = {};
-		if (!values.firstName) {
-			errors.firstName = 'Required';
-		}
-		if (!values.lastName) {
-			errors.lastName = 'Required';
-		}
-		if (!values.email) {
-			errors.email = 'Required';
-		}
-		return errors;
-	};
+	// const validate = (values: FormType) => {
+	// 	const errors: FormType = {};
+	// 	if (!values.firstName) {
+	// 		errors.firstName = 'Required';
+	// 	}
+	// 	if (!values.lastName) {
+	// 		errors.lastName = 'Required';
+	// 	}
+	// 	if (!values.email) {
+	// 		errors.email = 'Required';
+	// 	}
+	// 	return errors;
+	// };
 
 
 	const formFields: CustomField[] = [
@@ -94,22 +108,6 @@ export const OrderForm = () => {
 			),
 		},
 		{
-			size: 8,
-			field: (
-				<Radios
-					label="Best Stooge"
-					name="stooge"
-					formControlProps={{ margin: 'none' }}
-					radioGroupProps={{ row: true }}
-					data={[
-						{ label: 'Larry', value: 'larry' },
-						{ label: 'Moe', value: 'moe' },
-						{ label: 'Curly', value: 'curly' },
-					]}
-				/>
-			),
-		},
-		{
 			size: 12,
 			field: <TextField name="notes" multiline label="Notes" margin="none" />,
 		},
@@ -121,9 +119,8 @@ export const OrderForm = () => {
 					label="Select a City"
 					formControlProps={{ margin: 'none' }}
 				>
-					<MenuItem value="London">London</MenuItem>
-					<MenuItem value="Paris">Paris</MenuItem>
-					<MenuItem value="Budapest">A city with a very long Name</MenuItem>
+					<MenuItem value="London">Moscow</MenuItem>
+					<MenuItem value="Paris">Saint-Petersburg</MenuItem>
 				</Select>
 			),
 		},
@@ -154,19 +151,14 @@ export const OrderForm = () => {
 	return (
 		<div style={{ padding: 16, margin: 'auto', maxWidth: 480 }}>
 			<CssBaseline />
-			<Typography variant="h5" align="center" component="h2" gutterBottom>
+			{/* <Typography variant="h5" align="center" component="h2" gutterBottom>
 				Форма заказа
 			</Typography>
 			<Typography paragraph>
 				<Link href="https://github.com/erikras/react-final-form#-react-final-form">
 					Read Docs
 				</Link>
-				. This example demonstrates using{' '}
-				<Link href="https://material-ui.com/demos/text-fields/">
-					Material-UI
-				</Link>{' '}
-				form controls.
-			</Typography>
+			</Typography> */}
 			<Form<FormType>
 				onSubmit={onSubmit}
 				// initialValues={{ employed: true, stooge: 'larry' }}
@@ -180,17 +172,15 @@ export const OrderForm = () => {
 										{item.field}
 									</Grid>
 								))}
-								<Grid item xs={12} style={{ marginTop: 16 }}></Grid>
-                <Grid item xs={12} style={{ marginTop: 16, textAlign: 'center'}}><span>Цена: 4500 руб</span></Grid>
-                <Grid item xs={12} style={{ marginTop: 16 }}></Grid>
+                {/* <Grid item xs={12} style={{ marginTop: 16, textAlign: 'center'}}><span>Цена: {setPrice} руб</span></Grid> */}
 								<Grid item xs={12} style={{ marginTop: 16 , display: 'flex'}} justify="center">
 									<Button
 										variant="contained"
-										color="primary"
 										type="submit"
+                    className={classes.sendButt}
 										disabled={submitting}
 									>
-										Отправить
+										Send
 									</Button>
 								</Grid>
 							</Grid>

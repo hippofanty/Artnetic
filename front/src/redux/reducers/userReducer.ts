@@ -18,6 +18,27 @@ export const userReducer = (
         user: action.payload,
         isAuth: false,
       }
+    case Types.SET_FAVOURITE_WORK:
+      return {
+        ...state,
+        favourites: action.payload,
+      }
+    case Types.ADD_FAVOURITE_WORK:
+      return {
+        ...state,
+        favourites: [...state.favourites, action.payload],
+      }
+    case Types.REMOVE_FAVOURITE_WORK:
+      const updatedWorks = state.favourites.filter(work => work._id !== action.payload)
+      return {
+        ...state,
+        favourites: updatedWorks,
+      }
+    case Types.UNSET_FAVOURITE_WORK:
+      return {
+        ...state,
+        favourites: action.payload,
+      }
     default:
       return state;
   }

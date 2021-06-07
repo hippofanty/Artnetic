@@ -1,76 +1,173 @@
-import { Container, makeStyles, Theme, Typography } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import {
+	Box,
+	Button,
+	IconButton,
+	makeStyles,
+	Theme,
+	Typography,
+} from '@material-ui/core';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { getOneWorkAC } from '../../redux/actionCreators/getOneWork';
-// import { OneWorkState } from '../../redux/init';
 import { rootState } from '../../redux/init';
+import { OrderForm } from '../OrderForm';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import {
+	addToFavouritesList,
+	removeFromFavouriteList,
+} from '../../redux/actionCreators/userActions';
 
 interface ParamType {
-  id: string;
+	id: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  header: {
-    textAlign: 'center',
-    fontSize: 40,
-  },
+	imageContainer: {
+		display: 'flex',
+		justifyContent: 'space-around',
+	},
 
-  imageContainer: {
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
-
-  image: {
-    maxWidth: 1000,
-    marginTop: 10,
-    marginBottom: 10,
-    marginRight: 'auto',
-    marginLeft: 'auto',
-  }
+	image: {
+		maxWidth: 440,
+		maxHeight: 440,
+		objectFit: 'contain',
+		margin: 'auto',
+	},
+	gridTitle: {
+		fontSize: 26,
+		marginTop: 20,
+		overflowWrap: 'break-word',
+	},
+	flexButt: {
+		display: 'flex',
+		justifyContent: 'center',
+	},
+	availButt: {
+		margin: '20px 0 10px',
+	},
 }));
 
 export const Work = () => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const oneWorkState = useSelector((state: rootState) => state.work.work);
+	const classes = useStyles();
+	const dispatch = useDispatch();
+	const oneWorkState = useSelector((state: rootState) => state.work.work);
+	const [showForm, setShowForm] = useState<boolean>(false);
+	const [isLiked, setLike] = useState<boolean>(false);
 
-  const { id } = useParams<ParamType>();
-  useEffect(() => {
-    dispatch(getOneWorkAC(id));
-  }, [id, dispatch]);
+	const userLoggedIn = useSelector(
+		(state: rootState) => state.userState.isAuth
+	);
 
-  return (
-    <Container>
-      <Typography color="textPrimary" align="center">
-        <h1>{oneWorkState.title}</h1>
-      </Typography>
-      <Typography color="textSecondary" align="center" component="p">
-        Категория работы:
-        <Link to={`/categories/${oneWorkState.category.name}`}>
-          {oneWorkState.category.name}
-        </Link>
-      </Typography>
-      <div className={classes.imageContainer}>
-        <img
-          className={classes.image}
-          src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"
-          alt="Иллюстрация работы"
-        />
-      </div>
-      <Typography className={classes.header} component="h2" paragraph={true}>
-        Описание работы
-      </Typography>
-      <Typography component="p" paragraph={true}>
-        {oneWorkState.description}
-      </Typography>
-      <Typography className={classes.header} component="h2" paragraph={true}>
-        Автор работы
-      </Typography>
-      <Typography color="primary" component="h3" paragraph={true}>
-        {oneWorkState.user.username}
-      </Typography>
-    </Container>
-  );
+	const getUserFavourites = useSelector(
+		(state: rootState) => state.userState.favourites
+	);
+
+	const addToFavouritesHandler = useCallback(
+		(id: string) => {
+			dispatch(addToFavouritesList(id));
+		},
+		[dispatch]
+	);
+
+	const { id } = useParams<ParamType>();
+
+	const checkFavouriteHandler = useCallback(() => {
+		const isIdExists = getUserFavourites.filter(
+			(item) => item._id === oneWorkState._id
+		);
+		console.log('ПРОВЕРКА АЙДИ ЛАЙКА', isIdExists);
+		if (isIdExists.length) {
+			setLike(true);
+		} else {
+			setLike(false);
+		}
+	}, [getUserFavourites, oneWorkState._id]);
+
+	useEffect(() => {
+		dispatch(getOneWorkAC(id));
+		checkFavouriteHandler();
+	}, [id, dispatch, checkFavouriteHandler]);
+
+	return (
+		<div style={{ width: '100%', padding: '75px 0' }}>
+			<Box display="flex" justifyContent="center">
+				<div className="item-grid">
+					<div className="image-grid">
+						<img
+							className={classes.image}
+							src={oneWorkState?.image}
+							alt="Иллюстрация работы"
+						/>
+					</div>
+					<div className="right-col-grid">
+
+						<Typography color="textPrimary">
+							<h1 className={classes.gridTitle}>{oneWorkState?.title}</h1>
+						</Typography>
+
+						<Typography variant="h6" gutterBottom>
+							Author: {oneWorkState.user?.username}
+						</Typography>
+
+						<div className="grid-price">
+							<Typography variant="h6" gutterBottom>
+								{oneWorkState?.price} RUB
+							</Typography>
+
+							{isLiked ? (
+								<IconButton
+									color="secondary"
+									aria-label="delete to fav list"
+									onClick={() => {
+										setLike(false);
+										dispatch(removeFromFavouriteList(oneWorkState._id));
+									}}
+								>
+									<FavoriteIcon />
+								</IconButton>
+							) : (
+								<IconButton
+									color="secondary"
+									aria-label="add from fav list"
+									onClick={() => {
+										setLike(true);
+										addToFavouritesHandler(oneWorkState._id);
+									}}
+								>
+									<FavoriteBorderIcon />
+								</IconButton>
+							)}
+						</div>
+
+						<div className={classes.flexButt}>
+							{userLoggedIn ? (
+								<Button
+									onClick={() => setShowForm((prev) => !prev)}
+									color="inherit"
+									variant="outlined"
+									className={classes.availButt}
+								>
+									Check Availability
+								</Button>
+							) : null}
+						</div>
+						{showForm ? <OrderForm setPrice={oneWorkState.price} /> : null}
+            
+					</div>
+
+					<div className="grid-context">
+						<Typography variant="h6" gutterBottom>
+							Описание работы
+						</Typography>
+						<Typography component="p" paragraph={true}>
+							{oneWorkState?.description}
+						</Typography>
+					</div>
+				</div>
+			</Box>
+		</div>
+	);
 };

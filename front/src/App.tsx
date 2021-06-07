@@ -1,14 +1,16 @@
-import { Container, CssBaseline } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Main } from './components/Main/Main';
-import Profile from './components/Profile/Profile';
-import { refreshUser } from './redux/actionCreators/userActions';
+import { getFavouriteWorksFromBd, refreshUser } from './redux/actionCreators/userActions';
+import { rootState } from './redux/init';
 
 function App() {
 	const dispatch = useDispatch();
+
+  const userId = useSelector((state: rootState) => state.userState.user?.id)
 
   const refreshToken = useCallback(async() => {
 		try {
@@ -17,19 +19,20 @@ function App() {
 			});
 			const result = await response.json();
 			const { id, username, email, role } = result.existedUser;
-			// const { token } = result; // либо result.token
+
 			dispatch(refreshUser(id, username, email, role));
+      dispatch(getFavouriteWorksFromBd(userId));
 		} catch (e) {
 			localStorage.removeItem('token');
 		}
-	}, [dispatch]);
+	}, [dispatch, userId]);
 
   useEffect(() => {
     refreshToken();
   }, [refreshToken])
 
 	return (
-		<div>
+		<div className="container__main">
 			<Header />
 
 			<React.Fragment>

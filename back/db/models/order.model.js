@@ -9,13 +9,6 @@ const Order = new Schema({
     type: String,
     required: true,
   },
-  price: {
-    type: Number,
-    required: true,
-  },
-  image: {
-    type: String,
-  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'Users',

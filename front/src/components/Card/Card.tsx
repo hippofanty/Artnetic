@@ -1,139 +1,232 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 import { Link } from 'react-router-dom';
+import { deleteWorkAC } from '../../redux/actionCreators/deleteWorkAC';
+import { useDispatch, useSelector } from 'react-redux';
+import { rootState } from '../../redux/init';
+import { Button } from '@material-ui/core';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
+//dialog
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      // maxWidth: 345,
-      // minWidth:340,
-      width: 320,
-      marginTop: 20,
-      marginRight: 15,
-      marginLeft: 15,
-      textDecoration: 'none',
-    },
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    avatar: {
-      backgroundColor: red[500],
-    },
-    link: {
-      textDecoration: 'none',
-      color: 'black',
-    },
-  })
+	createStyles({
+		root: {
+			// maxWidth: 345,
+			// minWidth:340,
+			width: 250,
+			height: 337,
+			textDecoration: 'none',
+		},
+		link: {
+			textDecoration: 'none',
+			color: 'black',
+		},
+		cardTitle: {
+			display: 'flex',
+			justifyContent: 'space-between',
+			flexDirection: 'column',
+			marginTop: '10px',
+			alignItems: 'center',
+		},
+		titlePadd: {
+			padding: '0 12px',
+		},
+		buttonsDeleteEdit: {
+			position: 'absolute',
+			top: '26%',
+			left: '83px',
+			zIndex: 10,
+		},
+		delete_edit: {},
+	})
 );
 
-interface CardProps {
-  id: string;
-  category: {
-    name: string;
-  };
-  description: string;
-  price: number;
-  title: string;
-  user: {
-    username: string;
-  };
+export interface CardProps {
+	id: string;
+	category: {
+		name: string;
+	};
+	image: string;
+	description: string;
+	price: number;
+	title: string;
+	user: {
+		_id: string;
+		role: string;
+		username: string;
+		email: string;
+		password: string;
+	};
 }
 
 export default function CardItem({
-  id,
-  category,
-  description,
-  price,
-  title,
-  user,
+	id,
+	category,
+	description,
+	price,
+	title,
+	image,
+	user,
 }: CardProps) {
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+	//dialog
+	const [open, setOpen] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
 
-  return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={<Link className={classes.link} to={`works/${id}`}>{title}</Link>}
-        subheader={category.name}
-      />
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {description}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Price: <b>{price}</b>
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>
-            Нужно ли выпадающее описание? {description}
-          </Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
-  );
+	const handleClose = () => {
+		setOpen(false);
+	};
+	const deleteIt = () => {
+		dispatch(deleteWorkAC(id));
+		setOpen(false);
+	};
+	//end of dialog
+
+	const classes = useStyles();
+	const dispatch = useDispatch();
+	const [isLiked, setLike] = useState<boolean>(false);
+	const [showButtons, setShowButtons] = useState<boolean>(false);
+	const getUserID = useSelector((state: rootState) => state.userState.user.id);
+
+	const getUserFavourites = useSelector(
+		(state: rootState) => state.userState.favourites
+	);
+
+	const checkFavouriteHandler = useCallback(() => {
+		const isIdExists = getUserFavourites.filter((item) => item._id === id);
+
+		if (isIdExists.length) {
+			setLike(true);
+		} else {
+			setLike(false);
+		}
+	}, [getUserFavourites, id]);
+
+	useEffect(() => {
+		checkFavouriteHandler();
+	}, [checkFavouriteHandler]);
+
+	return (
+		<>
+			<div className={classes.root}>
+				<div className="card-wrapper" style={{ position: 'relative' }}>
+					{user?._id === getUserID && showButtons && (
+						<div
+							className={classes.buttonsDeleteEdit}
+							onMouseEnter={() => setShowButtons(true)}
+							onMouseLeave={() => setShowButtons(false)}
+						>
+							<Button variant="contained" onClick={handleClickOpen}>
+								Delete
+							</Button>
+							<br />
+							<Button style={{ marginTop: '5px' }} variant="contained">
+								Edit
+							</Button>
+							<br></br>
+						</div>
+					)}
+					<Link className={classes.link} to={`/categories/works/${id}`}>
+						<div
+							className="card-image-wrapper"
+							style={{ position: 'relative' }}
+							onMouseEnter={() => setShowButtons(true)}
+							onMouseLeave={() => setShowButtons(false)}
+						>
+							<img src={image} alt={title} className="card-image" />
+						</div>
+						<div className={classes.cardTitle}>
+							<Typography variant="subtitle1">{title}</Typography>
+							{isLiked ? (
+								<IconButton
+									color="secondary"
+									aria-label="add to favorites"
+									className={classes.titlePadd}
+								>
+									<FavoriteIcon />
+								</IconButton>
+							) : (
+								<IconButton
+									// color="secondary"
+									aria-label="add to favorites"
+									className={classes.titlePadd}
+								>
+									<FavoriteBorderIcon />
+								</IconButton>
+							)}
+						</div>
+					</Link>
+				</div>
+			</div>
+			<div>
+				<Dialog
+					open={open}
+					onClose={handleClose}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+				>
+					<DialogTitle id="alert-dialog-title">
+						{"Use Google's location service?"}
+					</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="Are you sure you want to permanently delete the post?">
+							There will be no opportunity to return a post about your art!
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleClose} color="primary">
+							Cancel
+						</Button>
+						<Button onClick={deleteIt} color="primary" autoFocus>
+							Delete
+						</Button>
+					</DialogActions>
+				</Dialog>
+			</div>
+		</>
+	);
+
+	// return (
+	// 	<div className={classes.root}>
+	// 		<div className="card-wrapper">
+	// 			<Link className={classes.link} to={`/categories/works/${id}`}>
+	// 				<div className="card-image-wrapper">
+	// 					<img src={image} alt={title} className="card-image" />
+	// 				</div>
+	// 				<div className={classes.cardTitle}>
+	// 					<Typography variant="subtitle1">{title}</Typography>
+	// 					{isLiked ? (
+	// 						<IconButton
+	// 							color="secondary"
+	// 							aria-label="add to favorites"
+	// 							className={classes.titlePadd}
+	// 						>
+	// 							<FavoriteIcon />
+	// 						</IconButton>
+	// 					) : (
+	// 						<IconButton
+	// 							// color="secondary"
+	// 							aria-label="add to favorites"
+	// 							className={classes.titlePadd}
+	// 						>
+	// 							<FavoriteBorderIcon />
+	// 						</IconButton>
+	// 					)}
+	// 				</div>
+	// 			</Link>
+	// 		</div>
+	// 	</div>
+	// );
 }

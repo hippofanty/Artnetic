@@ -1,5 +1,4 @@
 import { Container, makeStyles, Theme } from '@material-ui/core';
-import { title } from 'process';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -18,9 +17,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     flexWrap: 'wrap',
-    margin: 15,
   },
 }));
 
@@ -36,16 +34,18 @@ export const Categories = () => {
   }, [category, dispatch]);
   return (
     <>
-      <h1 className={classes.header}>{category}</h1>
+      <h1 className={classes.header}>{category === 'all' ? 'All categories': category === 'fineArt' ? 'Fine art' : category}</h1>
       <Container className={classes.container}>
         {worksState.map((item) => (
           <CardItem
             id={item._id}
             category={item.category}
+            image={item.image}
             description={item.description}
             price={item.price}
             title={item.title}
             user={item.user}
+            key={item._id}
           />
         ))}
       </Container>

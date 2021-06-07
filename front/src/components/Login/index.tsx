@@ -7,10 +7,11 @@ import {
 	TextField,
 	Theme,
 } from '@material-ui/core';
-import React, { ReactNode, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {  useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { login } from '../../redux/actionCreators/userActions';
+import { getFavouriteWorksFromBd, login } from '../../redux/actionCreators/userActions';
+import { rootState } from '../../redux/init';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -46,12 +47,14 @@ export const Login = ({setModal}:Props) => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 
+  const userId = useSelector((state: rootState) => state.userState.user?.id);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const SubmitHandler = (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 		dispatch(login(email, password));
+    dispatch(getFavouriteWorksFromBd(userId));
     setModal();
 		history.push('/');
 	};
