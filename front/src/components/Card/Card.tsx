@@ -91,7 +91,7 @@ export default function CardItem({
   image,
   user,
 }: CardProps) {
-  console.log(id, category, description, price, title, image, user);
+
 
   //dialog
   const [open, setOpen] = React.useState(false);

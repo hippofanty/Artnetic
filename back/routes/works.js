@@ -20,10 +20,11 @@ router.get('/:id',async (req, res) => {
 
 router.post('/',async (req, res) => {
 	try {
-		console.log(req.body);
-    const user = await User.findOne({_id: req.body.data.user.id})
     const category = await Category.findOne({name: req.body.data.category})
+    let user = await User.findOne({_id: req.body.data.user.id})
     const w = await Work.create({title: req.body.data.title, description: req.body.data.description, price: req.body.data.price, image: req.body.data.image, user: user._id, category: category._id,})
+    user = await User.findOneAndUpdate({_id: req.body.data.user.id}, {$push: {works: w._id}})
+     
     const work = await Work.findOne({_id: w._id}).populate(['category', 'user']);
 		return res.status(200).json({ work});
 	} catch (error) {

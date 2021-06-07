@@ -8,6 +8,7 @@ import { Hero } from '../Hero';
 import { Container } from '@material-ui/core';
 import { Work } from "../Work/Work";
 import { MyFavourites } from '../Profile/myFavourites';
+import { Artists } from '../Artists/Artists';
 
 
 export const Main = () => {
@@ -19,6 +20,9 @@ export const Main = () => {
 					<AboutUsMain />
 				</Route>
 				<Container fixed>
+          <Route exact path="/artists">
+            <Artists />
+          </Route>
 					<Route exact path="/categories/:category">
 						<Categories />
 					</Route>

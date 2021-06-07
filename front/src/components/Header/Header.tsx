@@ -110,7 +110,7 @@ export const Header = () => {
 						<div className={classes.navRightSide}>
 							<DropdownCategories />
 							<DropdownAboutUs />
-							<Link to="#" className={classes.link}>
+							<Link to="/artists" className={classes.link}>
 								<Button size="large">Artists</Button>
 							</Link>
 
