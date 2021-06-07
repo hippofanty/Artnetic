@@ -7,7 +7,7 @@ import {
 	Theme,
 	Typography,
 } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,11 @@ import { getOneWorkAC } from '../../redux/actionCreators/getOneWork';
 import { rootState } from '../../redux/init';
 import { OrderForm } from '../OrderForm';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import { addToFavouritesList } from '../../redux/actionCreators/userActions';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import {
+	addToFavouritesList,
+	removeFromFavouriteList,
+} from '../../redux/actionCreators/userActions';
 
 interface ParamType {
 	id: string;
@@ -33,10 +37,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 		maxHeight: 440,
 		objectFit: 'contain',
 		margin: 'auto',
-		// marginTop: 10,
-		// marginBottom: 10,
-		// marginRight: 'auto',
-		// marginLeft: 'auto',
 	},
 	gridTitle: {
 		fontSize: 26,
@@ -57,21 +57,41 @@ export const Work = () => {
 	const dispatch = useDispatch();
 	const oneWorkState = useSelector((state: rootState) => state.work.work);
 	const [showForm, setShowForm] = useState<boolean>(false);
+	const [isLiked, setLike] = useState<boolean>(false);
 
 	const userLoggedIn = useSelector(
 		(state: rootState) => state.userState.isAuth
 	);
 
-	const getUserId = useSelector((state: rootState) => state.userState.user?.id);
+	const getUserFavourites = useSelector(
+		(state: rootState) => state.userState.favourites
+	);
 
-	const addToFavouritesHandler = (id: string, userId: string) => {
-		dispatch(addToFavouritesList(id, userId));
-	};
+	const addToFavouritesHandler = useCallback(
+		(id: string) => {
+			dispatch(addToFavouritesList(id));
+		},
+		[dispatch]
+	);
 
 	const { id } = useParams<ParamType>();
+
+	const checkFavouriteHandler = useCallback(() => {
+		const isIdExists = getUserFavourites.filter(
+			(item) => item._id === oneWorkState._id
+		);
+		console.log('ПРОВЕРКА АЙДИ ЛАЙКА', isIdExists);
+		if (isIdExists.length) {
+			setLike(true);
+		} else {
+			setLike(false);
+		}
+	}, [getUserFavourites, oneWorkState._id]);
+
 	useEffect(() => {
 		dispatch(getOneWorkAC(id));
-	}, [id, dispatch]);
+		checkFavouriteHandler();
+	}, [id, dispatch, checkFavouriteHandler]);
 
 	return (
 		<div style={{ width: '100%', padding: '75px 0' }}>
@@ -85,37 +105,43 @@ export const Work = () => {
 						/>
 					</div>
 					<div className="right-col-grid">
-						{/* <Typography color="textSecondary" align="center" component="p">
-							Категория работы:
-							<Link to={`/categories/${oneWorkState.category.name}`}>
-								{oneWorkState.category.name}
-							</Link>
-						</Typography> */}
 
 						<Typography color="textPrimary">
 							<h1 className={classes.gridTitle}>{oneWorkState.title}</h1>
 						</Typography>
 
-            <Typography variant="h6" gutterBottom>
-							Author: {oneWorkState.user.username}
+						<Typography variant="h6" gutterBottom>
+							Author: {oneWorkState.user?.username}
 						</Typography>
-						{/* <Typography color="primary" component="h3" paragraph={true}>
-							{oneWorkState.user.username}
-						</Typography> */}
 
 						<div className="grid-price">
 							<Typography variant="h6" gutterBottom>
 								{oneWorkState.price} RUB
 							</Typography>
-							<IconButton
-								color="secondary"
-								aria-label="add an alarm"
-								onClick={() =>
-									addToFavouritesHandler(oneWorkState._id, getUserId)
-								}
-							>
-								<FavoriteBorderIcon />
-							</IconButton>
+
+							{isLiked ? (
+								<IconButton
+									color="secondary"
+									aria-label="delete to fav list"
+									onClick={() => {
+										setLike(false);
+										dispatch(removeFromFavouriteList(oneWorkState._id));
+									}}
+								>
+									<FavoriteIcon />
+								</IconButton>
+							) : (
+								<IconButton
+									color="secondary"
+									aria-label="add from fav list"
+									onClick={() => {
+										setLike(true);
+										addToFavouritesHandler(oneWorkState._id);
+									}}
+								>
+									<FavoriteBorderIcon />
+								</IconButton>
+							)}
 						</div>
 
 						<div className={classes.flexButt}>
@@ -131,14 +157,7 @@ export const Work = () => {
 							) : null}
 						</div>
 						{showForm ? <OrderForm setPrice={oneWorkState.price} /> : null}
-
-						{/* <Typography variant="h6" gutterBottom>
-							Описание работы
-						</Typography>
-						<Typography component="p" paragraph={true}>
-							{oneWorkState.description}
-						</Typography> */}
-
+            
 					</div>
 
 					<div className="grid-context">

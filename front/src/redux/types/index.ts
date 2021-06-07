@@ -1,5 +1,5 @@
 // any types here
-import {  Work } from "../init";
+import {  Id, Work } from "../init";
 
 export enum Types {
   GET_CATEGORIES = "GET_CATEGORIES",
@@ -9,7 +9,9 @@ export enum Types {
   GET_MY_WORKS = 'GET_MY_WORKS',
   DELETE_WORK = 'DELETE_WORK',
   ADD_FAVOURITE_WORK = "ADD_FAVOURITE_WORK",
+  REMOVE_FAVOURITE_WORK = "REMOVE_FAVOURITE_WORK",
   SET_FAVOURITE_WORK = "SET_FAVOURITE_WORK",
+  UNSET_FAVOURITE_WORK = "UNSET_FAVOURITE_WORK",
 }
 
 export interface SetUserAction {
@@ -54,10 +56,20 @@ export interface addFavouriteWork {
   payload: Work;
 }
 
+export interface removeFavouriteWork {
+  type: Types.REMOVE_FAVOURITE_WORK;
+  payload: Id;
+}
 export interface setFavouriteWorks {
   type: Types.SET_FAVOURITE_WORK;
   payload: Work[];
 }
+
+export interface unsetFavouriteWorks {
+  type: Types.UNSET_FAVOURITE_WORK;
+  payload: Work[];
+}
+
 
 export type Actions =
   | getWorksAction
@@ -68,6 +80,8 @@ export type Actions =
   | deleteWorkAction
   | addFavouriteWork
   | setFavouriteWorks
+  | unsetFavouriteWorks
+  | removeFavouriteWork
 
 
 

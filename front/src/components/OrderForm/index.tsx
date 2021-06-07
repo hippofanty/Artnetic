@@ -180,7 +180,7 @@ export const OrderForm = ({setPrice}: OrderProps) => {
                     className={classes.sendButt}
 										disabled={submitting}
 									>
-										Отправить
+										Send
 									</Button>
 								</Grid>
 							</Grid>

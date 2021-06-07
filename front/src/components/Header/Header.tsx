@@ -10,14 +10,14 @@ import { Link, useHistory } from 'react-router-dom';
 import DropdownCategories from './DropdownCategories';
 import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from '../../redux/init';
-import { logout } from '../../redux/actionCreators/userActions';
+import { logout, logoutFavouriteWorks } from '../../redux/actionCreators/userActions';
 
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 import { ModalDialog } from '../ModalDialog/index';
 import { Container } from '@material-ui/core';
 import DropdownAboutUs from './DropdownAboutUs';
 import DropdownProfileIcon from './DropdownProfileIcon';
-import ArtLogo from '/ArtneticLogo.png';
+import ArtLogo from './header_logo/ArtneticLogo.png';
 import { FavouriteIcon } from './favouritesIcon';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -66,6 +66,7 @@ export const Header = () => {
 
 	const logoutHandler = () => {
 		dispatch(logout());
+    dispatch(logoutFavouriteWorks());
 		localStorage.removeItem('token');
 		history.push('/');
 	};
@@ -100,7 +101,7 @@ export const Header = () => {
 								>
 									<img
 										alt="ArtneticLogo"
-										src="./ArtneticLogo.png"
+										src={ArtLogo}
 										className={classes.logo}
 									/>
 								</IconButton>

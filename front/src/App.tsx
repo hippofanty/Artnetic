@@ -19,7 +19,7 @@ function App() {
 			});
 			const result = await response.json();
 			const { id, username, email, role } = result.existedUser;
-			// const { token } = result; // либо result.token
+
 			dispatch(refreshUser(id, username, email, role));
       dispatch(getFavouriteWorksFromBd(userId));
 		} catch (e) {

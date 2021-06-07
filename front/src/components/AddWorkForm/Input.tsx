@@ -1,16 +1,22 @@
-import React, { forwardRef } from "react";
-import TextField from "@material-ui/core/TextField";
+import React, { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
+import TextField from '@material-ui/core/TextField';
 
-export const Input = forwardRef((props, ref) => {
-  return (
-    <>
-      <TextField 
-        id="outlined-basic"
-        variant="outlined"
-        inputRef={ref}
-        {...props}
-      />
-    </>
-  );
+interface InputProps {
+	children?: ReactNode;
+	className: string;
+	label: string;
+	type?: string;
+}
+
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+	return (
+		<>
+			<TextField
+				id="outlined-basic"
+				variant="outlined"
+				inputRef={ref}
+				{...props}
+			/>
+		</>
+	);
 });
-

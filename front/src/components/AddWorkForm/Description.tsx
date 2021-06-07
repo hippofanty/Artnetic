@@ -2,7 +2,11 @@
 import React, { forwardRef } from "react";
 import TextField from "@material-ui/core/TextField";
 
-export const Description = forwardRef((props, ref) => {
+interface DescriptionProps {
+  className: string,
+}
+
+export const Description = forwardRef<HTMLInputElement, DescriptionProps>((props, ref) => {
   return (
     <>
       <TextField 
