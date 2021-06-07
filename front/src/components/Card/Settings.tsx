@@ -30,8 +30,8 @@ interface SettingsProps {
 
 export function Settings({ ...props }: SettingsProps) {
   const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const getUserID = useSelector((state: rootState) => state.userState.user.id);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };

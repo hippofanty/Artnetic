@@ -19,11 +19,20 @@ export interface Work {
     password: string;
   };
 }
+export interface Artist {
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  favourites?: [];
+  role?: string;
+}
+
 export interface User {
-  id: string,
-  email: string,
-  username: string,
-  role: string,
+  id: string;
+  email: string;
+  username: string;
+  role: string;
 }
 // export interface State {
 //   works: Work[];
@@ -48,6 +57,9 @@ export interface MyWorksState {
 export interface OneWorkState {
   work: Work;
 }
+export interface ArtistsState {
+  artists: Artist[];
+}
 
 // тип для просмотра полей стора в useSelector()
 // export interface rootState {
@@ -59,14 +71,15 @@ export interface rootState {
   userState: UserState;
   work: OneWorkState;
   myWorks: MyWorksState;
+  artists: ArtistsState;
 }
 
 export const initialUserState = {
   user: {
-    id: '',
-    email: '',
-    username: '',
-    role: '',
+    id: "",
+    email: "",
+    username: "",
+    role: "",
   },
   isAuth: false,
   favourites: [],
@@ -74,10 +87,13 @@ export const initialUserState = {
   // orders: [],
   // works: [],
   // loader: true,
-}
+};
 
 export const initialStateCategories = {
   works: [],
+};
+export const initialStateArtists = {
+  artists: [],
 };
 export const initialStateMyWorks = {
   myWorks: [],
@@ -85,20 +101,20 @@ export const initialStateMyWorks = {
 
 export const initialStateWork = {
   work: {
-    _id: '',
-    title: '',
-    description: '',
+    _id: "",
+    title: "",
+    description: "",
     category: {
-      name: '',
+      name: "",
     },
     price: 0,
-    image: '',
+    image: "",
     user: {
       _id: "",
-      role: '',
-      username: '',
-      email: '',
-      password: '',
+      role: "",
+      username: "",
+      email: "",
+      password: "",
     },
   },
-}
+};

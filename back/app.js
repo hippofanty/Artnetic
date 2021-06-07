@@ -12,6 +12,7 @@ const categoryRouter = require('./routes/category');
 const worksRouter = require('./routes/works');
 const authRouter = require('./routes/auth');
 const favouritesRouter = require('./routes/favourites');
+const artistsRouter = require('./routes/artists');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
@@ -23,6 +24,7 @@ app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/works', worksRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/favourites', favouritesRouter);
+app.use('/api/v1/artists', artistsRouter);
 
 dbConnect();
 

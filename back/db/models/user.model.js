@@ -23,7 +23,15 @@ const User = new Schema({
       // type: String,
     type: Schema.Types.ObjectId,
     ref: 'Works',
-  }
+  },
+  
+],
+  works: [
+    {
+    type: Schema.Types.ObjectId,
+    ref: 'Works',
+  },
+  
 ]
 });
 

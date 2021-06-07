@@ -1,39 +1,39 @@
 // any types here
-import {  Work } from "../init";
+import { Work, Artist } from "../init";
 
 export enum Types {
   GET_CATEGORIES = "GET_CATEGORIES",
-  SET_USER = 'SET_USER',
-  UNSET_USER = 'UNSET_USER',
+  SET_USER = "SET_USER",
+  UNSET_USER = "UNSET_USER",
   GET_WORK = "GET_WORK",
-  GET_MY_WORKS = 'GET_MY_WORKS',
-  DELETE_WORK = 'DELETE_WORK',
+  GET_MY_WORKS = "GET_MY_WORKS",
+  DELETE_WORK = "DELETE_WORK",
 
-  ADD_MY_WORK = 'ADD_MY_WORK',
+  ADD_MY_WORK = "ADD_MY_WORK",
 
   ADD_FAVOURITE_WORK = "ADD_FAVOURITE_WORK",
   SET_FAVOURITE_WORK = "SET_FAVOURITE_WORK",
-
+  GET_ARTISTS = 'GET_ARTISTS',
 }
 
 export interface SetUserAction {
   type: Types.SET_USER;
   payload: {
-    id: string,
-    email: string,
-    username: string,
-    role: string,
+    id: string;
+    email: string;
+    username: string;
+    role: string;
   };
 }
 
 export interface UnsetUserAction {
   type: Types.UNSET_USER;
   payload: {
-    id: string,
-    email: string,
-    username: string,
-    role:string,
-  }
+    id: string;
+    email: string;
+    username: string;
+    role: string;
+  };
 }
 export interface getWorksAction {
   type: Types.GET_CATEGORIES;
@@ -66,6 +66,10 @@ export interface setFavouriteWorks {
   type: Types.SET_FAVOURITE_WORK;
   payload: Work[];
 }
+export interface getArtistsAction {
+  type: Types.GET_ARTISTS;
+  payload: Artist[];
+}
 
 export type Actions =
   | getWorksAction
@@ -74,18 +78,11 @@ export type Actions =
   | getOneWorkAction
   | getMyWorksAction
   | deleteWorkAction
-
   | addMyWorkAction
-
   | addFavouriteWork
   | setFavouriteWorks
+  | getArtistsAction;
 
-
-
-
-
-
-  
 /*import { Id, Todo } from "../init";
 
 export enum Types {

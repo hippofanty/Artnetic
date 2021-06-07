@@ -80,7 +80,7 @@ export const Work = () => {
 					<div className="image-grid">
 						<img
 							className={classes.image}
-							src={oneWorkState.image}
+							src={oneWorkState?.image}
 							alt="Иллюстрация работы"
 						/>
 					</div>
@@ -93,11 +93,11 @@ export const Work = () => {
 						</Typography> */}
 
 						<Typography color="textPrimary">
-							<h1 className={classes.gridTitle}>{oneWorkState.title}</h1>
+							<h1 className={classes.gridTitle}>{oneWorkState?.title}</h1>
 						</Typography>
 
             <Typography variant="h6" gutterBottom>
-							Author: {oneWorkState.user.username}
+							Author: {oneWorkState?.user?.username}
 						</Typography>
 						{/* <Typography color="primary" component="h3" paragraph={true}>
 							{oneWorkState.user.username}
@@ -105,13 +105,13 @@ export const Work = () => {
 
 						<div className="grid-price">
 							<Typography variant="h6" gutterBottom>
-								{oneWorkState.price} RUB
+								{oneWorkState?.price} RUB
 							</Typography>
 							<IconButton
 								color="secondary"
 								aria-label="add an alarm"
 								onClick={() =>
-									addToFavouritesHandler(oneWorkState._id, getUserId)
+									addToFavouritesHandler(oneWorkState?._id, getUserId)
 								}
 							>
 								<FavoriteBorderIcon />
@@ -130,7 +130,7 @@ export const Work = () => {
 								</Button>
 							) : null}
 						</div>
-						{showForm ? <OrderForm setPrice={oneWorkState.price} /> : null}
+						{showForm ? <OrderForm setPrice={oneWorkState?.price} /> : null}
 
 						{/* <Typography variant="h6" gutterBottom>
 							Описание работы
@@ -146,7 +146,7 @@ export const Work = () => {
 							Описание работы
 						</Typography>
 						<Typography component="p" paragraph={true}>
-							{oneWorkState.description}
+							{oneWorkState?.description}
 						</Typography>
 					</div>
 				</div>
