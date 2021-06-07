@@ -15,6 +15,11 @@ export const myWorksReducer = ( state: MyWorksState = initialStateMyWorks, actio
         ...state,
         myWorks: updatedWorks,
       }
+      case Types.ADD_MY_WORK:
+        return {
+          ...state,
+          myWorks: [...state.myWorks, action.payload]
+        }
     default:
       return state;
   }

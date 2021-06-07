@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "./Input";
 import { MyButton } from "./MyButton";
 import * as yup from "yup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../redux/init";
 import { MySelect } from "./Select";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -12,6 +12,7 @@ import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 import Divider from '@material-ui/core/Divider';
 import { useState } from "react";
 import DoneAllIcon from '@material-ui/icons/DoneAll';
+import { addMyWorkAC } from "../../redux/actionCreators/addMyWork";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,7 +62,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Inputs = {
-  nameDisabled: undefined;
   title: string;
   description: string;
   price: string;
@@ -88,6 +88,7 @@ export function AddWorkForm({ setShowForm }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   
   const classes = useStyles();
+  const dispatch = useDispatch();
   const user = useSelector((state: rootState) => state.userState.user);
   let url = "";
 
@@ -105,16 +106,13 @@ export function AddWorkForm({ setShowForm }: Props) {
     setLoading(true)
     const formData = new FormData();
     if (data.image) {
-      console.log(data.image, "dataimage");
+  
 
       //@ts-ignore
       formData.append("file", data.image[0]);
 
       formData.append("upload_preset", "ewojqqyg");
 
-      console.log(formData, "formData2");
-      // formData.append("cloud_name", "dcvhz3sqn");
-      // console.log(formData, 'formDat3');
 
       const response = await fetch(
         "https://api.cloudinary.com/v1_1/dcvhz3sqn/image/upload",
@@ -125,14 +123,14 @@ export function AddWorkForm({ setShowForm }: Props) {
         }
       );
       const result = await response.json();
-      console.log(result, result.url, "result");
+
       url = result.url;
     }
     data.user = user;
 
     data.image = url;
 
-    fetch("/api/v1/works", {
+    const addWork = await fetch("/api/v1/works", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -141,9 +139,11 @@ export function AddWorkForm({ setShowForm }: Props) {
         data,
       }),
     });
-
+    const res = await addWork.json();
+    console.log(res.work, 'resworkkkkkkk');
+    
+    dispatch(addMyWorkAC(res.work))
     setShowForm(false);
-   
   };
 
   return (
