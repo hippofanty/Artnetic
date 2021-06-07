@@ -10,6 +10,7 @@ const cors = require('cors');
 
 const categoryRouter = require('./routes/category');
 const authRouter = require('./routes/auth');
+const searchRouter = require('./routes/search');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +20,7 @@ app.use(logger('dev'));
 
 app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/search', searchRouter)
 
 dbConnect();
 
