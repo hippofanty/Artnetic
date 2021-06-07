@@ -8,6 +8,7 @@ export enum Types {
   GET_WORK = "GET_WORK",
   GET_MY_WORKS = 'GET_MY_WORKS',
   DELETE_WORK = 'DELETE_WORK',
+  ADD_MY_WORK = 'ADD_MY_WORK',
 }
 
 export interface SetUserAction {
@@ -37,6 +38,10 @@ export interface getMyWorksAction {
   type: Types.GET_MY_WORKS;
   payload: Work[];
 }
+export interface addMyWorkAction {
+  type: Types.ADD_MY_WORK;
+  payload: Work;
+}
 
 export interface getOneWorkAction {
   type: Types.GET_WORK;
@@ -54,6 +59,7 @@ export type Actions =
   | getOneWorkAction
   | getMyWorksAction
   | deleteWorkAction
+  | addMyWorkAction
 
 
 
