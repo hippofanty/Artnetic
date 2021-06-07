@@ -150,7 +150,7 @@ export function AddWorkForm({ setShowForm }: Props) {
     <>
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" style={{marginBottom: '15px'}}>
         <div className={classes.formDiv}>
-          {/* <div className={classes.titlePrice}>
+          <div className={classes.titlePrice}>
             <Input
               label="title"
               {...register("title", { required: true })}
@@ -208,7 +208,7 @@ export function AddWorkForm({ setShowForm }: Props) {
               </span>
               {uploaded && <DoneAllIcon />}
             </div>
-          </label> */}
+          </label>
 
           <br></br>
           <MyButton type="submit" className={classes.fileUploadBtn} loading={loading}/>

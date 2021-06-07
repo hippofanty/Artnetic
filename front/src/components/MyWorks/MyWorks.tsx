@@ -1,11 +1,13 @@
 import { Container, makeStyles, Theme } from "@material-ui/core";
-import { useEffect } from "react";
+import { relative } from "path";
+import { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteWorkAC } from "../../redux/actionCreators/deleteWorkAC";
 
 import { getMyWorksAC } from "../../redux/actionCreators/getMyWorksAC";
 import { rootState } from "../../redux/init";
 import CardItem from "../Card/Card";
-
 
 const useStyles = makeStyles((theme: Theme) => ({
   header: {
@@ -19,14 +21,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexWrap: "wrap",
     margin: 15,
   },
+
 }));
 
 export const MyWorks = () => {
   const classes = useStyles();
+
   const dispatch = useDispatch();
 
   const getUserID = useSelector((state: rootState) => state.userState.user.id);
-  const myWorksState = useSelector((state: rootState) => state.myWorks.myWorks);  
+  const myWorksState = useSelector((state: rootState) => state.myWorks.myWorks);
 
   useEffect(() => {
     dispatch(getMyWorksAC(getUserID));
@@ -39,15 +43,17 @@ export const MyWorks = () => {
       ) : (
         <Container className={classes.container}>
           {myWorksState.map((item) => (
-            <CardItem
-              id={item._id}
-              category={item.category}
-              image={item.image}
-              description={item.description}
-              price={item.price}
-              title={item.title}
-              user={item.user}
-            />
+
+              <CardItem
+                id={item._id}
+                category={item.category}
+                image={item.image}
+                description={item.description}
+                price={item.price}
+                title={item.title}
+                user={item.user}
+              />
+
           ))}
         </Container>
       )}
