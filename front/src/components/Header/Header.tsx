@@ -17,7 +17,7 @@ import { ModalDialog } from '../ModalDialog/index';
 import { Container } from '@material-ui/core';
 import DropdownAboutUs from './DropdownAboutUs';
 import DropdownProfileIcon from './DropdownProfileIcon';
-import ArtLogo from '/ArtneticLogo.png';
+import ArtLogo from './ArtneticLogo.png';
 import { FavouriteIcon } from './favouritesIcon';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -100,7 +100,7 @@ export const Header = () => {
 								>
 									<img
 										alt="ArtneticLogo"
-										src="./ArtneticLogo.png"
+										src={ArtLogo}
 										className={classes.logo}
 									/>
 								</IconButton>

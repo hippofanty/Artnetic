@@ -19,6 +19,14 @@ import { Link } from "react-router-dom";
 import { deleteWorkAC } from "../../redux/actionCreators/deleteWorkAC";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../redux/init";
+import { Button } from "@material-ui/core";
+//dialog
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,9 +57,10 @@ const useStyles = makeStyles((theme: Theme) =>
     buttonsDeleteEdit: {
       position: "absolute",
       top: "26%",
-      left: "95px",
+      left: "83px",
       zIndex: 10,
     },
+    delete_edit: {},
   })
 );
 
@@ -82,62 +91,98 @@ export default function CardItem({
   image,
   user,
 }: CardProps) {
-  console.log(
-    id,
-    category,
-    description,
-    price,
-    title,
-    image,
-    user,
-    "uuuuuuuuuuer last"
-  );
+  console.log(id, category, description, price, title, image, user);
+
+  //dialog
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const deleteIt = () => {
+    dispatch(deleteWorkAC(id));
+    setOpen(false);
+  };
+  //end of dialog
 
   const classes = useStyles();
   const dispatch = useDispatch();
   const [showButtons, setShowButtons] = useState<boolean>(false);
   const getUserID = useSelector((state: rootState) => state.userState.user.id);
   return (
-    <div className={classes.root}>
-      <div className="card-wrapper" style={{ position: "relative" }}>
-        {user._id === getUserID && showButtons && (
-          <div
-            className={classes.buttonsDeleteEdit}
-            onMouseEnter={() => setShowButtons(true)}
-            onMouseLeave={() => setShowButtons(false)}
-          >
-            <button
-              onClick={(event) => {
-                event.stopPropagation();
-                dispatch(deleteWorkAC(id));
-              }}
+    <>
+      <div className={classes.root}>
+        <div className="card-wrapper" style={{ position: "relative" }}>
+          {user?._id === getUserID && showButtons && (
+            <div
+              className={classes.buttonsDeleteEdit}
+              onMouseEnter={() => setShowButtons(true)}
+              onMouseLeave={() => setShowButtons(false)}
             >
-              delete
-            </button>
-            <br></br>
-            <button onClick={() => dispatch(deleteWorkAC(id))}>edit</button>
-          </div>
-        )}
-        <Link className={classes.link} to={`/categories/works/${id}`}>
-          <div
-            className="card-image-wrapper"
-            style={{ position: "relative" }}
-            onMouseEnter={() => setShowButtons(true)}
-            onMouseLeave={() => setShowButtons(false)}
-          >
-            <img src={image} alt={title} className="card-image" />
-          </div>
-          <div className={classes.cardTitle}>
-            <Typography variant="subtitle1">{title}</Typography>
-            <IconButton
-              aria-label="add to favorites"
-              className={classes.titlePadd}
+              <Button
+                variant="contained"
+                onClick={handleClickOpen}
+
+              >
+                Delete
+              </Button>
+              <br />
+              <Button style={{ marginTop: "5px" }} variant="contained">
+                Edit
+              </Button>
+              <br></br>
+            </div>
+          )}
+          <Link className={classes.link} to={`/categories/works/${id}`}>
+            <div
+              className="card-image-wrapper"
+              style={{ position: "relative" }}
+              onMouseEnter={() => setShowButtons(true)}
+              onMouseLeave={() => setShowButtons(false)}
             >
-              <FavoriteIcon />
-            </IconButton>
-          </div>
-        </Link>
+              <img src={image} alt={title} className="card-image" />
+            </div>
+            <div className={classes.cardTitle}>
+              <Typography variant="subtitle1">{title}</Typography>
+              <IconButton
+                aria-label="add to favorites"
+                className={classes.titlePadd}
+              >
+                <FavoriteIcon />
+              </IconButton>
+            </div>
+          </Link>
+        </div>
       </div>
-    </div>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Use Google's location service?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="Are you sure you want to permanently delete the post?">
+            There will be no opportunity to return a post about your art!
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={deleteIt} color="primary" autoFocus>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </>
   );
 }

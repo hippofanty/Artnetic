@@ -206,7 +206,7 @@ export function AddWorkForm({ setShowForm }: Props) {
               >
                 Upload photo
               </span>
-              {uploaded && <DoneAllIcon />}
+              {' '}{uploaded && <DoneAllIcon />}
             </div>
           </label>
 
