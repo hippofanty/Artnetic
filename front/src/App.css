@@ -2,30 +2,109 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Unica+One&display=swap');
 
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+	height: 40vmin;
+	pointer-events: none;
 }
 
 .App-link {
-  color: #61dafb;
+	color: #61dafb;
 }
 
 .font-80 {
-  font-size: 80px;
+	font-size: 80px;
 }
 
 .unica-one {
-  font-family: 'Unica One', cursive;
+	font-family: 'Unica One', cursive;
 }
 
 .main-subtitle {
-  font-family: 'Nanum Pen Script', cursive;
+	font-family: 'Nanum Pen Script', cursive;
 }
 
 .body {
-  color: black;
+	color: black;
+}
+
+.container__main {
+	background-color: #fff;
+  min-height: 100vh;
+}
+
+.item-grid {
+	display: grid;
+	max-width: 920px;
+	min-height: 825px;
+	grid-template-columns: 460px 300px;
+	column-gap: 50px;
+	grid-template-areas:
+		'left right'
+		'footer right'
+		'edit right';
+	padding: 40px 55px;
+	clear: both;
+}
+
+.image-grid {
+	grid-area: left / left / left / left;
+	max-height: 550px;
+	max-width: 460px;
+	display: flex;
+	flex-direction: column;
+	-webkit-box-pack: center;
+	justify-content: center;
+}
+
+.right-col-grid {
+	grid-area: right / right / right / right;
+}
+
+.transform-title-grid {
+	text-transform: var(--headerFontTextTransform);
+}
+
+.grid-price {
+	display: flex;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.my-fav-wrapper {
+	/* width: 1350px;
+  height: 350px; */
+	max-width: 1350px;
+	overflow: hidden;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.card-wrapper {
+	padding: 15px;
+	border-radius: 8px;
+	height: 100%;
+	width: inherit;
+}
+
+.card-image-wrapper {
+	height: calc(100% - 88px);
+}
+
+.card-image {
+	height: 100%;
+	width: 100%;
+	border-radius: 4px;
+	-webkit-object-fit: contain;
+	object-fit: contain;
+}
+
+.grid-context {
+  grid-area: footer / footer / footer / footer;
+  min-height: 195px;
 }

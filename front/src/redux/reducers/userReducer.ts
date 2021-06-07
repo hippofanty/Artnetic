@@ -18,6 +18,16 @@ export const userReducer = (
         user: action.payload,
         isAuth: false,
       }
+    case Types.SET_FAVOURITE_WORK:
+      return {
+        ...state,
+        favourites: action.payload,
+      }
+    case Types.ADD_FAVOURITE_WORK:
+      return {
+        ...state,
+        favourites: [...state.favourites, action.payload],
+      }
     default:
       return state;
   }

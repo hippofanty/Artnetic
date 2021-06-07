@@ -80,14 +80,14 @@ export function AddWorkForm() {
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <Grid container alignItems="flex-start" justify="center" spacing={2}>
 
-          <Input label="title" {...register("title", { required: true })} />
+          <Input  {...register("title", { required: true })} />
           <Input
-            label="description"
+            // label="description"
             {...register("description", { required: true })}
           />
           <Input
-            type="number"
-            label="price"
+            // type="number"
+            // label="price"
             {...register("price", { required: true })}
           />
           <MySelect

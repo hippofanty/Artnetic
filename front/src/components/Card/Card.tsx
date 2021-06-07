@@ -18,122 +18,77 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      // maxWidth: 345,
-      // minWidth:340,
-      width: 320,
-      marginTop: 20,
-      marginRight: 15,
-      marginLeft: 15,
-      textDecoration: 'none',
+	createStyles({
+		root: {
+			// maxWidth: 345,
+			// minWidth:340,
+			width: 250,
+			height: 337,
+			// marginTop: 20,
+			// marginRight: 15,
+			// marginLeft: 15,
+			textDecoration: 'none',
+		},
+		link: {
+			textDecoration: 'none',
+			color: 'black',
+		},
+    cardTitle: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      flexDirection: 'column',
+      marginTop: '10px',
+      alignItems: 'center',
     },
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    avatar: {
-      backgroundColor: red[500],
-    },
-    link: {
-      textDecoration: 'none',
-      color: 'black',
-    },
-  })
+    titlePadd: {
+      padding: '0 12px',
+    }
+	})
 );
 
 interface CardProps {
-  id: string;
-  category: {
-    name: string;
-  };
-  description: string;
-  price: number;
-  title: string;
-  user: {
-    username: string;
-  };
+	id: string;
+	category: {
+		name: string;
+	};
+	description: string;
+	price: number;
+	title: string;
+	image: string;
+	user: {
+		username: string;
+	};
 }
 
 export default function CardItem({
-  id,
-  category,
-  description,
-  price,
-  title,
-  user,
+	id,
+	category,
+	description,
+	price,
+	title,
+	image,
+	user,
 }: CardProps) {
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+	const classes = useStyles();
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-  console.log(category);
-  return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={<Link className={classes.link} to={`works/${id}`}>{title}</Link>}
-        subheader={category.name}
-      />
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {description}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Price: <b>{price}</b>
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>
-            Нужно ли выпадающее описание? {description}
-          </Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
-  );
+	console.log(category);
+	return (
+		<div className={classes.root}>
+			<div className="card-wrapper">
+				<Link className={classes.link} to={`/categories/works/${id}`}>
+					<div className="card-image-wrapper">
+						<img src={image} alt={title} className="card-image" />
+					</div>
+					<div className={classes.cardTitle}>
+						<Typography variant="subtitle1">
+							{title}
+						</Typography>
+						<IconButton aria-label="add to favorites" className={classes.titlePadd}>
+							<FavoriteIcon />
+						</IconButton>
+					</div>
+				</Link>
+			</div>
+		</div>
+	);
 }

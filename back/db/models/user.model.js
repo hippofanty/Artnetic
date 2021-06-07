@@ -17,7 +17,14 @@ const User = new Schema({
   role: {
     type: String,
     default: 'Guest',
+  },
+  favourites: [
+    {
+      // type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Works',
   }
+]
 });
 
 module.exports = model('Users', User);

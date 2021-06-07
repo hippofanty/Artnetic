@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Categories } from '../Categories/Categories';
 import { AboutUsMain } from '../AboutUsMain/AboutUsMain';
@@ -8,6 +7,8 @@ import Profile from '../Profile/Profile';
 import { Hero } from '../Hero';
 import { Container } from '@material-ui/core';
 import { Work } from "../Work/Work";
+import { MyFavourites } from '../Profile/myFavourites';
+
 
 export const Main = () => {
 	return (
@@ -21,14 +22,11 @@ export const Main = () => {
 					<Route exact path="/categories/:category">
 						<Categories />
 					</Route>
-					{/* <Route exact path="/login">
-						<Login />
-					</Route> */}
-					{/* <Route exact path="/signup">
-						<Signup />
-					</Route> */}
 					<Route exact path="/profile">
 						<Profile />
+					</Route>
+          <Route exact path="/profile/favourites">
+						<MyFavourites />
 					</Route>
           <Route exact path="/categories/works/:id">
             <Work />

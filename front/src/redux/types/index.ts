@@ -6,6 +6,8 @@ export enum Types {
   SET_USER = 'SET_USER',
   UNSET_USER = 'UNSET_USER',
   GET_WORK = "GET_WORK",
+  ADD_FAVOURITE_WORK = "ADD_FAVOURITE_WORK",
+  SET_FAVOURITE_WORK = "SET_FAVOURITE_WORK",
 }
 
 export interface SetUserAction {
@@ -37,11 +39,23 @@ export interface getOneWorkAction {
   payload: Work;
 }
 
+export interface addFavouriteWork {
+  type: Types.ADD_FAVOURITE_WORK;
+  payload: Work;
+}
+
+export interface setFavouriteWorks {
+  type: Types.SET_FAVOURITE_WORK;
+  payload: Work[];
+}
+
 export type Actions =
   | getWorksAction
   | SetUserAction
   | UnsetUserAction
   | getOneWorkAction
+  | addFavouriteWork
+  | setFavouriteWorks
 
 
 

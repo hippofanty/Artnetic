@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useHistory } from 'react-router-dom';
 import DropdownCategories from './DropdownCategories';
 import { useDispatch, useSelector } from 'react-redux';
-import { rootState} from '../../redux/init';
+import { rootState } from '../../redux/init';
 import { logout } from '../../redux/actionCreators/userActions';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -19,6 +19,7 @@ import { Container } from '@material-ui/core';
 import DropdownAboutUs from './DropdownAboutUs';
 import DropdownProfileIcon from './DropdownProfileIcon';
 import ArtLogo from '/ArtneticLogo.png';
+import { FavouriteIcon } from './favouritesIcon';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -26,15 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
 			flexGrow: 1,
 		},
 		navbar: {
-			backgroundColor: '#fafafa',
+			backgroundColor: '#fff',
+      boxShadow: 'none',
 		},
 		menuButton: {
 			marginRight: theme.spacing(2),
-		},
-		title: {
-			flexGrow: 1,
-			fontFamily: 'Allura',
-			fontSize: '32px',
 		},
 		navTextColor: {
 			color: '#000000',
@@ -120,23 +117,16 @@ export const Header = () => {
 
 							{userLoggedIn ? (
 								<>
+									<Link to="/profile/favourites" className={classes.link}>
+                  <IconButton aria-label="my-favourites">
+											<FavouriteIcon />
+										</IconButton>
+									</Link>
+
 									<DropdownProfileIcon
 										logoutHandler={() => logoutHandler()}
 										getUsername={getUsername}
 									/>
-									{/* <Link to="/profile" className={classes.link}>
-										<Button startIcon={<AccountCircleIcon />}>
-											{getUsername}
-										</Button>
-									</Link>
-									<IconButton
-										color="inherit"
-										size="medium"
-										aria-label="logout"
-										onClick={() => logoutHandler()}
-									>
-										<ExitToAppOutlinedIcon />
-									</IconButton> */}
 								</>
 							) : (
 								<>

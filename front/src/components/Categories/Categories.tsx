@@ -18,9 +18,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     flexWrap: 'wrap',
-    margin: 15,
   },
 }));
 
@@ -46,6 +45,8 @@ export const Categories = () => {
             price={item.price}
             title={item.title}
             user={item.user}
+            image={item.image}
+            key={item._id}
           />
         ))}
       </Container>
