@@ -8,6 +8,7 @@ export const workReducer = ( state: OneWorkState = initialStateWork, action: Act
       return {
         work: action.payload
       };
+
     default:
       return state;
   }
