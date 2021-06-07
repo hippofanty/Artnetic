@@ -24,7 +24,6 @@ export interface User {
   email: string,
   username: string,
   role: string,
-  // token: string,
 }
 // export interface State {
 //   works: Work[];
@@ -36,6 +35,7 @@ export interface User {
 export interface UserState {
   user: User;
   isAuth: boolean;
+  favourites: Work[];
 }
 export interface WorksState {
   works: Work[];
@@ -69,6 +69,7 @@ export const initialUserState = {
     role: '',
   },
   isAuth: false,
+  favourites: [],
   // categories: [],
   // orders: [],
   // works: [],
