@@ -9,13 +9,15 @@ router.get('/',async (req, res) => {
 	try {
 		
     const artists = await User.find({role: 'Artist'}).lean();
+
     let artistsArray = await Promise.all(artists.map(async(artist) => {
-      if (artist?.works?.length > 0) {
+      if (artist.works?.length > 0 && artist.works?.length !== undefined) {
+        console.log(artist, 'artist');
         return await User.findOne({_id: artist._id}).populate('works');
       }
     }))
-    console.log(artistsArray);
-    artistsArray.filter(item => item.hasOwnProperty(works))
+    artistsArray = artistsArray.filter(item => item !== undefined)
+    console.log(artistsArray, 'artistsArray')
 		return res.status(200).json({artistsArray});
 	} catch (error) {
 		console.log(error);

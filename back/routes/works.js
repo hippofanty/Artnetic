@@ -32,10 +32,12 @@ router.post('/',async (req, res) => {
 	}
 });
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
+router.delete('/:id/:getUserID', async (req, res) => {
+  const { id, getUserID } = req.params;
 	try {
     const works = await Work.findOneAndDelete({ _id: id });
+    const user = await User.findOneAndUpdate({ _id: getUserID }, { $pull: {works: id}})
+
     return res.status(200).json({ status: 'removed' });
 	} catch (error) {
 		console.log(error);

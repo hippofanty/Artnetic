@@ -12,7 +12,6 @@ import { createStyles } from '@material-ui/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { useDispatch } from 'react-redux';
-import { searchAC } from '../../redux/actionCreators/searchAC';
 import { Category, Work } from '../../redux/init';
 import { Link } from 'react-router-dom';
 

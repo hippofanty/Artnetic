@@ -26,6 +26,15 @@ export interface Artist {
   password: string;
   favourites?: [];
   role?: string;
+  works?: [{
+    _id: string;
+    category: string;
+    description: string;
+    image: string;
+    price: number;
+    title: string;
+    user: string;
+  }]
 }
 
 export interface User {
