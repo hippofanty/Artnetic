@@ -105,6 +105,7 @@
 }
 
 .grid-context {
+  margin-top: 35px;
   grid-area: footer / footer / footer / footer;
   min-height: 195px;
 }

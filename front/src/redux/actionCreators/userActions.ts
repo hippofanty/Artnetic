@@ -3,9 +3,11 @@ import { ThunkAction } from 'redux-thunk';
 import { rootState } from '../init';
 import {
 	addFavouriteWork,
+	removeFavouriteWork,
 	setFavouriteWorks,
 	SetUserAction,
 	Types,
+  unsetFavouriteWorks,
 	UnsetUserAction,
 } from '../types/index';
 
@@ -97,24 +99,24 @@ export const refreshUser = (
 };
 
 export const addToFavouritesList =
-	(
-		id: string,
-		userId: string
-	): ThunkAction<void, rootState, unknown, addFavouriteWork> =>
-	async (dispatch) => {
-		const response = await fetch(`/api/v1/favourites/${userId}`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				workId: id,
-			}),
-		});
+	(id: string): ThunkAction<void, rootState, unknown, addFavouriteWork> =>
+	async (dispatch, getState) => {
+		const state = getState();
+		const response = await fetch(
+			`/api/v1/favourites/${state.userState.user.id}`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					workId: id,
+				}),
+			}
+		);
 
 		if (response.status === 200) {
 			const { updatedFavourites } = await response.json();
-			console.log(updatedFavourites);
 
 			dispatch({
 				type: Types.ADD_FAVOURITE_WORK,
@@ -125,8 +127,11 @@ export const addToFavouritesList =
 
 export const getFavouriteWorksFromBd =
 	(userId: string): ThunkAction<void, rootState, unknown, setFavouriteWorks> =>
-	async (dispatch) => {
-		const response = await fetch(`/api/v1/favourites/${userId}`);
+	async (dispatch, getState) => {
+		const state = getState();
+		const response = await fetch(
+			`/api/v1/favourites/${userId}`
+		);
 
 		if (response.status === 200) {
 			const { myFavourites } = await response.json();
@@ -136,4 +141,38 @@ export const getFavouriteWorksFromBd =
 				payload: myFavourites,
 			});
 		}
+	};
+
+export const logoutFavouriteWorks = ():unsetFavouriteWorks => {
+  return {
+    type: Types.UNSET_FAVOURITE_WORK,
+    payload: [],
+  }
+}
+
+export const removeFromFavouriteList =
+	(id: string): ThunkAction<void, rootState, unknown, removeFavouriteWork> =>
+	async (dispatch, getState) => {
+		const state = getState();
+		const response = await fetch(
+			`/api/v1/favourites/${state.userState.user.id}`, {
+        method: 'DELETE',
+        headers: {
+					'Content-Type': 'application/json',
+				},
+        body: JSON.stringify({
+					workId: id,
+				}),
+      }
+		);
+
+    if (response.status === 200) {
+      const result = await response.json();
+
+      dispatch({
+				type: Types.REMOVE_FAVOURITE_WORK,
+				payload: id,
+			});
+      console.log("🚀 ~ file: userActions.ts ~ line 155 ~ УСПЕШНО УДАЛЕНО", result)
+    }
 	};

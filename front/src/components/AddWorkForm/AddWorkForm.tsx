@@ -172,7 +172,7 @@ export function AddWorkForm({ setShowForm }: Props) {
               className={classes.description}
               />
             <MySelect
-              className={classes.select}
+              // className={classes.select}
               options={[
                 { label: "Живопись", value: "fineArt" },
                 { label: "Скульптуры", value: "sculptures" },

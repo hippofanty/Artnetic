@@ -1,5 +1,5 @@
 // any types here
-import { Work, Artist } from "../init";
+import { Id, Work, Artist } from "../init";
 
 export enum Types {
   GET_CATEGORIES = "GET_CATEGORIES",
@@ -12,8 +12,10 @@ export enum Types {
   ADD_MY_WORK = "ADD_MY_WORK",
 
   ADD_FAVOURITE_WORK = "ADD_FAVOURITE_WORK",
+  REMOVE_FAVOURITE_WORK = "REMOVE_FAVOURITE_WORK",
   SET_FAVOURITE_WORK = "SET_FAVOURITE_WORK",
   GET_ARTISTS = 'GET_ARTISTS',
+  UNSET_FAVOURITE_WORK = "UNSET_FAVOURITE_WORK",
 }
 
 export interface SetUserAction {
@@ -62,6 +64,10 @@ export interface addFavouriteWork {
   payload: Work;
 }
 
+export interface removeFavouriteWork {
+  type: Types.REMOVE_FAVOURITE_WORK;
+  payload: Id;
+}
 export interface setFavouriteWorks {
   type: Types.SET_FAVOURITE_WORK;
   payload: Work[];
@@ -69,6 +75,11 @@ export interface setFavouriteWorks {
 export interface getArtistsAction {
   type: Types.GET_ARTISTS;
   payload: Artist[];
+}
+
+export interface unsetFavouriteWorks {
+  type: Types.UNSET_FAVOURITE_WORK;
+  payload: Work[];
 }
 
 export type Actions =
@@ -81,43 +92,6 @@ export type Actions =
   | addMyWorkAction
   | addFavouriteWork
   | setFavouriteWorks
-  | getArtistsAction;
-
-/*import { Id, Todo } from "../init";
-
-export enum Types {
-  ADD_TODO = "ADD_TODO",
-  EDIT_TODO = "EDIT_TODO",
-  DELETE_TODO = "DELETE_TODO",
-  SET_STATUS_TODO = "SET_STATUS_TODO",
-}
-
-export interface AddTodoAction {
-  type: Types.ADD_TODO;
-  payload: Todo;
-}
-
-export interface DeleteTodoAction {
-  type: Types.DELETE_TODO;
-  payload: Id;
-}
-
-export interface EditTodoAction {
-  type: Types.EDIT_TODO;
-  payload: {
-    text: string;
-    id: Id;
-  };
-}
-
-export interface SetStatusTodoAction {
-  type: Types.SET_STATUS_TODO;
-  payload: Id;
-}
-
-export type Actions =
-  | AddTodoAction
-  | DeleteTodoAction
-  | EditTodoAction
-  | SetStatusTodoAction;
- */
+  | getArtistsAction
+  | unsetFavouriteWorks
+  | removeFavouriteWork
