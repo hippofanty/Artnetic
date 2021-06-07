@@ -1,7 +1,13 @@
 // action creator
 import { ThunkAction } from 'redux-thunk';
 import { rootState } from '../init';
-import { SetUserAction, Types, UnsetUserAction } from '../types/index';
+import {
+	addFavouriteWork,
+	setFavouriteWorks,
+	SetUserAction,
+	Types,
+	UnsetUserAction,
+} from '../types/index';
 
 export const login =
 	(
@@ -89,3 +95,45 @@ export const refreshUser = (
 		payload: { id, username, email, role },
 	};
 };
+
+export const addToFavouritesList =
+	(
+		id: string,
+		userId: string
+	): ThunkAction<void, rootState, unknown, addFavouriteWork> =>
+	async (dispatch) => {
+		const response = await fetch(`/api/v1/favourites/${userId}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				workId: id,
+			}),
+		});
+
+		if (response.status === 200) {
+			const { updatedFavourites } = await response.json();
+			console.log(updatedFavourites);
+
+			dispatch({
+				type: Types.ADD_FAVOURITE_WORK,
+				payload: updatedFavourites,
+			});
+		}
+	};
+
+export const getFavouriteWorksFromBd =
+	(userId: string): ThunkAction<void, rootState, unknown, setFavouriteWorks> =>
+	async (dispatch) => {
+		const response = await fetch(`/api/v1/favourites/${userId}`);
+
+		if (response.status === 200) {
+			const { myFavourites } = await response.json();
+
+			dispatch({
+				type: Types.SET_FAVOURITE_WORK,
+				payload: myFavourites,
+			});
+		}
+	};
