@@ -14,6 +14,7 @@ import { Artist } from '../Artist/Artist';
 import { MyArts } from '../MyArts/MyArts';
 import { SearchSection } from '../searchSection';
 import { Information } from '../Profile/Information/Information';
+import { EditProfileForm } from '../Profile/Information/EditProfileForm';
 
 export const Main = () => {
 	return (
@@ -61,6 +62,10 @@ export const Main = () => {
 
 				<Route exact path="/categories/works/:id">
 					<Work />
+				</Route>
+
+				<Route exact path="/editest">
+					<EditProfileForm />
 				</Route>
 				{/* </Container> */}
 				{/* </div> */}
