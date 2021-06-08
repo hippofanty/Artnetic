@@ -23,6 +23,7 @@ export const Main = () => {
 				</Route>
 
 				<div className="main-wrapper">
+
 					<Route exact path="/artists">
 						<Artists />
 					</Route>
@@ -39,9 +40,7 @@ export const Main = () => {
 					</Route>
 
 					{/* <Container fixed> */}
-					<Route exact path="/artists">
-						<Artists />
-					</Route>
+
 					<Route exact path="/categories/:category">
 						{/* <Categories /> */}
 						<SearchSection>{<Categories />}</SearchSection>

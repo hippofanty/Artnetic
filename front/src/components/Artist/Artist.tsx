@@ -38,7 +38,7 @@ export const Artist = () => {
 
   return (
     <>
-    <h1>{(getArtistWorks[0].user.username).toUpperCase()}</h1>
+    {/* <h1>{(getArtistWorks[0].user.username).toUpperCase()}</h1> */}
       {getArtistWorks.length === 0 ? (
         <h3>This author has not published any works</h3>
       ) : (
