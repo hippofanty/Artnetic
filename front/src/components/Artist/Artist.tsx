@@ -5,6 +5,7 @@ import { getOneArtistWorksAC } from "../../redux/actionCreators/getOneArtistWork
 import { rootState } from "../../redux/init";
 import { Container, Divider, makeStyles, Theme } from "@material-ui/core";
 import CardItem from "../Card/Card";
+import { deleteOneArtistWorksAC } from "../../redux/actionCreators/deleteOneArtistWorksAC";
 
 interface ParamTypes {
   id: string;
@@ -34,6 +35,9 @@ export const Artist = () => {
 
   useEffect(() => {
     dispatch(getOneArtistWorksAC(id));
+    return () => {
+      dispatch(deleteOneArtistWorksAC())
+    }
   }, [dispatch, id]);
 
   return (
