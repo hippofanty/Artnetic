@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { getWorksAC } from '../../redux/actionCreators/getWorks';
 import { rootState } from '../../redux/init';
 import CardItem from '../Card/Card';
-interface ParamTypes {
+export interface ParamTypes {
   category: string;
 }
 
@@ -34,7 +34,8 @@ export const Categories = () => {
   }, [category, dispatch]);
   return (
     <Container fixed>
-      <h1 className={classes.header}>{category === 'all' ? 'All categories': category === 'fineArt' ? 'Fine art' : category}</h1>
+      {/* <h1 className={classes.header}>{category === 'all' ? 'All categories': category === 'fineArt' ? 'Fine art' : category}</h1> */}
+
       <Container className={classes.container}>
         {worksState.map((item) => (
           <CardItem
@@ -49,6 +50,7 @@ export const Categories = () => {
           />
         ))}
       </Container>
+
     </Container>
   );
 };

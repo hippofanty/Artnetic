@@ -73,7 +73,7 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 	// GET RESERVED DATE ARRAY
 	const excludedDates = useMemo(() => {
 		const getExactWorkOrders = allApprovedOrders.filter(
-			(item) => item.work._id === workId
+			(item) => item.work?._id === workId
 		);
 		const getDates = getExactWorkOrders.map((item) => item.date);
 		const slicedTime = getDates.map((item) => new Date(item.slice(0, 10)));

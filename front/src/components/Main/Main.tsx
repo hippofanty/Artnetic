@@ -22,48 +22,40 @@ export const Main = () => {
 					<AboutUsMain />
 				</Route>
 
-				<div className="main-wrapper">
-					<Route exact path="/artists">
-						<Artists />
-					</Route>
-					<Route exact path="/artist/:id">
+				{/* <div className="main-wrapper"> */}
+				{/* <Container fixed> */}
+				<Route exact path="/artists">
+					<Artists />
+				</Route>
+				<Route exact path="/artist/:id">
+					<SearchSection>
 						<Artist />
-					</Route>
+					</SearchSection>
+				</Route>
 
-					<Route exact path="/searchSection">
-						<SearchSection />
-					</Route>
+				<Route exact path="/searchSection">
+					<SearchSection />
+				</Route>
 
-					<Route exact path="/searchSection/test">
-						<SearchSection>{<Categories />}</SearchSection>
-					</Route>
-
-					{/* <Container fixed> */}
-					<Route exact path="/artists">
-						<Artists />
-					</Route>
-					<Route exact path="/categories/:category">
-						{/* <Categories /> */}
-						<SearchSection>{<Categories />}</SearchSection>
-					</Route>
-					<Route exact path="/profile">
-						<Profile />
-					</Route>
-					<Route exact path="/profile/favourites">
-						<MyFavourites />
-					</Route>
-					<Route exact path="/profile/orders">
-						<MyOrders />
-					</Route>
-					<Route exact path="/categories/works/:id">
-						<Work />
-					</Route>
-					{/* </Container> */}
-				</div>
-
-				{/* <Route exact path="/secret">
-          {loggedIn ? <Redirect to="/" /> : <div>Секретная страничка</div>}
-        </Route> */}
+				<Route exact path="/categories/:category">
+					<SearchSection>
+						<Categories />
+					</SearchSection>
+				</Route>
+				<Route exact path="/profile">
+					<Profile />
+				</Route>
+				<Route exact path="/profile/favourites">
+					<MyFavourites />
+				</Route>
+				<Route exact path="/profile/orders">
+					<MyOrders />
+				</Route>
+				<Route exact path="/categories/works/:id">
+					<Work />
+				</Route>
+				{/* </Container> */}
+				{/* </div> */}
 			</Switch>
 		</>
 	);
