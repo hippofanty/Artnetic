@@ -77,6 +77,9 @@ export interface WorksState {
 export interface MyWorksState {
   myWorks: Work[];
 }
+export interface OneArtistWorksState {
+  oneArtistWorks: Work[];
+}
 
 // тип для workReducer
 export interface OneWorkState {
@@ -102,6 +105,7 @@ export interface rootState {
   myWorks: MyWorksState;
   artists: ArtistsState;
   ordersState: OrdersState;
+  oneArtistWorks: OneArtistWorksState;
 }
 
 export const initialUserState = {
@@ -125,6 +129,9 @@ export const initialStateArtists = {
 };
 export const initialStateMyWorks = {
   myWorks: [],
+};
+export const initialStateOneArtistWorks = {
+  oneArtistWorks: [],
 };
 
 export const intitialStateOrders = {

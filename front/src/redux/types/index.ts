@@ -14,11 +14,12 @@ export enum Types {
   ADD_FAVOURITE_WORK = "ADD_FAVOURITE_WORK",
   REMOVE_FAVOURITE_WORK = "REMOVE_FAVOURITE_WORK",
   SET_FAVOURITE_WORK = "SET_FAVOURITE_WORK",
-  GET_ARTISTS = 'GET_ARTISTS',
+  GET_ARTISTS = "GET_ARTISTS",
   UNSET_FAVOURITE_WORK = "UNSET_FAVOURITE_WORK",
 
   SET_APPROVED_ORDERS = "SET_APPROVED_ORDERS",
   GET_APPROVED_ORDERS = "GET_APPROVED_ORDERS",
+  GET_ONE_ARTIST_WORKS = "GET_ONE_ARTIST_WORKS",
 }
 
 export interface SetUserAction {
@@ -46,6 +47,10 @@ export interface getWorksAction {
 }
 export interface getMyWorksAction {
   type: Types.GET_MY_WORKS;
+  payload: Work[];
+}
+export interface GetOneArtistWorksAction {
+  type: Types.GET_ONE_ARTIST_WORKS;
   payload: Work[];
 }
 export interface addMyWorkAction {
@@ -110,3 +115,4 @@ export type Actions =
   | removeFavouriteWork
   | SetApprovedOrders
   | GetApprovedOrders
+  | GetOneArtistWorksAction;
