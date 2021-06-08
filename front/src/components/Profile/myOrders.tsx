@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setApprovedOrdersAC } from '../../redux/actionCreators/userActions';
 import { rootState } from '../../redux/init';
 import { Box, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const useStyles = makeStyles({
 	table: {
@@ -29,6 +31,10 @@ const useStyles = makeStyles({
     margin: '0px auto',
     padding: '40px 0px',
     width: '100%',
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#f50057',
   }
 });
 
@@ -39,9 +45,12 @@ export const MyOrders = () => {
 		(state: rootState) => state.userState.approvedOrders
 	);
 
+  const userId = useSelector((state: rootState) => state.userState.user.id);
+
 	useEffect(() => {
-		dispatch(setApprovedOrdersAC());
-	}, [dispatch]);
+    console.log('СРАБОТАЛ USE EFFECT')
+		dispatch(setApprovedOrdersAC(userId));
+	}, [dispatch, userId]);
 
 	return (
 		<div className={classes.orderWrapper}>
@@ -71,8 +80,8 @@ export const MyOrders = () => {
 									<TableCell component="th" scope="row">
 										{order.vendorCode}
 									</TableCell>
-									<TableCell align="right">{order.date}</TableCell>
-									<TableCell align="right">{order.work.title}</TableCell>
+									<TableCell align="right">{moment(order.date).format('LL')}</TableCell>
+									<TableCell align="right"><Link to={`/categories/works/${order.work._id}`} className={classes.link}>{order.work.title}</Link></TableCell>
 									<TableCell align="right">
 										{order.work.price}&nbsp;&#x20bd;
 									</TableCell>
@@ -85,3 +94,7 @@ export const MyOrders = () => {
 		</div>
 	);
 };
+
+// const momentDate = moment(startDate);
+// moment.locale('en-gb');
+// const formattedDate = momentDate.format('LL');

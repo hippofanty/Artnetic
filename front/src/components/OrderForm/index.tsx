@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 
 import DateFnsUtils from '@date-io/date-fns';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from '../../redux/init';
 import cryptoRandomString from 'crypto-random-string';
@@ -55,12 +55,9 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 		(state: rootState) => state.userState.user.email
 	);
 
-  const allApprovedOrders = useSelector(
-    (state: rootState) => state.ordersState.allApprovedOrders
-  );
-	// const momentDate = moment(startDate);
-	// moment.locale('en-gb');
-	// const formattedDate = momentDate.format('LL');
+	const allApprovedOrders = useSelector(
+		(state: rootState) => state.ordersState.allApprovedOrders
+	);
 
 	interface FormType {
 		notes?: string;
@@ -73,16 +70,19 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 		field: ReactNode;
 	}
 
-  // GET RESERVED DATE ARRAY
-  const getExactWorkOrders = allApprovedOrders.filter((item) => item.work._id === workId);
-  const getDates = getExactWorkOrders.map((item) => (item.date));
-  const slicedTime = getDates.map((item) => item.slice(0, 10))
-  const excludeDates = slicedTime.map((date) => new Date(date));
+	// GET RESERVED DATE ARRAY
+	const excludedDates = useMemo(() => {
+		const getExactWorkOrders = allApprovedOrders.filter(
+			(item) => item.work._id === workId
+		);
+		const getDates = getExactWorkOrders.map((item) => item.date);
+		const slicedTime = getDates.map((item) => new Date(item.slice(0, 10)));
+    return slicedTime;
+	}, [allApprovedOrders, workId]);
 
 	useEffect(() => {
 		dispatch(getAllApprovedOrders());
 	}, [dispatch]);
-
 
 	const sendForm = useCallback(
 		async (values: FormType) => {
@@ -188,7 +188,7 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 					withPortal
 					isClearable={true}
 					minDate={new Date()}
-					excludeDates={excludeDates}
+					excludeDates={excludedDates}
 				/>
 			),
 		},
