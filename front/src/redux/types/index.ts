@@ -1,5 +1,5 @@
 // any types here
-import { Id, Work, Artist } from "../init";
+import { Id, Work, Artist, ApprovedOrder } from "../init";
 
 export enum Types {
   GET_CATEGORIES = "GET_CATEGORIES",
@@ -16,6 +16,9 @@ export enum Types {
   SET_FAVOURITE_WORK = "SET_FAVOURITE_WORK",
   GET_ARTISTS = 'GET_ARTISTS',
   UNSET_FAVOURITE_WORK = "UNSET_FAVOURITE_WORK",
+
+  SET_APPROVED_ORDERS = "SET_APPROVED_ORDERS",
+  GET_APPROVED_ORDERS = "GET_APPROVED_ORDERS",
 }
 
 export interface SetUserAction {
@@ -82,6 +85,16 @@ export interface unsetFavouriteWorks {
   payload: Work[];
 }
 
+export interface SetApprovedOrders {
+  type: Types.SET_APPROVED_ORDERS;
+  payload: ApprovedOrder[];
+}
+
+export interface GetApprovedOrders {
+  type: Types.GET_APPROVED_ORDERS;
+  payload: ApprovedOrder[];
+}
+
 export type Actions =
   | getWorksAction
   | SetUserAction
@@ -95,3 +108,5 @@ export type Actions =
   | getArtistsAction
   | unsetFavouriteWorks
   | removeFavouriteWork
+  | SetApprovedOrders
+  | GetApprovedOrders

@@ -5,6 +5,7 @@ import { combineReducers } from "redux";
 import { workReducer } from "./workReducer";
 import { myWorksReducer } from "./myWorksReducer";
 import { artistsReducer } from "./artistsReducer";
+import { ordersReducer } from "./ordersReducer";
 
 
 export const rootReducer=combineReducers({
@@ -13,5 +14,6 @@ export const rootReducer=combineReducers({
   work: workReducer,
   myWorks: myWorksReducer,
   artists: artistsReducer,
+  ordersState: ordersReducer,
 })
 

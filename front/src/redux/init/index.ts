@@ -19,6 +19,21 @@ export interface Work {
     password: string;
   };
 }
+
+export interface ApprovedOrder {
+  _id: string;
+  vendorCode: string;
+  date: string;
+  user: {
+    _id: string;
+    role: string;
+    username: string;
+    email: string;
+  };
+  work: Work;
+  status: string;
+}
+
 export interface Artist {
   _id: string;
   username: string;
@@ -54,6 +69,7 @@ export interface UserState {
   user: User;
   isAuth: boolean;
   favourites: Work[];
+  approvedOrders: ApprovedOrder[];
 }
 export interface WorksState {
   works: Work[];
@@ -70,6 +86,10 @@ export interface ArtistsState {
   artists: Artist[];
 }
 
+export interface OrdersState {
+  allApprovedOrders: ApprovedOrder[];
+}
+
 // тип для просмотра полей стора в useSelector()
 // export interface rootState {
 //   works: Work[];
@@ -81,6 +101,7 @@ export interface rootState {
   work: OneWorkState;
   myWorks: MyWorksState;
   artists: ArtistsState;
+  ordersState: OrdersState;
 }
 
 export const initialUserState = {
@@ -92,9 +113,7 @@ export const initialUserState = {
   },
   isAuth: false,
   favourites: [],
-  // categories: [],
-  // orders: [],
-  // works: [],
+  approvedOrders: [],
   // loader: true,
 };
 
@@ -107,6 +126,10 @@ export const initialStateArtists = {
 export const initialStateMyWorks = {
   myWorks: [],
 };
+
+export const intitialStateOrders = {
+  allApprovedOrders: [],
+}
 
 export const initialStateWork = {
   work: {

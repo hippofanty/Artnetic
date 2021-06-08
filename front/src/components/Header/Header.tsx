@@ -25,6 +25,7 @@ import DropdownProfileIcon from './DropdownProfileIcon';
 import ArtLogo from './header_logo/ArtneticLogo.png';
 import { FavouriteIcon } from './favouritesIcon';
 import {Search} from '../Search/Search'
+
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {

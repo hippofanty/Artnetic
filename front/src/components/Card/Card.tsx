@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			zIndex: 10,
 		},
 		delete_edit: {},
+		textCenter: {
+			textAlign: 'center',
+		},
 	})
 );
 
@@ -150,7 +153,9 @@ export default function CardItem({
 							<img src={image} alt={title} className="card-image" />
 						</div>
 						<div className={classes.cardTitle}>
-							<Typography variant="subtitle1">{title}</Typography>
+							<Typography variant="subtitle1" className={classes.textCenter}>
+								{title}
+							</Typography>
 							{isLiked ? (
 								<IconButton
 									color="secondary"

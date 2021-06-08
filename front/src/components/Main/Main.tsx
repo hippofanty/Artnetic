@@ -9,6 +9,7 @@ import { Container } from '@material-ui/core';
 import { Work } from "../Work/Work";
 import { MyFavourites } from '../Profile/myFavourites';
 import { Artists } from '../Artists/Artists';
+import { MyOrders } from '../Profile/myOrders';
 
 
 export const Main = () => {
@@ -31,6 +32,9 @@ export const Main = () => {
 					</Route>
           <Route exact path="/profile/favourites">
 						<MyFavourites />
+					</Route>
+          <Route exact path="/profile/orders">
+						<MyOrders />
 					</Route>
           <Route exact path="/categories/works/:id">
             <Work />
