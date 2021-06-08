@@ -1,18 +1,18 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ClickAwayListener,
   fade,
+  Grow,
   makeStyles,
-  Menu,
   MenuItem,
   MenuList,
+  Paper,
+  Popper,
   Theme,
 } from '@material-ui/core';
 import { createStyles } from '@material-ui/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-import { useDispatch } from 'react-redux';
-import { searchAC } from '../../redux/actionCreators/searchAC';
 import { Category, Work } from '../../redux/init';
 import { Link } from 'react-router-dom';
 
@@ -81,42 +81,32 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Search = () => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
-  // Для поиска
+  // Стейты инпута и пришедших результатов поиска
   const [searchInput, setSearchInput] = useState('');
-  // useEffect(() => {dispatch(searchAC(searchInput))}, [dispatch, searchInput]);
   const [searchResult, setSearchResult] = useState<SearchResult>();
 
-  console.log('searchResult>>>>', searchResult);
-
-  const searchHandler = async () => {
+  // отправка фетча
+  const searchHandler = async (text: string) => {
     const response = await fetch(`/api/v1/search`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: searchInput,
+        query: text,
       }),
     });
     const result = await response.json();
     setSearchResult(result);
-    console.log('result>>>>>>>', result);
   };
 
   // Выпадающее меню с результатами поиска
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLButtonElement>(null);
+  const anchorRef = React.useRef<HTMLInputElement>(null);
 
-  // const handleClick = (
-  //   event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  // ) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
 
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-  const handleClose = (event: React.MouseEvent<EventTarget> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleClose = (event: React.MouseEvent<EventTarget>) => {
     if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return;
     }
@@ -131,16 +121,6 @@ export const Search = () => {
     }
   };
 
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current!.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
   return (
     <>
       <div className={classes.search}>
@@ -151,10 +131,12 @@ export const Search = () => {
           onSubmit={(e) => {
             e.preventDefault();
             setSearchInput('');
-            searchHandler();
+            searchHandler(searchInput);
+            handleToggle();
           }}
-        >
+          >
           <InputBase
+            ref={anchorRef}
             placeholder="Search…"
             classes={{
               root: classes.inputRoot,
@@ -163,34 +145,67 @@ export const Search = () => {
             inputProps={{ 'aria-label': 'search' }}
             value={searchInput}
             onChange={(e) => {
-              setSearchInput(e.target.value);
-              searchHandler();
-              e.target.value ? handleClose(e) : handleClose(e);
+              setSearchInput(e.target.value);              
+              (e.target.value === '') ? setOpen(false) : setOpen(true);
+              searchHandler(e.target.value);
+            }}
+            onBlur={() => {
+              setOpen(false);
             }}
           />
         </form>
         <div className={classes.searchResults}>
-          <ClickAwayListener onClickAway={handleClose}>
-            <MenuList
-              autoFocusItem={open}
-              id="menu-list-grow"
-              onKeyDown={handleListKeyDown}
-            >
-              {searchResult
-                ? searchResult.workResults.map((elem: Work) => (
-                    <Link
-                      onClick={handleClose}
-                      style={{ color: 'inherit', textDecoration: 'inherit' }}
-                      to={`/categories/works/${elem._id}`}
+          <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleClose}>
+                    <MenuList
+                      autoFocusItem={open}
+                      id="menu-list-grow"
+                      onKeyDown={handleListKeyDown}
                     >
-                      <MenuItem key={elem._id} onClick={handleClose}>
-                        {elem.title}
-                      </MenuItem>
-                    </Link>
-                  ))
-                : null}
-            </MenuList>
-          </ClickAwayListener>
+                        <i>Works</i>
+                      {searchResult?.workResults.length
+                        ? searchResult?.workResults.map((elem) => (
+                            <Link
+                              key={elem._id}
+                              onClick={(e) => setSearchInput('')}
+                              style={{ color: 'inherit', textDecoration: 'inherit' }}
+                              to={`/categories/works/${elem._id}`}
+                            >
+                              <MenuItem key={elem._id}>
+                                {elem.title}
+                              </MenuItem>
+                            </Link>
+                          ))
+                        : <MenuItem><i>Nothing is found</i></MenuItem>
+                      }
+                         <i>Categories</i>
+                      {searchResult?.categoryResults.length
+                        ? searchResult?.categoryResults.map((elem) => (
+                            <Link
+                              key={elem}
+                              onClick={(e) => setSearchInput('')}
+                              style={{ color: 'inherit', textDecoration: 'inherit' }}
+                              to={`/categories/${elem}`}
+                            >
+                              <MenuItem key={elem}>
+                                {elem}
+                              </MenuItem>
+                            </Link>
+                          ))
+                        : <MenuItem><i>Nothing is found</i></MenuItem>
+                      }
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
         </div>
       </div>
       <div className={classes.grow} />

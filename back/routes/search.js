@@ -9,7 +9,11 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const categoryResults = await Category.find({name: { $regex: req.body.query, $options: 'i'}}).lean();
+    const categories = await Category.find({name: { $regex: req.body.query, $options: 'i'}}).lean();
+    let categoryResults = [];
+    categories.map((el) => {
+      categoryResults.push(el.name);
+    })
     const workResults = await Work.find({title: {$regex: req.body.query, $options: 'i'}}).lean();
     return res.json({categoryResults, workResults});
   } catch (error) {
