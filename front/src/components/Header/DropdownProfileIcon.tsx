@@ -66,6 +66,11 @@ export default function DropdownProfileIcon({logoutHandler, getUsername}: Props)
 						Profile
 					</Link>
 				</MenuItem>
+				<MenuItem onClick={handleClose}>
+					<Link to="/myArts" className={classes.linkDrop}>
+						My Arts
+					</Link>
+				</MenuItem>
         <MenuItem onClick={handleClose}>
 					<Link to="/profile/orders" className={classes.linkDrop}>
 						Orders
