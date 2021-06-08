@@ -39,6 +39,16 @@ export const userReducer = (
         ...state,
         favourites: action.payload,
       }
+    case Types.SET_APPROVED_ORDERS:
+      return {
+        ...state,
+        approvedOrders: action.payload,
+      }
+    case Types.GET_APPROVED_ORDERS:
+      return {
+        ...state,
+        
+      }
     default:
       return state;
   }

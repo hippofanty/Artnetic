@@ -2,12 +2,17 @@ const { Schema, model } = require('mongoose');
 
 const Order = new Schema({
   vendorCode: {
-    type: Number,
-    required: true,
-  },
-  dates: {
     type: String,
     required: true,
+  },
+  notes: {
+    type: String,
+  },
+  city: {
+    types: String,
+  },
+  date: {
+    type: String,
   },
   user: {
     type: Schema.Types.ObjectId,
@@ -16,6 +21,10 @@ const Order = new Schema({
   work: {
     type: Schema.Types.ObjectId,
     ref: 'Works',
+  },
+  status: {
+    type: String,
+    default: 'Pending',
   }
 });
 

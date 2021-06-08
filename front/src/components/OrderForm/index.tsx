@@ -1,11 +1,5 @@
 import { Form } from 'react-final-form';
-import {
-	TextField,
-	Radios,
-	Select,
-	DatePicker,
-	TimePicker,
-} from 'mui-rff';
+import { TextField, Radios, Select, TimePicker } from 'mui-rff';
 import {
 	Typography,
 	Paper,
@@ -15,53 +9,112 @@ import {
 	CssBaseline,
 	MenuItem,
 	GridSize,
-  makeStyles,
-  Theme
+	makeStyles,
+	Theme,
 } from '@material-ui/core';
 
 import DateFnsUtils from '@date-io/date-fns';
-import { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from '../../redux/init';
+import cryptoRandomString from 'crypto-random-string';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
+import 'moment/min/locales.min';
+import subDays from 'date-fns/subDays';
+import { getAllApprovedOrders } from '../../redux/actionCreators/orderAC';
 
 interface OrderProps {
-  setPrice: number,
+	setPrice: number;
+	workId: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  sendButt: {
-    color: 'white',
-    backgroundColor: 'black',
-  }
+	sendButt: {
+		color: 'white',
+		backgroundColor: 'black',
+	},
+	datePick: {
+		margin: 0,
+	},
+	dateInput: {
+		width: 'inherit',
+		height: '30px',
+	},
 }));
 
-export const OrderForm = ({setPrice}: OrderProps) => {
-  const classes = useStyles();
+export const OrderForm = ({ setPrice, workId }: OrderProps) => {
+	const classes = useStyles();
+	const dispatch = useDispatch();
+	const [startDate, setStartDate] = useState<Date | null>(new Date());
 
-  const getUsername = useSelector(
-		(state: rootState) => state.userState.user.username
-	);
+	const user = useSelector((state: rootState) => state.userState.user);
 
-  const getUserEmail = useSelector(
+	const getUserEmail = useSelector(
 		(state: rootState) => state.userState.user.email
 	);
 
-  // const getCategoryWorks = useSelector((state: rootState) => state.works?.works)
+  const allApprovedOrders = useSelector(
+    (state: rootState) => state.ordersState.allApprovedOrders
+  );
+	// const momentDate = moment(startDate);
+	// moment.locale('en-gb');
+	// const formattedDate = momentDate.format('LL');
 
-  interface FormType {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-  }
+	interface FormType {
+		notes?: string;
+		city: string;
+		date?: string;
+	}
 
-  interface CustomField {
-    size: GridSize;
-    field: ReactNode;
-  }
+	interface CustomField {
+		size: GridSize;
+		field: ReactNode;
+	}
 
-	const onSubmit = async (values: FormType) => {
-		console.log('Hi');
-	};
+  // GET RESERVED DATE ARRAY
+  const getExactWorkOrders = allApprovedOrders.filter((item) => item.work._id === workId);
+  const getDates = getExactWorkOrders.map((item) => (item.date));
+  const slicedTime = getDates.map((item) => item.slice(0, 10))
+  const excludeDates = slicedTime.map((date) => new Date(date));
+
+	useEffect(() => {
+		dispatch(getAllApprovedOrders());
+	}, [dispatch]);
+
+
+	const sendForm = useCallback(
+		async (values: FormType) => {
+			try {
+				const response = await fetch('/api/v1/orders/new', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						vendorCode: cryptoRandomString({ length: 10, type: 'base64' }),
+						notes: values.notes,
+						city: values.city,
+						// date: values.date,
+						date: startDate,
+						user: user.id,
+						work: workId,
+					}),
+				});
+				if (response.status === 200) {
+					const result = await response.json();
+					console.log(
+						'🚀 ~ file: index.tsx ~ line 82 ~ sendForm ~ ОТВЕТ НА ЗАКАЗ',
+						result
+					);
+				}
+			} catch (e) {
+				console.log(e);
+			}
+		},
+		[startDate, user.id, workId]
+	);
 
 	// const validate = (values: FormType) => {
 	// 	const errors: FormType = {};
@@ -77,19 +130,18 @@ export const OrderForm = ({setPrice}: OrderProps) => {
 	// 	return errors;
 	// };
 
-
 	const formFields: CustomField[] = [
 		{
 			size: 12,
 			field: (
 				<TextField
-          type="text"
+					type="text"
 					label="Ваше имя"
 					name="firstName"
-          value={getUsername}
+					value={user.username}
 					margin="none"
 					// required={true}
-          disabled
+					disabled
 				/>
 			),
 		},
@@ -100,10 +152,10 @@ export const OrderForm = ({setPrice}: OrderProps) => {
 					type="email"
 					label="Электронная почта"
 					name="email"
-          value={getUserEmail}
+					value={getUserEmail}
 					margin="none"
 					// required={true}
-          disabled
+					disabled
 				/>
 			),
 		},
@@ -119,30 +171,24 @@ export const OrderForm = ({setPrice}: OrderProps) => {
 					label="Select a City"
 					formControlProps={{ margin: 'none' }}
 				>
-					<MenuItem value="London">Moscow</MenuItem>
-					<MenuItem value="Paris">Saint-Petersburg</MenuItem>
+					<MenuItem value="Moscow">Moscow</MenuItem>
+					<MenuItem value="Saint-Petersburg">Saint-Petersburg</MenuItem>
 				</Select>
 			),
 		},
 		{
-			size: 6,
+			size: 12,
 			field: (
 				<DatePicker
+					className={classes.dateInput}
 					name="date"
-					margin="normal"
-					label="Дата"
-					dateFunsUtils={DateFnsUtils}
-				/>
-			),
-		},
-		{
-			size: 6,
-			field: (
-				<TimePicker
-					name="time"
-					margin="normal"
-					label="Время"
-					dateFunsUtils={DateFnsUtils}
+					dateFormat="dd/MM/yyyy"
+					selected={startDate}
+					onChange={(date: Date | null) => setStartDate(date)}
+					withPortal
+					isClearable={true}
+					minDate={new Date()}
+					excludeDates={excludeDates}
 				/>
 			),
 		},
@@ -151,33 +197,37 @@ export const OrderForm = ({setPrice}: OrderProps) => {
 	return (
 		<div style={{ padding: 16, margin: 'auto', maxWidth: 480 }}>
 			<CssBaseline />
-			{/* <Typography variant="h5" align="center" component="h2" gutterBottom>
-				Форма заказа
-			</Typography>
-			<Typography paragraph>
-				<Link href="https://github.com/erikras/react-final-form#-react-final-form">
-					Read Docs
-				</Link>
-			</Typography> */}
+			{/* <button onClick={() => console.log('FILTERED ORDERS ===', getExactWorkOrders)}>
+				MOMENT
+			</button> */}
 			<Form<FormType>
-				onSubmit={onSubmit}
-				// initialValues={{ employed: true, stooge: 'larry' }}
+				onSubmit={sendForm}
 				// validate={validate}
 				render={({ handleSubmit, form, submitting, pristine, values }) => (
 					<form onSubmit={handleSubmit} noValidate>
 						<Paper style={{ padding: 16 }}>
-							<Grid container alignItems="flex-start" justify="center" spacing={2}>
+							<Grid
+								container
+								alignItems="flex-start"
+								justify="center"
+								spacing={2}
+							>
 								{formFields.map((item, idx) => (
 									<Grid item xs={item.size} key={idx}>
 										{item.field}
 									</Grid>
 								))}
-                {/* <Grid item xs={12} style={{ marginTop: 16, textAlign: 'center'}}><span>Цена: {setPrice} руб</span></Grid> */}
-								<Grid item xs={12} style={{ marginTop: 16 , display: 'flex'}} justify="center">
+								{/* <Grid item xs={12} style={{ marginTop: 16, textAlign: 'center'}}><span>Цена: {setPrice} руб</span></Grid> */}
+								<Grid
+									item
+									xs={12}
+									style={{ marginTop: 16, display: 'flex' }}
+									justify="center"
+								>
 									<Button
 										variant="contained"
 										type="submit"
-                    className={classes.sendButt}
+										className={classes.sendButt}
 										disabled={submitting}
 									>
 										Send
