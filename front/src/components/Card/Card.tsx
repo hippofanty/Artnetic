@@ -79,6 +79,8 @@ export default function CardItem({
 	user,
 }: CardProps) {
 	//dialog
+  console.log('useeeeeeeeeeeeeeeeeeeeeer', user);
+  
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
@@ -89,7 +91,7 @@ export default function CardItem({
 		setOpen(false);
 	};
 	const deleteIt = () => {
-		dispatch(deleteWorkAC(id));
+		dispatch(deleteWorkAC(id, getUserID));
 		setOpen(false);
 	};
 	//end of dialog
@@ -178,10 +180,10 @@ export default function CardItem({
 					aria-describedby="alert-dialog-description"
 				>
 					<DialogTitle id="alert-dialog-title">
-						{"Use Google's location service?"}
+						{"Are you sure you want to permanently delete the post?"}
 					</DialogTitle>
 					<DialogContent>
-						<DialogContentText id="Are you sure you want to permanently delete the post?">
+						<DialogContentText  id="alert-dialog-description">
 							There will be no opportunity to return a post about your art!
 						</DialogContentText>
 					</DialogContent>

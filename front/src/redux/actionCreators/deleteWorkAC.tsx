@@ -3,9 +3,9 @@ import { rootState } from "../init";
 import { ThunkAction } from "redux-thunk";
 
 export const deleteWorkAC =
-  (id: string): ThunkAction<void, rootState, unknown, deleteWorkAction> =>
+  (id: string, getUserID: string): ThunkAction<void, rootState, unknown, deleteWorkAction> =>
   async (dispatch) => {
-    const response = await fetch(`/api/v1/works/${id}`, {
+    const response = await fetch(`/api/v1/works/${id}/${getUserID}`, {
       method: "DELETE",
     });
     const result = await response.json();

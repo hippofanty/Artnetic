@@ -34,6 +34,7 @@ export const userReducer = (
         ...state,
         favourites: updatedWorks,
       }
+      
     case Types.UNSET_FAVOURITE_WORK:
       return {
         ...state,
