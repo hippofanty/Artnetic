@@ -34,10 +34,21 @@ export const userReducer = (
         ...state,
         favourites: updatedWorks,
       }
+      
     case Types.UNSET_FAVOURITE_WORK:
       return {
         ...state,
         favourites: action.payload,
+      }
+    case Types.SET_APPROVED_ORDERS:
+      return {
+        ...state,
+        approvedOrders: action.payload,
+      }
+    case Types.GET_APPROVED_ORDERS:
+      return {
+        ...state,
+        
       }
     default:
       return state;

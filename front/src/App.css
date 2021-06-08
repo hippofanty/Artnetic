@@ -28,11 +28,13 @@
 
 .body {
 	color: black;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .container__main {
 	background-color: #fff;
-  min-height: 100vh;
+	min-height: 100vh;
 }
 
 .item-grid {
@@ -105,7 +107,17 @@
 }
 
 .grid-context {
-  margin-top: 35px;
-  grid-area: footer / footer / footer / footer;
-  min-height: 195px;
+	margin-top: 35px;
+	grid-area: footer / footer / footer / footer;
+	min-height: 195px;
+}
+
+.main-wrapper {
+	margin: 0px auto;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+* {
+  text-decoration: none !important;
 }

@@ -14,6 +14,8 @@ const authRouter = require('./routes/auth');
 const searchRouter = require('./routes/search');
 const favouritesRouter = require('./routes/favourites');
 const artistsRouter = require('./routes/artists');
+const usersRouter = require('./routes/users');
+const ordersRouter = require('./routes/orders');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
@@ -27,6 +29,8 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/search', searchRouter)
 app.use('/api/v1/favourites', favouritesRouter);
 app.use('/api/v1/artists', artistsRouter);
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/orders', ordersRouter);
 
 dbConnect();
 

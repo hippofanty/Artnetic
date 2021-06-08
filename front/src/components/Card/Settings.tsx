@@ -54,7 +54,7 @@ export function Settings({ ...props }: SettingsProps) {
   //----
   const handleDelete = () => {
     setOpen(false);
-    dispatch(deleteWorkAC(props.pictureid));
+    dispatch(deleteWorkAC(props.pictureid, props.userid));
   };
   return (
     <div>

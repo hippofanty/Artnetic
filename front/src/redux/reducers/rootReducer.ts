@@ -1,10 +1,12 @@
-import { categoriesReducer } from "./categoriesReducer";
-import { userReducer } from './userReducer';
-
 import { combineReducers } from "redux";
+
+import { userReducer } from './userReducer';
+import { categoriesReducer } from "./categoriesReducer";
 import { workReducer } from "./workReducer";
 import { myWorksReducer } from "./myWorksReducer";
 import { artistsReducer } from "./artistsReducer";
+import { ordersReducer } from "./ordersReducer";
+import { oneArtistWorksReducer } from "./oneArtistWorksReducer";
 
 
 export const rootReducer=combineReducers({
@@ -13,5 +15,7 @@ export const rootReducer=combineReducers({
   work: workReducer,
   myWorks: myWorksReducer,
   artists: artistsReducer,
+  ordersState: ordersReducer,
+  oneArtistWorks: oneArtistWorksReducer,
 })
 

@@ -9,19 +9,33 @@ router.get('/',async (req, res) => {
 	try {
 		
     const artists = await User.find({role: 'Artist'}).lean();
+
     let artistsArray = await Promise.all(artists.map(async(artist) => {
-      if (artist?.works?.length > 0) {
+      if (artist.works?.length > 0 && artist.works?.length !== undefined) {
+        console.log(artist, 'artist');
         return await User.findOne({_id: artist._id}).populate('works');
       }
     }))
-    console.log(artistsArray);
-    artistsArray.filter(item => item.hasOwnProperty(works))
+    artistsArray = artistsArray.filter(item => item !== undefined)
 		return res.status(200).json({artistsArray});
 	} catch (error) {
 		console.log(error);
     return res.sendStatus(400);
 	}
 });
-
+router.get('/:id',async (req, res) => {
+  const { id } = req.params;
+	try {
+		console.log(id, 'id');
+    const artist = await User.findOne({_id: id}).populate('works');
+    // console.log('artist', artist);
+    console.log('artist.works', artist.works);
+    const works = await Promise.all(artist.works.map(async (item) => await Work.findOne({_id: item._id}).populate(['category', 'user'])))
+		return res.status(200).json({works});
+	} catch (error) {
+		console.log(error);
+    return res.sendStatus(400);
+	}
+});
 
 module.exports = router;

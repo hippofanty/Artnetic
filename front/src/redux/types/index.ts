@@ -1,5 +1,5 @@
 // any types here
-import { Id, Work, Artist } from "../init";
+import { Id, Work, Artist, ApprovedOrder } from "../init";
 
 export enum Types {
   GET_CATEGORIES = "GET_CATEGORIES",
@@ -14,8 +14,12 @@ export enum Types {
   ADD_FAVOURITE_WORK = "ADD_FAVOURITE_WORK",
   REMOVE_FAVOURITE_WORK = "REMOVE_FAVOURITE_WORK",
   SET_FAVOURITE_WORK = "SET_FAVOURITE_WORK",
-  GET_ARTISTS = 'GET_ARTISTS',
+  GET_ARTISTS = "GET_ARTISTS",
   UNSET_FAVOURITE_WORK = "UNSET_FAVOURITE_WORK",
+
+  SET_APPROVED_ORDERS = "SET_APPROVED_ORDERS",
+  GET_APPROVED_ORDERS = "GET_APPROVED_ORDERS",
+  GET_ONE_ARTIST_WORKS = "GET_ONE_ARTIST_WORKS",
 }
 
 export interface SetUserAction {
@@ -43,6 +47,10 @@ export interface getWorksAction {
 }
 export interface getMyWorksAction {
   type: Types.GET_MY_WORKS;
+  payload: Work[];
+}
+export interface GetOneArtistWorksAction {
+  type: Types.GET_ONE_ARTIST_WORKS;
   payload: Work[];
 }
 export interface addMyWorkAction {
@@ -82,6 +90,16 @@ export interface unsetFavouriteWorks {
   payload: Work[];
 }
 
+export interface SetApprovedOrders {
+  type: Types.SET_APPROVED_ORDERS;
+  payload: ApprovedOrder[];
+}
+
+export interface GetApprovedOrders {
+  type: Types.GET_APPROVED_ORDERS;
+  payload: ApprovedOrder[];
+}
+
 export type Actions =
   | getWorksAction
   | SetUserAction
@@ -95,3 +113,6 @@ export type Actions =
   | getArtistsAction
   | unsetFavouriteWorks
   | removeFavouriteWork
+  | SetApprovedOrders
+  | GetApprovedOrders
+  | GetOneArtistWorksAction;

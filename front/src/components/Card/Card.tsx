@@ -17,6 +17,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import styled from "styled-components";
+
+
+const CardImgWrapper = styled.div`
+
+  &:hover {
+    background-color: #DAD9D7;
+  }
+`;
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -48,6 +57,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			zIndex: 10,
 		},
 		delete_edit: {},
+		textCenter: {
+			textAlign: 'center',
+		},
 	})
 );
 
@@ -79,6 +91,8 @@ export default function CardItem({
 	user,
 }: CardProps) {
 	//dialog
+  console.log('useeeeeeeeeeeeeeeeeeeeeer', user);
+  
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
@@ -89,7 +103,7 @@ export default function CardItem({
 		setOpen(false);
 	};
 	const deleteIt = () => {
-		dispatch(deleteWorkAC(id));
+		dispatch(deleteWorkAC(id, getUserID));
 		setOpen(false);
 	};
 	//end of dialog
@@ -121,7 +135,7 @@ export default function CardItem({
 	return (
 		<>
 			<div className={classes.root}>
-				<div className="card-wrapper" style={{ position: 'relative' }}>
+				<CardImgWrapper className="card-wrapper" style={{ position: 'relative' }}>
 					{user?._id === getUserID && showButtons && (
 						<div
 							className={classes.buttonsDeleteEdit}
@@ -148,7 +162,9 @@ export default function CardItem({
 							<img src={image} alt={title} className="card-image" />
 						</div>
 						<div className={classes.cardTitle}>
-							<Typography variant="subtitle1">{title}</Typography>
+							<Typography variant="subtitle1" className={classes.textCenter}>
+								{title}
+							</Typography>
 							{isLiked ? (
 								<IconButton
 									color="secondary"
@@ -168,7 +184,7 @@ export default function CardItem({
 							)}
 						</div>
 					</Link>
-				</div>
+				</CardImgWrapper>
 			</div>
 			<div>
 				<Dialog
@@ -178,10 +194,10 @@ export default function CardItem({
 					aria-describedby="alert-dialog-description"
 				>
 					<DialogTitle id="alert-dialog-title">
-						{"Use Google's location service?"}
+						{"Are you sure you want to permanently delete the post?"}
 					</DialogTitle>
 					<DialogContent>
-						<DialogContentText id="Are you sure you want to permanently delete the post?">
+						<DialogContentText  id="alert-dialog-description">
 							There will be no opportunity to return a post about your art!
 						</DialogContentText>
 					</DialogContent>

@@ -154,7 +154,7 @@ export const Work = () => {
 								</Button>
 							) : null}
 						</div>
-						{showForm ? <OrderForm setPrice={oneWorkState.price} /> : null}
+						{showForm ? <OrderForm setPrice={oneWorkState.price} workId={oneWorkState._id} /> : null}
             
 					</div>
 

@@ -1,15 +1,14 @@
-import { Container, makeStyles, Theme } from "@material-ui/core";
-import zIndex from "@material-ui/core/styles/zIndex";
-import { relative } from "path";
-import { useEffect, useState } from "react";
-import { set } from "react-hook-form";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteWorkAC } from "../../redux/actionCreators/deleteWorkAC";
-
-import { getMyWorksAC } from "../../redux/actionCreators/getMyWorksAC";
+import { useParams } from "react-router-dom";
+import { getOneArtistWorksAC } from "../../redux/actionCreators/getOneArtistWorksAC";
 import { rootState } from "../../redux/init";
+import { Container, Divider, makeStyles, Theme } from "@material-ui/core";
 import CardItem from "../Card/Card";
 
+interface ParamTypes {
+  id: string;
+}
 const useStyles = makeStyles((theme: Theme) => ({
   header: {
     textAlign: "center",
@@ -23,26 +22,30 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 15,
   },
 }));
-
-export const MyWorks = () => {
+export const Artist = () => {
   const classes = useStyles();
+  const { id } = useParams<ParamTypes>();
 
   const dispatch = useDispatch();
-
-  const getUserID = useSelector((state: rootState) => state.userState.user.id);
-  const myWorksState = useSelector((state: rootState) => state.myWorks.myWorks);
+  const getArtistWorks = useSelector(
+    (state: rootState) => state.oneArtistWorks.oneArtistWorks
+  );
+  console.log(getArtistWorks);
 
   useEffect(() => {
-    dispatch(getMyWorksAC(getUserID));
-  }, [dispatch, getUserID]);
+    dispatch(getOneArtistWorksAC(id));
+  }, [dispatch, id]);
 
   return (
     <>
-      {myWorksState.length === 0 ? (
-        <h3>You have not published any works yet</h3>
+       <Container fixed>
+    <h1>{(getArtistWorks[0].user.username && (getArtistWorks[0].user.username).toUpperCase())}</h1>
+    <Divider />
+      {getArtistWorks.length === 0 ? (
+        <h3>This author has not published any works</h3>
       ) : (
         <Container className={classes.container}>
-          {myWorksState.map((item, index) => (
+          {getArtistWorks.map((item, index) => (
             <CardItem
               key={item._id || index}
               id={item._id}
@@ -56,6 +59,7 @@ export const MyWorks = () => {
           ))}
         </Container>
       )}
+      </Container>
     </>
   );
 };
