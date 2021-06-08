@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
+import { FormHelperText } from "@material-ui/core";
 
 
 const CardWrapper = styled.div`
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 250,
       height: 337,
       textDecoration: "none",
+      dispalay: 'flex',
     },
     link: {
       textDecoration: "none",
