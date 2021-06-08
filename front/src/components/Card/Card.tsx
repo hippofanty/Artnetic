@@ -17,6 +17,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import styled from "styled-components";
+
+
+const CardImgWrapper = styled.div`
+
+  &:hover {
+    background-color: #DAD9D7;
+  }
+`;
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -126,7 +135,7 @@ export default function CardItem({
 	return (
 		<>
 			<div className={classes.root}>
-				<div className="card-wrapper" style={{ position: 'relative' }}>
+				<CardImgWrapper className="card-wrapper" style={{ position: 'relative' }}>
 					{user?._id === getUserID && showButtons && (
 						<div
 							className={classes.buttonsDeleteEdit}
@@ -175,7 +184,7 @@ export default function CardItem({
 							)}
 						</div>
 					</Link>
-				</div>
+				</CardImgWrapper>
 			</div>
 			<div>
 				<Dialog
