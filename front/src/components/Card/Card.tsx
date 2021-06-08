@@ -91,7 +91,6 @@ export default function CardItem({
 	user,
 }: CardProps) {
 	//dialog
-  console.log('useeeeeeeeeeeeeeeeeeeeeer', user);
   
 	const [open, setOpen] = React.useState(false);
 

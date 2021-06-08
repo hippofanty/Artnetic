@@ -1,9 +1,10 @@
 import { makeStyles, Theme, Typography } from '@material-ui/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getWorksAC } from '../../redux/actionCreators/getWorks';
 import { rootState } from '../../redux/init';
+import { ParamTypes } from '../Categories/Categories';
 import { CategoryButton } from './categoriesButtons';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -112,9 +113,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const SearchSection: React.FC = (props) => {
 	const classes = useStyles();
-  const dispatch = useDispatch();
 	const [allCategories, setAllCategories] =
 		useState<[{ _id: string; name: string; image: string }]>();
+
+	const sortedCategoriesNames = allCategories?.sort((a, b) =>
+		a.name.localeCompare(b.name)
+	);
+
+	const { category } = useParams<ParamTypes>();
+
+	const worksAmount = useSelector((state: rootState) => state.works.works);
 
 	const getCategories = useCallback(async () => {
 		const response = await fetch('/api/v1/categories');
@@ -126,16 +134,11 @@ export const SearchSection: React.FC = (props) => {
 		getCategories();
 	}, [getCategories]);
 
-  // const category = 'all'
-  // useEffect(() => {
-  //   dispatch(getWorksAC(category));
-  // }, [category, dispatch]);
-
 	return (
 		<section className={classes.mainSection}>
 			<div className={classes.searchTitleBlock}>
 				<Typography variant="h3" className={classes.searchtitle}>
-					All
+					{category ? category : undefined}
 				</Typography>
 				<hr className={classes.searchTitleDivider} />
 			</div>
@@ -166,7 +169,7 @@ export const SearchSection: React.FC = (props) => {
 						<span>Categories</span>
 					</Typography>
 					<ul className={classes.categoriesButtonsBlock}>
-						{allCategories?.map((item) => (
+						{sortedCategoriesNames?.map((item) => (
 							<CategoryButton
 								categoryId={item._id}
 								categoryName={item.name}
@@ -178,13 +181,13 @@ export const SearchSection: React.FC = (props) => {
 			</div>
 
 			<div className={classes.searchContentBlock}>
-
 				<div className={classes.searchResults}>
-					<div className={classes.searchResultsText}> 42 results</div>
+					<div className={classes.searchResultsText}>
+						{worksAmount.length} results
+					</div>
 				</div>
 
 				<div className={classes.children}>{props.children}</div>
-
 			</div>
 		</section>
 	);
