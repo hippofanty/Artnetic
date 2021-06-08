@@ -39,7 +39,7 @@ export const Artist = () => {
   return (
     <>
        <Container fixed>
-    <h1>{(getArtistWorks[0].user.username && (getArtistWorks[0].user.username).toUpperCase())}</h1>
+    <h1>{(getArtistWorks[0]?.user?.username && (getArtistWorks[0].user.username).toUpperCase())}</h1>
     <Divider />
       {getArtistWorks.length === 0 ? (
         <h3>This author has not published any works</h3>
