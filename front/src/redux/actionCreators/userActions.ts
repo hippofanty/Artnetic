@@ -181,23 +181,24 @@ export const removeFromFavouriteList =
 	};
 
 export const setApprovedOrdersAC =
-	(): ThunkAction<void, rootState, unknown, SetApprovedOrders> =>
+	(userId: string): ThunkAction<void, rootState, unknown, SetApprovedOrders> =>
 	async (dispatch, getState) => {
-		const state = getState();
-		const response = await fetch(
-			`/api/v1/users/${state.userState.user.id}/orders`
-		);
+    if (userId !== '') {
+      const response = await fetch(
+        `/api/v1/users/${userId}/orders`
+      );
 
-		if (response.status === 200) {
-			const { approvedOrders } = await response.json();
-			console.log(
-				'🚀 ~ file: userActions.ts ~ line 191 ~ ПРИНИМАЕМ ЗАКАЗЫ',
-				approvedOrders
-			);
-
-      dispatch({
-        type: Types.SET_APPROVED_ORDERS,
-        payload: approvedOrders,
-      })
-		}
+      if (response.status === 200) {
+        const { approvedOrders } = await response.json();
+        console.log(
+          '🚀 ~ file: userActions.ts ~ line 191 ~ ПРИНИМАЕМ ЗАКАЗЫ',
+          approvedOrders
+        );
+  
+        dispatch({
+          type: Types.SET_APPROVED_ORDERS,
+          payload: approvedOrders,
+        })
+      }
+    }
 	};
