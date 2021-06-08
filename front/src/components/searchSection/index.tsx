@@ -123,6 +123,7 @@ export const SearchSection: React.FC = (props) => {
 	const { category } = useParams<ParamTypes>();
 
 	const worksAmount = useSelector((state: rootState) => state.works.works);
+  const artistsWorksAmount = useSelector((state: rootState) => state.oneArtistWorks.oneArtistWorks);
 
 	const getCategories = useCallback(async () => {
 		const response = await fetch('/api/v1/categories');
@@ -183,7 +184,7 @@ export const SearchSection: React.FC = (props) => {
 			<div className={classes.searchContentBlock}>
 				<div className={classes.searchResults}>
 					<div className={classes.searchResultsText}>
-						{worksAmount.length} results
+            {artistsWorksAmount.length ? (artistsWorksAmount.length) : (worksAmount.length)} results
 					</div>
 				</div>
 

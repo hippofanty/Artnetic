@@ -8,7 +8,11 @@ export const oneArtistWorksReducer = ( state: OneArtistWorksState = initialState
         ...state,
         oneArtistWorks: action.payload
       };
-
+      case Types.DELETE_ONE_ARTIST_WORKS:
+        return {
+          ...state,
+          oneArtistWorks: []
+        }
     default:
       return state;
   }
