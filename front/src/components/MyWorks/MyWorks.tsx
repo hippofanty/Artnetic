@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexWrap: "wrap",
     margin: 15,
   },
-
 }));
 
 export const MyWorks = () => {
@@ -44,18 +43,16 @@ export const MyWorks = () => {
       ) : (
         <Container className={classes.container}>
           {myWorksState.map((item, index) => (
-
-              <CardItem
+            <CardItem
               key={item._id || index}
-                id={item._id}
-                category={item.category}
-                image={item.image}
-                description={item.description}
-                price={item.price}
-                title={item.title}
-                user={item.user}
-              />
-
+              id={item._id}
+              category={item.category}
+              image={item.image}
+              description={item.description}
+              price={item.price}
+              title={item.title}
+              user={item.user}
+            />
           ))}
         </Container>
       )}

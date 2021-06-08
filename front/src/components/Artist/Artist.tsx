@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOneArtistWorksAC } from "../../redux/actionCreators/getOneArtistWorksAC";
 import { rootState } from "../../redux/init";
-import { Container, makeStyles, Theme } from "@material-ui/core";
+import { Container, Divider, makeStyles, Theme } from "@material-ui/core";
 import CardItem from "../Card/Card";
 
 interface ParamTypes {
@@ -38,7 +38,9 @@ export const Artist = () => {
 
   return (
     <>
-    {/* <h1>{(getArtistWorks[0].user.username).toUpperCase()}</h1> */}
+       <Container fixed>
+    <h1>{(getArtistWorks[0].user.username && (getArtistWorks[0].user.username).toUpperCase())}</h1>
+    <Divider />
       {getArtistWorks.length === 0 ? (
         <h3>This author has not published any works</h3>
       ) : (
@@ -57,6 +59,7 @@ export const Artist = () => {
           ))}
         </Container>
       )}
+      </Container>
     </>
   );
 };
