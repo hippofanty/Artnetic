@@ -146,6 +146,7 @@ export default function Profile() {
 					Сообщения
 				</TabPanel>
 			</SwipeableViews>
+      
 		</div>
 	);
 }
