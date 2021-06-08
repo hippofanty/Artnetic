@@ -33,7 +33,7 @@ export const Categories = () => {
     dispatch(getWorksAC(category));
   }, [category, dispatch]);
   return (
-    <>
+    <Container fixed>
       <h1 className={classes.header}>{category === 'all' ? 'All categories': category === 'fineArt' ? 'Fine art' : category}</h1>
       <Container className={classes.container}>
         {worksState.map((item) => (
@@ -49,6 +49,6 @@ export const Categories = () => {
           />
         ))}
       </Container>
-    </>
+    </Container>
   );
 };
