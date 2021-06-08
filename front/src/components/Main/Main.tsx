@@ -10,7 +10,7 @@ import { Work } from "../Work/Work";
 import { MyFavourites } from '../Profile/myFavourites';
 import { Artists } from '../Artists/Artists';
 import { MyOrders } from '../Profile/myOrders';
-
+import {Artist} from '../Artist/Artist'
 
 export const Main = () => {
 	return (
@@ -23,6 +23,9 @@ export const Main = () => {
 				<Container fixed>
           <Route exact path="/artists">
             <Artists />
+          </Route>
+          <Route exact path="/artist/:id">
+            <Artist />
           </Route>
 					<Route exact path="/categories/:category">
 						<Categories />

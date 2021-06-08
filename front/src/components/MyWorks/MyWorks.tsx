@@ -1,4 +1,5 @@
 import { Container, makeStyles, Theme } from "@material-ui/core";
+import zIndex from "@material-ui/core/styles/zIndex";
 import { relative } from "path";
 import { useEffect, useState } from "react";
 import { set } from "react-hook-form";
@@ -42,9 +43,10 @@ export const MyWorks = () => {
         <h3>You have not published any works yet</h3>
       ) : (
         <Container className={classes.container}>
-          {myWorksState.map((item) => (
+          {myWorksState.map((item, index) => (
 
               <CardItem
+              key={item._id || index}
                 id={item._id}
                 category={item.category}
                 image={item.image}

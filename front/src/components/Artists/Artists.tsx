@@ -25,7 +25,6 @@ export const Artists = () => {
     dispatch(getArtistsAC());
   }, [dispatch]);
   const getArtists = useSelector((state: rootState) => state.artists.artists);
-  console.log(getArtists, "geeeeeeeeeeeeeeeeet");
 
   return (
     <>

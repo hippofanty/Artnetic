@@ -62,7 +62,7 @@ export interface CardProps {
 
 export function Card({ key, id, username, picture, alt }: CardProps) {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  
 
   return (
     <>
