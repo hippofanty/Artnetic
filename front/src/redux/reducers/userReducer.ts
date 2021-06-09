@@ -50,6 +50,14 @@ export const userReducer = (
         ...state,
         
       }
+    case Types.SET_AVATAR:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          avatar: action.payload,
+        }
+      }
     default:
       return state;
   }
