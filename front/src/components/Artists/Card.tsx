@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       // maxWidth: 345,
       // minWidth:340,
-      width: 250,
-      height: 337,
+      width: 225,
+      height: 270,
       textDecoration: "none",
       dispalay: 'flex',
     },
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     titlePadd: {
       padding: "0 12px",
+      opacity: 0.6,
     },
     buttonsDeleteEdit: {
       position: "absolute",
@@ -49,7 +50,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     delete_edit: {},
     textCenter: {
-      textAlign: "center",
+      fontFamily: `'Josefin Sans', sans-serif`,
+      fontSize: '15px',
+			textAlign: 'center',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      color: '#484848',
+      width: '100%',
     },
   })
 );

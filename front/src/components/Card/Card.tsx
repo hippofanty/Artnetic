@@ -17,14 +17,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import styled from "styled-components";
-
+import styled from 'styled-components';
 
 const CardImgWrapper = styled.div`
-
-  &:hover {
-    background-color: #DAD9D7;
-  }
+	&:hover {
+		background-color: #dad9d7;
+	}
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -32,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		root: {
 			// maxWidth: 345,
 			// minWidth:340,
-			width: 250,
+			width: 249,
 			height: 337,
 			textDecoration: 'none',
 		},
@@ -49,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		titlePadd: {
 			padding: '0 12px',
+      opacity: 0.6,
 		},
 		buttonsDeleteEdit: {
 			position: 'absolute',
@@ -58,7 +57,14 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		delete_edit: {},
 		textCenter: {
+      fontFamily: `'Josefin Sans', sans-serif`,
+      fontSize: '15px',
 			textAlign: 'center',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      color: '#484848',
+      width: '100%',
 		},
 	})
 );
@@ -91,7 +97,7 @@ export default function CardItem({
 	user,
 }: CardProps) {
 	//dialog
-  
+
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
@@ -134,7 +140,10 @@ export default function CardItem({
 	return (
 		<>
 			<div className={classes.root}>
-				<CardImgWrapper className="card-wrapper" style={{ position: 'relative' }}>
+				<CardImgWrapper
+					className="card-wrapper"
+					style={{ position: 'relative' }}
+				>
 					{user?._id === getUserID && showButtons && (
 						<div
 							className={classes.buttonsDeleteEdit}
@@ -193,10 +202,10 @@ export default function CardItem({
 					aria-describedby="alert-dialog-description"
 				>
 					<DialogTitle id="alert-dialog-title">
-						{"Are you sure you want to permanently delete the post?"}
+						{'Are you sure you want to permanently delete the post?'}
 					</DialogTitle>
 					<DialogContent>
-						<DialogContentText  id="alert-dialog-description">
+						<DialogContentText id="alert-dialog-description">
 							There will be no opportunity to return a post about your art!
 						</DialogContentText>
 					</DialogContent>

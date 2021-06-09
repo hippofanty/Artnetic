@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 	availButt: {
 		margin: '20px 0 10px',
 	},
+  iconButt: {
+    opacity: 0.6,
+  }
 }));
 
 export const Work = () => {
@@ -125,6 +128,7 @@ export const Work = () => {
 										setLike(false);
 										dispatch(removeFromFavouriteList(oneWorkState._id));
 									}}
+                  className={classes.iconButt}
 								>
 									<FavoriteIcon />
 								</IconButton>
@@ -136,6 +140,7 @@ export const Work = () => {
 										setLike(true);
 										addToFavouritesHandler(oneWorkState._id);
 									}}
+                  className={classes.iconButt}
 								>
 									<FavoriteBorderIcon />
 								</IconButton>
