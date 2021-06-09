@@ -46,11 +46,13 @@ export const userReducer = (
         approvedOrders: action.payload,
       }
     case Types.SET_AVATAR:
+      console.log(state, 'state', action.payload);
       return {
         ...state,
         user: {
           ...state.user,
           avatar: action.payload,
+          
         }
       }
     default:

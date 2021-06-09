@@ -118,7 +118,7 @@ export interface GetApprovedOrders {
 }
 export interface SetAvatarAction {
   type: Types.SET_AVATAR;
-  payload: string;
+  payload: string | undefined;
 }
 
 export interface getAllOrders {
@@ -148,8 +148,5 @@ export type Actions =
   | GetApprovedOrders
   | GetOneArtistWorksAction
   | deleteOneArtistWorksAction
-<<<<<<< HEAD
   | SetAvatarAction
-=======
   | getAllOrders
->>>>>>> feature/AdminPanel

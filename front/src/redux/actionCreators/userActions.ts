@@ -261,12 +261,16 @@ export const setAvatarAC =
           avatar,
         }),
       });
-
+      
       const result = await response.json();
+      console.log(result, result.status, 'result, result.status');
       if (result.status === "200") {
+        console.log('dispatch');
+        console.log('before avatar dispatch', avatar);
+        
         dispatch({
           type: Types.SET_AVATAR,
-          payload: result.avatar,
+          payload: avatar,
         });
       }
     }

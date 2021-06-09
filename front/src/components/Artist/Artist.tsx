@@ -48,7 +48,6 @@ export const Artist = () => {
 
   return (
     <>
-<<<<<<< HEAD
       <Container fixed>
         <h1>
           {getArtistWorks[0]?.user?.username &&
@@ -77,30 +76,6 @@ export const Artist = () => {
           </Container>
         )}
       </Container>
-=======
-       {/* <Container fixed> */}
-    {/* <h1>{(getArtistWorks[0]?.user?.username && (getArtistWorks[0].user.username).toUpperCase())}</h1> */}
-    {/* <Divider /> */}
-      {getArtistWorks.length === 0 ? (
-        <h3>This author has not published any works</h3>
-      ) : (
-        <Container className={classes.container}>
-          {getArtistWorks.map((item, index) => (
-            <CardItem
-              key={item._id || index}
-              id={item._id}
-              category={item.category}
-              image={item.image}
-              description={item.description}
-              price={item.price}
-              title={item.title}
-              user={item.user}
-            />
-          ))}
-        </Container>
-      )}
-      {/* </Container> */}
->>>>>>> feature/SearchSection
     </>
   );
 };
