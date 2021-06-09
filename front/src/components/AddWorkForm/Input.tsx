@@ -6,6 +6,7 @@ interface InputProps {
 	className: string;
 	label: string;
 	type?: string;
+  defaultValue?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
