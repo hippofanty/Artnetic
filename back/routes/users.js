@@ -32,5 +32,18 @@ const updatedUser = await User.findOneAndUpdate({_id: id}, {firstname, lastname,
     console.log(error);
   }
 });
+router.put('/edit/avatar/:id', async (req, res) => {
+  try {
+// console.log(req.body, 'reeeeeeeeeeeeq');
+const { id } = req.params;
+
+const { avatar } = req.body
+
+const updatedUser = await User.findOneAndUpdate({_id: id}, {avatar});
+    return res.json({status: '200'});
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;

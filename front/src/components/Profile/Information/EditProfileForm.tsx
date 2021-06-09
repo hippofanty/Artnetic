@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "./Input";
-
+import Alert from "@material-ui/lab/Alert";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { rootState } from "../../../redux/init";
@@ -10,10 +10,10 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 import { useState } from "react";
 
-import Button from "@material-ui/core/Button";
-import styled from "styled-components";
 
 import TextField from "@material-ui/core/TextField";
+import styled from "styled-components";
+import Button from "@material-ui/core/Button";
 
 const MyButton = styled(Button)`
   MuiButton-root {
@@ -80,7 +80,6 @@ type Inputs = {
   about?: string;
 };
 
-
 // const schema = yup.object().shape({
 //   title: yup.string().required("title is a required field"),
 //   description: yup.string().required("description is a required field"),
@@ -88,11 +87,10 @@ type Inputs = {
 // });
 
 export const EditProfileForm = () => {
-
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state: rootState) => state.userState?.user);
-
+  const [showGreenAlarm, setShowGreenAlarm] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -116,7 +114,9 @@ export const EditProfileForm = () => {
       }),
     });
     const result = await response.json();
-    console.log(result, "result test");
+    if (result.status === '200') {
+      setShowGreenAlarm(true)
+    }
   };
   return (
     <>
@@ -127,13 +127,13 @@ export const EditProfileForm = () => {
         <div className={classes.inputs}>
           <MyInput
             className={classes.input}
-            defaultValue={user?.firstname ? user.firstname : ''}
+            defaultValue={user?.firstname ? user.firstname : ""}
             label="firstname"
             {...register("firstname")}
           />
           <MyInput
             className={classes.input}
-            defaultValue={user?.lastname ? user.lastname : ''}
+            defaultValue={user?.lastname ? user.lastname : ""}
             label="lastname"
             {...register("lastname")}
           />
@@ -141,19 +141,19 @@ export const EditProfileForm = () => {
             className={classes.input}
             label="email"
             defaultValue={user?.email}
-            {...register("email", {required: true})}
+            {...register("email", { required: true })}
           />
           <MyInput
             className={classes.input}
             type="tel"
             label="phone"
-            defaultValue={user?.phone ? user.phone : ''}
+            defaultValue={user?.phone ? user.phone : ""}
             {...register("phone")}
           />
           <MyInput
             className={classes.input}
             label="company"
-            defaultValue={user?.company ? user.company : ''}
+            defaultValue={user?.company ? user.company : ""}
             {...register("company")}
           />
 
@@ -163,11 +163,13 @@ export const EditProfileForm = () => {
             label="About you"
             multiline
             rows={4}
-            defaultValue={user?.about ? user.about : ''}
+            defaultValue={user?.about ? user.about : ""}
             variant="outlined"
             {...register("about")}
           />
-
+          {showGreenAlarm && <Alert severity="success">
+            Thank you! Changes have been accepted!
+          </Alert>}
           <MyButton type="submit" className={classes.saveBtn}>
             Save
           </MyButton>

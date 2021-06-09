@@ -7,7 +7,7 @@ import Box from "@material-ui/core/Box";
 import { Container, Divider } from "@material-ui/core";
 import { EditProfileForm } from "./EditProfileForm";
 import { UploadAvatar } from "./UploadAvatar";
-
+import {Subscribe} from './Subscribe'
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
@@ -51,6 +51,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
   },
+  tab: {
+
+    fontFamily: `'Montserrat', sans-serif`,
+  },
 }));
 
 export default function VerticalTabs() {
@@ -70,26 +74,39 @@ export default function VerticalTabs() {
         onChange={handleChange}
         aria-label="Vertical tabs example"
         className={classes.tabs}
-        style={{ justifyContent: "flex-start" }}
+
       >
-        <Tab label="Edit profile" {...a11yProps(0)} />
-        <Tab label="Profile photo" {...a11yProps(1)} />
-        <Tab label="Change password" {...a11yProps(2)} />
-        <Tab label="Email preferences" {...a11yProps(2)} />
+        <Tab label="Edit profile" {...a11yProps(0)} className={classes.tab} />
+        <Tab label="Profile photo" {...a11yProps(1)} className={classes.tab}  />
+        <Tab label="Change password" {...a11yProps(2)}  className={classes.tab} />
+        <Tab label="Email preferences" {...a11yProps(2)}  className={classes.tab} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Container>PROFILE<Divider /></Container>
-        <EditProfileForm />
+        <Container style={{ fontFamily: `'Montserrat', sans-serif`}}>
+          PROFILE
+          <Divider />
+          <EditProfileForm />
+        </Container>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        PROFILE PHOTO
-        <UploadAvatar />
+        <Container  style={{ fontFamily: `'Montserrat', sans-serif`}}>
+          {/* PROFILE PHOTO */}
+          <Divider />
+          <UploadAvatar />
+        </Container>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        CHANGE PASSWORD
+        <Container  style={{ fontFamily: `'Montserrat', sans-serif`}}>
+          CHANGE PASSWORD
+          <Divider />
+        </Container>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        SUBSCRIBE TO
+        <Container  style={{ fontFamily: `'Montserrat', sans-serif`}}>
+          SUBSCRIBE TO
+          <Divider />
+          <Subscribe />
+        </Container>
       </TabPanel>
     </div>
   );
