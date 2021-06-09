@@ -45,11 +45,6 @@ export const userReducer = (
         ...state,
         approvedOrders: action.payload,
       }
-    case Types.GET_APPROVED_ORDERS:
-      return {
-        ...state,
-        
-      }
     case Types.SET_AVATAR:
       return {
         ...state,

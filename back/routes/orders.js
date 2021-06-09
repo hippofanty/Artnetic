@@ -20,13 +20,25 @@ router.route('/new').post(async (req, res) => {
 	}
 });
 
-router.route('/').get(async (req, res) => {
+router.route('/approved').get(async (req, res) => {
 	try {
 		const allOrders = await Order.find().populate(['user', 'work']);
 		const allApprovedOrders = allOrders.filter(
-			(order) => order.status === 'Approved'
-		);
+      (order) => order.status === 'Approved'
+      );
+    console.log('СТАТУС APPROVED:', allApprovedOrders)
 		res.status(200).json({ allApprovedOrders });
+	} catch (error) {
+		console.log(error);
+		return res.status(500);
+	}
+});
+
+router.route('/').get(async (req, res) => {
+	try {
+		const allOrders = await Order.find().populate(['user', 'work']);
+    console.log('ВСЕ ЗАКАЗЫ:', allOrders)
+		res.status(200).json({ allOrders });
 	} catch (error) {
 		console.log(error);
 		return res.status(500);

@@ -84,6 +84,11 @@ export default function DropdownProfileIcon({
 						Orders
 					</Link>
 				</MenuItem>
+				<MenuItem onClick={handleClose}>
+					<Link to="/profile/manage" className={classes.linkDrop}>
+						Manage Orders
+					</Link>
+				</MenuItem>
 				<Divider />
 				<MenuItem
 					onClick={() => {

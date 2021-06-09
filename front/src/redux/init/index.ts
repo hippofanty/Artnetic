@@ -19,6 +19,19 @@ export interface Work {
     password: string;
   };
 }
+export interface Order {
+  _id: string;
+  vendorCode: string;
+  date: string;
+  user: {
+    _id: string;
+    role: string;
+    username: string;
+    email: string;
+  };
+  work: Work;
+  status: string;
+}
 
 export interface ApprovedOrder {
   _id: string;
@@ -92,6 +105,7 @@ export interface ArtistsState {
 
 export interface OrdersState {
   allApprovedOrders: ApprovedOrder[];
+  allOrders: Order[];
 }
 
 // тип для просмотра полей стора в useSelector()
@@ -140,6 +154,7 @@ export const initialStateOneArtistWorks = {
 
 export const intitialStateOrders = {
   allApprovedOrders: [],
+  allOrders: [],
 }
 
 export const initialStateWork = {
