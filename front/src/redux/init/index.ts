@@ -1,7 +1,10 @@
 export type Category = string;
 
 export type Id = string;
-
+// export type Subscriptions = ['newspaper',
+// 'products',
+// 'research',
+// 'reminder']
 export interface Work {
   _id: string;
   title: string;
@@ -66,6 +69,7 @@ export interface Artist {
 }
 
 export interface User {
+  // subscriptions: []
   lastname?: string;
   firstname?: string;
   phone?: string;
@@ -132,6 +136,8 @@ export const initialUserState = {
     lastname: '',
     company: '',
     about: '',
+    // subscriptions: ['', ''],
+    // subscriptions: [],
   },
   isAuth: false,
   favourites: [],

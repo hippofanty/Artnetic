@@ -143,7 +143,7 @@ export function AddWorkForm({ setShowForm }: Props) {
   };
 
   return (
-    <>
+    <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
@@ -223,6 +223,6 @@ export function AddWorkForm({ setShowForm }: Props) {
         </div>
       </form>
       <Divider />
-    </>
+    </div>
   );
 }

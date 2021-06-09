@@ -1,5 +1,6 @@
 // action creator
 import { ThunkAction } from "redux-thunk";
+// import { rootState, Subscriptions } from "../init";
 import { rootState } from "../init";
 import {
   addFavouriteWork,
@@ -7,6 +8,7 @@ import {
   SetApprovedOrders,
   SetAvatarAction,
   setFavouriteWorks,
+  // SetSubscriptionsAction,
   SetUserAction,
   Types,
   unsetFavouriteWorks,
@@ -275,3 +277,33 @@ export const setAvatarAC =
       }
     }
   };
+// export const setSubscriptionsAC =
+//   (
+//     userId: string,
+//     // subscriptions: Subscriptions[],
+//     // subscriptions: string[],
+//     // subscriptions: string[],
+//     subscriptions: [],
+//   ): ThunkAction<void, rootState, unknown, SetSubscriptionsAction> =>
+//   async (dispatch) => {
+//     if (userId !== "") {
+//       const response = await fetch(`/api/v1/users//subscription/${userId}`, {
+//         method: "PUT",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           subscriptions,
+//         }),
+//       });
+      
+//       const result = await response.json();
+//       console.log(result, result.status, 'subscriptions result, result.status');
+//       if (result.status === "200") {
+//         dispatch({
+//           type: Types.SET_SUBSCRIPTIONS,
+//           payload: subscriptions,
+//         });
+//       }
+//     }
+//   };

@@ -8,6 +8,7 @@ import { Container, Divider } from "@material-ui/core";
 import { EditProfileForm } from "./EditProfileForm";
 import { UploadAvatar } from "./UploadAvatar";
 import {Subscribe} from './Subscribe'
+import { EditPassword } from "./EditPassword";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
@@ -99,6 +100,7 @@ export default function VerticalTabs() {
         <Container  style={{ fontFamily: `'Montserrat', sans-serif`}}>
           CHANGE PASSWORD
           <Divider />
+          <EditPassword />
         </Container>
       </TabPanel>
       <TabPanel value={value} index={3}>

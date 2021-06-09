@@ -50,6 +50,7 @@ const User = new Schema({
 			ref: 'Works',
 		},
 	],
+	subscriptions: [String],
 });
 
 module.exports = model('Users', User);

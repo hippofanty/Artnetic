@@ -1,34 +1,109 @@
-import React from 'react';
-import Switch from '@material-ui/core/Switch';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import React from "react";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Switch from "@material-ui/core/Switch";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { rootState } from "../../../redux/init";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    divSubscr: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    btn: {
+      margin: "20px",
+    },
+  })
+);
+// type Keys = [
+//  'newspaper',
+// 'products',
+// 'research',
+// 'reminder',
+// ]
 
 export function Subscribe() {
-  const [checked, setChecked] = React.useState(false);
+  const dispatch = useDispatch();
+  const userid = useSelector((state: rootState) => state.userState.user.id);
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    newspaper: false,
+    products: false,
+    research: false,
+    reminder: false,
+  });
 
-  const toggleChecked = () => {
-    setChecked((prev) => !prev);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
   };
-
+  const sendSubscription = () => {
+    // let keys:Keys = Object.keys(state);
+    let keys = Object.keys(state);
+    const subcriptions = [];
+    for (let i = 0; i < keys.length; i++) {
+      //@ts-ignore
+      if (state[keys[i]]) {
+        subcriptions.push(keys[i]);
+      }
+    }
+    // dispatch(setSubscriptionsAC(userid, subscriptions));
+  };
   return (
-    <FormGroup>
-
-      <FormControlLabel
-        control={<Switch checked={checked} onChange={toggleChecked} />}
-        label="Monthly newspaper"
-      />
-      <FormControlLabel
-        control={<Switch checked={checked} onChange={toggleChecked} />}
-        label="Product emails"
-      />
-      <FormControlLabel
-        control={<Switch checked={checked} onChange={toggleChecked} />}
-        label="Research emails"
-      />
-      <FormControlLabel
-        control={<Switch checked={checked} onChange={toggleChecked} />}
-        label="Reminder emails"
-      />
-    </FormGroup>
+    <div className={classes.divSubscr}>
+      <FormControl component="fieldset">
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={state.newspaper}
+                onChange={handleChange}
+                name="newspaper"
+              />
+            }
+            label="Monthly newspaper"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={state.products}
+                onChange={handleChange}
+                name="products"
+              />
+            }
+            label="Product emails"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={state.research}
+                onChange={handleChange}
+                name="research"
+              />
+            }
+            label="Research emails"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={state.reminder}
+                onChange={handleChange}
+                name="reminder"
+              />
+            }
+            label="Reminder emails"
+          />
+        </FormGroup>
+        <FormHelperText>To stay informed</FormHelperText>
+      </FormControl>
+      <Button onClick={sendSubscription} className={classes.btn}>
+        SUBSCRIBE
+      </Button>
+    </div>
   );
 }

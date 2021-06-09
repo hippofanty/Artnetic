@@ -24,6 +24,7 @@ export enum Types {
   GET_ONE_ARTIST_WORKS = "GET_ONE_ARTIST_WORKS",
   DELETE_ONE_ARTIST_WORKS = "DELETE_ONE_ARTIST_WORKS",
   SET_AVATAR = "SET_AVATAR",
+  // SET_SUBSCRIPTIONS = "SET_SUBSCRIPTIONS",
 }
 
 export interface SetUserAction {
@@ -39,6 +40,7 @@ export interface SetUserAction {
     lastname?: string;
     company?: string;
     about?: string;
+    // subscriptions?: string[]
   };
 }
 
@@ -125,6 +127,10 @@ export interface getAllOrders {
   type: Types.GET_ALL_ORDERS;
   payload: Order[];
 }
+// export interface SetSubscriptionsAction {
+//   type: Types.SET_SUBSCRIPTIONS;
+//   payload: [];
+// }
 
 export interface deleteOneArtistWorksAction {
   type: Types.DELETE_ONE_ARTIST_WORKS;
@@ -150,3 +156,4 @@ export type Actions =
   | deleteOneArtistWorksAction
   | SetAvatarAction
   | getAllOrders
+  // | SetSubscriptionsAction
