@@ -18,9 +18,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: "flex",
     flexDirection: "row",
-    // justifyContent: "space-around",
+    justifyContent: "flex-start",
     flexWrap: "wrap",
     margin: 15,
+    padding: 0,
   },
 }));
 export const Artist = () => {
@@ -42,9 +43,9 @@ export const Artist = () => {
 
   return (
     <>
-       <Container fixed>
-    <h1>{(getArtistWorks[0]?.user?.username && (getArtistWorks[0].user.username).toUpperCase())}</h1>
-    <Divider />
+       {/* <Container fixed> */}
+    {/* <h1>{(getArtistWorks[0]?.user?.username && (getArtistWorks[0].user.username).toUpperCase())}</h1> */}
+    {/* <Divider /> */}
       {getArtistWorks.length === 0 ? (
         <h3>This author has not published any works</h3>
       ) : (
@@ -63,7 +64,7 @@ export const Artist = () => {
           ))}
         </Container>
       )}
-      </Container>
+      {/* </Container> */}
     </>
   );
 };
