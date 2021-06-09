@@ -15,6 +15,7 @@ import { MyArts } from '../MyArts/MyArts';
 import { SearchSection } from '../searchSection';
 import { Information } from '../Profile/Information/Information';
 import { EditProfileForm } from '../Profile/Information/EditProfileForm';
+import { Gallery } from '../Carousel/Carousel';
 
 export const Main = () => {
 	return (
@@ -23,6 +24,7 @@ export const Main = () => {
         
 				<Route exact path="/">
 					<Hero />
+          <Gallery /> 
 					<AboutUsMain />
 				</Route>
 

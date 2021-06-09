@@ -4,6 +4,7 @@ import {
   fade,
   Grow,
   makeStyles,
+  Menu,
   MenuItem,
   MenuList,
   Paper,
@@ -159,7 +160,7 @@ export const Search = () => {
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
-                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}
               >
                 <Paper>
                   <ClickAwayListener onClickAway={handleClose}>
@@ -168,7 +169,7 @@ export const Search = () => {
                       id="menu-list-grow"
                       onKeyDown={handleListKeyDown}
                     >
-                        <i>Works</i>
+                        <b><i style={{padding: 10}}>Works</i></b>
                       {searchResult?.workResults.length
                         ? searchResult?.workResults.map((elem) => (
                             <Link
@@ -184,7 +185,7 @@ export const Search = () => {
                           ))
                         : <MenuItem><i>Nothing is found</i></MenuItem>
                       }
-                         <i>Categories</i>
+                         <b><i style={{padding: 10}}>Categories</i></b>
                       {searchResult?.categoryResults.length
                         ? searchResult?.categoryResults.map((elem) => (
                             <Link
