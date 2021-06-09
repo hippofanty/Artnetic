@@ -32,6 +32,18 @@ router.get('/:name', async (req, res) => {
 	}
 });
 
+router.get('/carousel/works', async (req, res) => {
+  try {
+    const allWorks = await Work.find().populate('category');
+    const works = allWorks.slice(0, 16);
+    console.log('works>>>>>>', works);
+    return res.status(200).json({works});
+  } catch (error) {
+    console.log(error);
+    return res.status(405);
+  }
+});
+
 router.get('/works/:id', async (req, res) => {
 	const work = await Work.findOne({ _id: req.params.id }).populate(['category', 'user']);
 	res.json({ work });
