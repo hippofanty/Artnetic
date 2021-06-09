@@ -1,5 +1,5 @@
 // any types here
-import { Id, Work, Artist, ApprovedOrder } from "../init";
+import { Id, Work, Artist, ApprovedOrder, Order } from "../init";
 
 export enum Types {
   GET_CATEGORIES = "GET_CATEGORIES",
@@ -19,6 +19,8 @@ export enum Types {
 
   SET_APPROVED_ORDERS = "SET_APPROVED_ORDERS",
   GET_APPROVED_ORDERS = "GET_APPROVED_ORDERS",
+  GET_ALL_ORDERS = "GET_ALL_ORDERS",
+
   GET_ONE_ARTIST_WORKS = "GET_ONE_ARTIST_WORKS",
   DELETE_ONE_ARTIST_WORKS = "DELETE_ONE_ARTIST_WORKS",
 }
@@ -54,6 +56,7 @@ export interface UnsetUserAction {
     about?: string;
   };
 }
+
 export interface getWorksAction {
   type: Types.GET_CATEGORIES;
   payload: Work[];
@@ -112,6 +115,12 @@ export interface GetApprovedOrders {
   type: Types.GET_APPROVED_ORDERS;
   payload: ApprovedOrder[];
 }
+
+export interface getAllOrders {
+  type: Types.GET_ALL_ORDERS;
+  payload: Order[];
+}
+
 export interface deleteOneArtistWorksAction {
   type: Types.DELETE_ONE_ARTIST_WORKS;
 
@@ -134,3 +143,4 @@ export type Actions =
   | GetApprovedOrders
   | GetOneArtistWorksAction
   | deleteOneArtistWorksAction
+  | getAllOrders

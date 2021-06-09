@@ -1,7 +1,7 @@
 import { makeStyles, Theme, Typography } from '@material-ui/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { getWorksAC } from '../../redux/actionCreators/getWorks';
 import { rootState } from '../../redux/init';
 import { ParamTypes } from '../Categories/Categories';
@@ -121,6 +121,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const SearchSection: React.FC = (props) => {
+  const location = useLocation();
+  console.log("🚀 ~ file: index.tsx ~ line 125 ~ location", location)
+  
 	const classes = useStyles();
 	const [allCategories, setAllCategories] =
 		useState<[{ _id: string; name: string; image: string }]>();

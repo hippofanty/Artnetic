@@ -11,6 +11,11 @@ export const ordersReducer = (
 				...state,
 				allApprovedOrders: action.payload,
 			};
+    case Types.GET_ALL_ORDERS:
+      return {
+        ...state,
+        allOrders: action.payload,
+      }
 		default:
 			return state;
 	}
