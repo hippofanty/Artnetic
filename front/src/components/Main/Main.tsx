@@ -11,12 +11,16 @@ import { MyFavourites } from '../Profile/myFavourites';
 import { Artists } from '../Artists/Artists';
 import { MyOrders } from '../Profile/myOrders';
 import { Artist } from '../Artist/Artist';
+import { MyArts } from '../MyArts/MyArts';
 import { SearchSection } from '../searchSection';
+import { Information } from '../Profile/Information/Information';
+import { EditProfileForm } from '../Profile/Information/EditProfileForm';
 
 export const Main = () => {
 	return (
 		<>
 			<Switch>
+        
 				<Route exact path="/">
 					<Hero />
 					<AboutUsMain />
@@ -40,9 +44,7 @@ export const Main = () => {
 					</SearchSection>
 				</Route>
 
-				<Route exact path="/profile">
-					<Profile />
-				</Route>
+
 
 				<Route exact path="/profile/favourites">
 					<MyFavourites />
@@ -51,9 +53,19 @@ export const Main = () => {
 				<Route exact path="/profile/orders">
 					<MyOrders />
 				</Route>
+				<Route exact path="/myArts">
+					<MyArts />
+				</Route>
+				<Route exact path="/profile">
+					<Information />
+				</Route>
 
 				<Route exact path="/categories/works/:id">
 					<Work />
+				</Route>
+
+				<Route exact path="/editest">
+					<EditProfileForm />
 				</Route>
 				{/* </Container> */}
 				{/* </div> */}

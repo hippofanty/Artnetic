@@ -106,12 +106,12 @@ export default function Profile() {
 				onChangeIndex={handleChangeIndex}
 			>
 				<TabPanel value={value} index={0} dir={theme.direction}>
-					<Paper className={classes.avatar} variant="outlined" square>
+					{/* <Paper className={classes.avatar} variant="outlined" square>
 						<img
 							src="https://www.kinonews.ru/insimgs/2019/newsimg/newsimg87089.jpg"
 							alt=""
 						/>
-					</Paper>
+					</Paper> */}
 					<Information />
 				</TabPanel>
 				<TabPanel value={value} index={1} dir={theme.direction}>
@@ -146,6 +146,7 @@ export default function Profile() {
 					Сообщения
 				</TabPanel>
 			</SwipeableViews>
+      
 		</div>
 	);
 }

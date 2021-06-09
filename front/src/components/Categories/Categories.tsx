@@ -6,51 +6,47 @@ import { getWorksAC } from '../../redux/actionCreators/getWorks';
 import { rootState } from '../../redux/init';
 import CardItem from '../Card/Card';
 export interface ParamTypes {
-  category: string;
+	category: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  header: {
-    textAlign: 'center',
-  },
+	header: {
+		textAlign: 'center',
+	},
 
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
+	container: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+		flexWrap: 'wrap',
+    padding: 0,
+	},
 }));
 
 export const Categories = () => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const worksState = useSelector((state: rootState) => state.works.works);
-  console.log(worksState, 'worksState', typeof worksState);
+	const classes = useStyles();
+	const dispatch = useDispatch();
+	const worksState = useSelector((state: rootState) => state.works.works);
+	console.log(worksState, 'worksState', typeof worksState);
 
-  const { category } = useParams<ParamTypes>();
-  useEffect(() => {
-    dispatch(getWorksAC(category));
-  }, [category, dispatch]);
-  return (
-    <Container fixed>
-      {/* <h1 className={classes.header}>{category === 'all' ? 'All categories': category === 'fineArt' ? 'Fine art' : category}</h1> */}
-
-      <Container className={classes.container}>
-        {worksState.map((item) => (
-          <CardItem
-            id={item._id}
-            category={item.category}
-            image={item.image}
-            description={item.description}
-            price={item.price}
-            title={item.title}
-            user={item.user}
-            key={item._id}
-          />
-        ))}
-      </Container>
-
-    </Container>
-  );
+	const { category } = useParams<ParamTypes>();
+	useEffect(() => {
+		dispatch(getWorksAC(category));
+	}, [category, dispatch]);
+	return (
+		<Container className={classes.container}>
+			{worksState.map((item) => (
+				<CardItem
+					id={item._id}
+					category={item.category}
+					image={item.image}
+					description={item.description}
+					price={item.price}
+					title={item.title}
+					user={item.user}
+					key={item._id}
+				/>
+			))}
+		</Container>
+	);
 };

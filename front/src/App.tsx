@@ -18,9 +18,11 @@ function App() {
 				headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			const result = await response.json();
-			const { id, username, email, role } = result.existedUser;
+			const { id, username, email, role, avatar, phone, firstname, lastname, company, about  } = result.existedUser;
 
-			dispatch(refreshUser(id, username, email, role));
+			dispatch(refreshUser(id, username, email, role, avatar, phone, firstname, lastname, company, about ));
+
+			// dispatch(refreshUser(result.existedUser));
       dispatch(getFavouriteWorksFromBd(userId));
 		} catch (e) {
 			localStorage.removeItem('token');
@@ -50,3 +52,4 @@ function App() {
 }
 
 export default App;
+

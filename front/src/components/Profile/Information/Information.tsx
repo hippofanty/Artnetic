@@ -1,10 +1,12 @@
-import React from 'react';
-import { Box } from '@material-ui/core';
+import { Container, Divider } from "@material-ui/core";
+import VerticalTabs from "./Tabs";
 
 export const Information = () => {
-  return (
-    <Box>
-      <h1> Информация профиля</h1>
-    </Box>
-  )
-}
+  return (<>
+    <Container fixed maxWidth="md">
+    <h1> Info</h1>
+      <VerticalTabs />
+    </Container>
+    </>
+  );
+};

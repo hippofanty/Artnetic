@@ -14,13 +14,32 @@ const User = new Schema({
 		type: String,
 		required: true,
 	},
+	firstname: {
+		type: String,
+
+	},
+	lastname: {
+		type: String,
+	},
+	phone: {
+		type: String,
+	},
+	company: {
+		type: String,
+	},
+	about: {
+		type: String,
+	},
+	avatar: {
+		type: String,
+    default: 'https://res.cloudinary.com/dcvhz3sqn/image/upload/v1623181013/empty_onzxyb.png'
+	},
 	role: {
 		type: String,
 		default: 'Guest',
 	},
 	favourites: [
 		{
-			// type: String,
 			type: Schema.Types.ObjectId,
 			ref: 'Works',
 		},

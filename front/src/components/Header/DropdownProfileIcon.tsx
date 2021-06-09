@@ -14,20 +14,28 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		link: {
 			textDecoration: 'none',
+			fontFamily: `'Josefin Sans', sans-serif`,
+			fontSize: '.9em',
 		},
 		linkDrop: {
 			textDecoration: 'none',
 			color: 'grey',
 		},
+		navMargin: {
+			margin: '0px 5px',
+		},
 	})
 );
 
 interface Props {
-  logoutHandler: () => void,
-  getUsername: string,
+	logoutHandler: () => void;
+	getUsername: string;
 }
 
-export default function DropdownProfileIcon({logoutHandler, getUsername}: Props) {
+export default function DropdownProfileIcon({
+	logoutHandler,
+	getUsername,
+}: Props) {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -45,9 +53,9 @@ export default function DropdownProfileIcon({logoutHandler, getUsername}: Props)
 				aria-controls="simple-menu"
 				aria-haspopup="true"
 				onClick={handleClick}
-				className={classes.link}
-        size="large"
-        startIcon={<AccountCircleIcon />}
+				className={[classes.link, classes.navMargin].join(' ')}
+				size="large"
+				startIcon={<AccountCircleIcon />}
 			>
 				{getUsername}
 			</Button>
@@ -59,21 +67,31 @@ export default function DropdownProfileIcon({logoutHandler, getUsername}: Props)
 				onClose={handleClose}
 				anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
 				transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        getContentAnchorEl={null}
+				getContentAnchorEl={null}
 			>
 				<MenuItem onClick={handleClose}>
 					<Link to="/profile" className={classes.linkDrop}>
 						Profile
 					</Link>
 				</MenuItem>
-        <MenuItem onClick={handleClose}>
+				<MenuItem onClick={handleClose}>
+					<Link to="/myArts" className={classes.linkDrop}>
+						My Arts
+					</Link>
+				</MenuItem>
+				<MenuItem onClick={handleClose}>
 					<Link to="/profile/orders" className={classes.linkDrop}>
 						Orders
 					</Link>
 				</MenuItem>
 				<Divider />
-				<MenuItem onClick={() => {handleClose(); logoutHandler()}}>
-						Log out
+				<MenuItem
+					onClick={() => {
+						handleClose();
+						logoutHandler();
+					}}
+				>
+					Log out
 				</MenuItem>
 			</Menu>
 		</div>

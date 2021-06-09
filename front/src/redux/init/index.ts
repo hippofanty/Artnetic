@@ -53,6 +53,12 @@ export interface Artist {
 }
 
 export interface User {
+  lastname?: string;
+  firstname?: string;
+  phone?: string;
+  company?: string;
+  about?: string;
+  avatar?: string;
   id: string;
   email: string;
   username: string;
@@ -114,6 +120,12 @@ export const initialUserState = {
     email: "",
     username: "",
     role: "",
+    avatar: '',
+    phone: '',
+    firstname: '',
+    lastname: '',
+    company: '',
+    about: '',
   },
   isAuth: false,
   favourites: [],

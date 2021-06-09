@@ -1,4 +1,4 @@
-import React, { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
+import React, { forwardRef, ReactNode } from 'react';
 import TextField from '@material-ui/core/TextField';
 
 interface InputProps {

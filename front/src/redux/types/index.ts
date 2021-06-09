@@ -20,6 +20,7 @@ export enum Types {
   SET_APPROVED_ORDERS = "SET_APPROVED_ORDERS",
   GET_APPROVED_ORDERS = "GET_APPROVED_ORDERS",
   GET_ONE_ARTIST_WORKS = "GET_ONE_ARTIST_WORKS",
+  DELETE_ONE_ARTIST_WORKS = "DELETE_ONE_ARTIST_WORKS",
 }
 
 export interface SetUserAction {
@@ -29,6 +30,12 @@ export interface SetUserAction {
     email: string;
     username: string;
     role: string;
+    avatar?: string;
+    phone?: string;
+    firstname?: string;
+    lastname?: string;
+    company?: string;
+    about?: string;
   };
 }
 
@@ -39,6 +46,12 @@ export interface UnsetUserAction {
     email: string;
     username: string;
     role: string;
+    avatar?: string;
+    phone?: string;
+    firstname?: string;
+    lastname?: string;
+    company?: string;
+    about?: string;
   };
 }
 export interface getWorksAction {
@@ -99,6 +112,10 @@ export interface GetApprovedOrders {
   type: Types.GET_APPROVED_ORDERS;
   payload: ApprovedOrder[];
 }
+export interface deleteOneArtistWorksAction {
+  type: Types.DELETE_ONE_ARTIST_WORKS;
+
+}
 
 export type Actions =
   | getWorksAction
@@ -115,4 +132,5 @@ export type Actions =
   | removeFavouriteWork
   | SetApprovedOrders
   | GetApprovedOrders
-  | GetOneArtistWorksAction;
+  | GetOneArtistWorksAction
+  | deleteOneArtistWorksAction

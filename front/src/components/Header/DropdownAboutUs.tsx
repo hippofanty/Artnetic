@@ -15,8 +15,19 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		linkDrop: {
 			textDecoration: 'none',
-			color: 'grey',
+			color: '#222',
+			textTransform: 'uppercase',
+			fontSize: '.99em',
+      fontFamily: `'Montserrat', sans-serif`,
 		},
+    navText: {
+      fontFamily: `'Josefin Sans', sans-serif`,
+      fontSize: '.9em',
+      letterSpacing: '1px',
+    },
+    navMargin: {
+      margin: '0px 5px',
+    }
 	})
 );
 
@@ -38,10 +49,10 @@ export default function DropdownAboutUs() {
 				aria-controls="simple-menu"
 				aria-haspopup="true"
 				onClick={handleClick}
-				className={classes.link}
+				className={[classes.link, classes.navMargin].join(' ')}
 				size="large"
 			>
-				О нас
+				<span className={classes.navText}>About</span>
 			</Button>
 			<Menu
 				id="simple-menu"
@@ -53,21 +64,21 @@ export default function DropdownAboutUs() {
 				transformOrigin={{ vertical: 'top', horizontal: 'left' }}
 				getContentAnchorEl={null}
 			>
-				<MenuItem onClick={handleClose}>
-					<Link to="#" className={classes.linkDrop}>
-						О нас
-					</Link>
+					<Link to="#">
+				<MenuItem onClick={handleClose} className={classes.linkDrop}>
+						About
 				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="#" className={classes.linkDrop}>
-						Клиенты
 					</Link>
+					<Link to="#">
+				<MenuItem onClick={handleClose} className={classes.linkDrop}>
+						Clients
 				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="#" className={classes.linkDrop}>
-						Контакты
 					</Link>
+					<Link to="#">
+				<MenuItem onClick={handleClose} className={classes.linkDrop}>
+						Contact
 				</MenuItem>
+					</Link>
 			</Menu>
 		</div>
 	);

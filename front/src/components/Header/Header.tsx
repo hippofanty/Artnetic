@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		navTextColor: {
 			color: '#000000',
+      maxWidth: '1350px',
 		},
 		link: {
 			textDecoration: 'none',
@@ -95,6 +96,18 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '20ch',
       },
     },
+    navText: {
+      fontFamily: `'Josefin Sans', sans-serif`,
+      fontSize: '.9em',
+      letterSpacing: '1px',
+    },
+    toolBar: {
+      padding: '10px 20px',
+      height: '70px',
+    },
+    navMargin: {
+      margin: '0px 5px',
+    }
 	})
 );
 
@@ -136,7 +149,7 @@ export const Header = () => {
 		<div className={classes.root}>
 			<AppBar position="static" className={classes.navbar}>
 				<Container fixed className={classes.navTextColor}>
-					<Toolbar>
+					<Toolbar className={classes.toolBar}>
 						<div className={classes.navInnerContainer}>
 							<Link to="/">
 								<IconButton
@@ -159,13 +172,13 @@ export const Header = () => {
 							<DropdownCategories />
 							<DropdownAboutUs />
 							<Link to="/artists" className={classes.link}>
-								<Button size="large">Artists</Button>
+								<Button size="large" className={classes.navMargin}><span className={classes.navText}>Artists</span></Button>
 							</Link>
 
 							{userLoggedIn ? (
 								<>
 									<Link to="/profile/favourites" className={classes.link}>
-                  <IconButton aria-label="my-favourites">
+                  <IconButton aria-label="my-favourites" className={classes.navMargin}>
 											<FavouriteIcon />
 										</IconButton>
 									</Link>
@@ -177,7 +190,6 @@ export const Header = () => {
 								</>
 							) : (
 								<>
-									<IconButton color="inherit" aria-label="login"></IconButton>
 									<Button
 										color="inherit"
 										startIcon={<OpenInBrowserIcon />}
@@ -186,8 +198,9 @@ export const Header = () => {
 											toggleModal();
 											isLoginBut();
 										}}
+                    className={classes.navMargin}
 									>
-										Log in
+										<span className={classes.navText}>Log in</span>
 									</Button>
 									<Button
 										color="inherit"
@@ -196,8 +209,9 @@ export const Header = () => {
 											toggleModal();
 											isSignupBut();
 										}}
+                    className={classes.navMargin}
 									>
-										Sign up
+										<span className={classes.navText}>Sign up</span>
 									</Button>
 								</>
 							)}
