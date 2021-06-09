@@ -15,6 +15,12 @@ function serializeUser(user) {
     username: user.username,
     email: user.email,
     role: user.role,
+    avatar: user.avatar || undefined, // удалить undefined
+    lastname: user.lastname || undefined,
+    firstname: user.firstname || undefined,
+    phone: user.phone || undefined,
+    company: user.company || undefined,
+    about: user.about || undefined,
   };
 }
 

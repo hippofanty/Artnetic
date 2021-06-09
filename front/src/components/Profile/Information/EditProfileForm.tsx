@@ -72,8 +72,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Inputs = {
-  firstName?: string;
-  lastName?: string;
+  firstname?: string;
+  lastname?: string;
   email: string;
   phone?: string;
   company?: string;
@@ -88,9 +88,10 @@ type Inputs = {
 // });
 
 export const EditProfileForm = () => {
+
   const classes = useStyles();
   const dispatch = useDispatch();
-  const user = useSelector((state: rootState) => state.userState.user);
+  const user = useSelector((state: rootState) => state.userState?.user);
 
   const {
     register,
@@ -107,10 +108,10 @@ export const EditProfileForm = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        firstName: data.firstName,
-        lastName: data.lastName,
+        firstname: data.firstname,
+        lastname: data.lastname,
         email: data.email,
-        phone: data.email,
+        phone: data.phone,
         company: data.company,
         about: data.about,
       }),
@@ -127,29 +128,33 @@ export const EditProfileForm = () => {
         <div className={classes.inputs}>
           <MyInput
             className={classes.input}
-            label="firstName"
-            {...register("firstName")}
+            defaultValue={user?.firstname ? user.firstname : ''}
+            label="firstname"
+            {...register("firstname")}
           />
           <MyInput
             className={classes.input}
-            label="lastName"
-            {...register("lastName")}
+            defaultValue={user?.lastname ? user.lastname : ''}
+            label="lastname"
+            {...register("lastname")}
           />
           <MyInput
             className={classes.input}
             label="email"
             defaultValue={user?.email}
-            {...register("email")}
+            {...register("email", {required: true})}
           />
           <MyInput
             className={classes.input}
             type="tel"
             label="phone"
+            defaultValue={user?.phone ? user.phone : ''}
             {...register("phone")}
           />
           <MyInput
             className={classes.input}
             label="company"
+            defaultValue={user?.company ? user.company : ''}
             {...register("company")}
           />
 
@@ -159,6 +164,7 @@ export const EditProfileForm = () => {
             label="About you"
             multiline
             rows={4}
+            defaultValue={user?.about ? user.about : ''}
             variant="outlined"
           />
 

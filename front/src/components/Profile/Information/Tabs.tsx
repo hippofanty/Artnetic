@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { Container, Divider } from "@material-ui/core";
 import { EditProfileForm } from "./EditProfileForm";
+import { UploadAvatar } from "./UploadAvatar";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -82,6 +83,7 @@ export default function VerticalTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         PROFILE PHOTO
+        <UploadAvatar />
       </TabPanel>
       <TabPanel value={value} index={2}>
         CHANGE PASSWORD

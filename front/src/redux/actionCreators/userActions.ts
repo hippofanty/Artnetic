@@ -31,13 +31,14 @@ export const login =
 
 		if (response.status === 200) {
 			const result = await response.json();
-			console.log(result);
-			const { id, username, email, role } = result.existedUser;
+      console.log(result.existedUser, 'resuuuuuuuuuuuult');
+      
+			const { id, username, email, role, firstname, lastname, phone, about, company } = result.existedUser;
 			const { token } = result; // либо result.token
 			localStorage.setItem('token', token);
 			dispatch({
 				type: Types.SET_USER,
-				payload: { id, username, email, role },
+				payload: { id, username, email, role, firstname, lastname, phone, about, company },
 			});
 		}
 	};
@@ -47,7 +48,7 @@ export const signup =
 		username: string,
 		email: string,
 		password: string,
-		role: string
+		role: string,
 	): ThunkAction<void, rootState, unknown, SetUserAction> =>
 	async (dispatch) => {
 		const response = await fetch('/api/v1/auth/signup', {
@@ -65,12 +66,12 @@ export const signup =
 
 		if (response.status === 200) {
 			const result = await response.json();
-			const { id, username, email, role } = result.newUser;
+			const { id, username, email, role, avatar } = result.newUser;
 			const { token } = result; // либо result.token
 			localStorage.setItem('token', token);
 			dispatch({
 				type: Types.SET_USER,
-				payload: { id, username, email, role },
+				payload: { id, username, email, role, avatar },
 			});
 		}
 	};
@@ -83,6 +84,12 @@ export const logout = (): UnsetUserAction => {
 			email: '',
 			username: '',
 			role: '',
+			avatar: '',
+			phone: '',
+      firstname: '',
+      lastname: '',
+      company: '',
+      about: '',
 		},
 	};
 };
@@ -91,11 +98,17 @@ export const refreshUser = (
 	id: string,
 	username: string,
 	email: string,
-	role: string
+	role: string,
+  avatar?: string,
+  phone?: string,
+  firstname?: string,
+  lastname?: string,
+  company?: string,
+  about?: string,
 ): SetUserAction => {
 	return {
 		type: Types.SET_USER,
-		payload: { id, username, email, role },
+		payload: { id, username, email, role, avatar, phone, firstname, lastname, company, about },
 	};
 };
 

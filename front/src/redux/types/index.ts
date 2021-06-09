@@ -30,6 +30,12 @@ export interface SetUserAction {
     email: string;
     username: string;
     role: string;
+    avatar?: string;
+    phone?: string;
+    firstname?: string;
+    lastname?: string;
+    company?: string;
+    about?: string;
   };
 }
 
@@ -40,6 +46,12 @@ export interface UnsetUserAction {
     email: string;
     username: string;
     role: string;
+    avatar?: string;
+    phone?: string;
+    firstname?: string;
+    lastname?: string;
+    company?: string;
+    about?: string;
   };
 }
 export interface getWorksAction {
