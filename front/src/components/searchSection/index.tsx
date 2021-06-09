@@ -1,11 +1,12 @@
-import { makeStyles, Theme, Typography } from '@material-ui/core';
+import { Breadcrumbs, makeStyles, Theme, Typography } from '@material-ui/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { HashRouter as Router, Route, Link, useParams } from 'react-router-dom';
 import { getWorksAC } from '../../redux/actionCreators/getWorks';
 import { rootState } from '../../redux/init';
 import { ParamTypes } from '../Categories/Categories';
 import { CategoryButton } from './categoriesButtons';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	mainSection: {
@@ -25,8 +26,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 		textAlign: 'center',
 		margin: '45px 0',
 		textTransform: 'uppercase',
-    fontFamily: `'Montserrat', sans-serif`,
-    fontSize: '36px',
+		fontFamily: `'Montserrat', sans-serif`,
+		fontSize: '36px',
 	},
 	searchTitleDivider: {
 		borderTop: '1px solid rgb(238, 238, 238)',
@@ -51,6 +52,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 	breadCrumb: {
 		marginBottom: '40px',
 	},
+  breadCrumbText: {
+    color: '#222',
+    fontFamily: `'Montserrat', sans serif`,
+    fontSize: '15px',
+    lineHeight: 1.4,
+  },
 	refineBlock: {
 		marginBottom: '20px',
 		width: '100%',
@@ -111,13 +118,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 		overflow: 'hidden',
 		zIndex: -1,
 	},
-  clearButtFont: {
-    fontFamily: `'Josefin Sans', sans-serif`,
-  },
-  leftColTitles: {
-    fontFamily: `'Josefin Sans', sans-serif`,
-    fontSize: '16px',
-  }
+	clearButtFont: {
+		fontFamily: `'Josefin Sans', sans-serif`,
+	},
+	leftColTitles: {
+		fontFamily: `'Josefin Sans', sans-serif`,
+		fontSize: '16px',
+	},
 }));
 
 export const SearchSection: React.FC = (props) => {
@@ -150,14 +157,25 @@ export const SearchSection: React.FC = (props) => {
 		<section className={classes.mainSection}>
 			<div className={classes.searchTitleBlock}>
 				<Typography variant="h4" className={classes.searchtitle}>
-					{category ? category : undefined}
+					{category && category}
+          {artistsWorksAmount[0]?.user.username && artistsWorksAmount[0].user.username}
 				</Typography>
 				<hr className={classes.searchTitleDivider} />
 			</div>
 
 			<div className={classes.leftCol}>
 				<div className={classes.breadCrumb}>
-					<p>Breadcrubm</p>
+					<Breadcrumbs
+						separator={<NavigateNextIcon fontSize="small" />}
+						aria-label="breadcrumb"
+					>
+						<Link to="/" color="inherit" className={classes.breadCrumbText}>
+							Home
+						</Link>
+						<Link to="#" color="inherit" className={classes.breadCrumbText}>
+							{artistsWorksAmount.length ? 'Artists' : 'Categories'}
+						</Link>
+					</Breadcrumbs>
 				</div>
 				<div className={classes.refineBlock}>
 					<Typography
@@ -182,10 +200,7 @@ export const SearchSection: React.FC = (props) => {
 					</Typography>
 					<ul className={classes.categoriesButtonsBlock}>
 						{sortedCategoriesNames?.map((item) => (
-							<CategoryButton
-								categoryName={item.name}
-								key={item._id}
-							/>
+							<CategoryButton categoryName={item.name} key={item._id} />
 						))}
 					</ul>
 				</div>
