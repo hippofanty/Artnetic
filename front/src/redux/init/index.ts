@@ -64,18 +64,13 @@ export interface User {
   username: string;
   role: string;
 }
-// export interface State {
-//   works: Work[];
-//   user: User;
-//   isAuth: boolean;
-// }
-
 // тип для userReducer
 export interface UserState {
   user: User;
   isAuth: boolean;
   favourites: Work[];
   approvedOrders: ApprovedOrder[];
+  
 }
 export interface WorksState {
   works: Work[];
@@ -100,10 +95,7 @@ export interface OrdersState {
 }
 
 // тип для просмотра полей стора в useSelector()
-// export interface rootState {
-//   works: Work[];
-//   userState: UserState;
-// }
+
 export interface rootState {
   works: WorksState;
   userState: UserState;
