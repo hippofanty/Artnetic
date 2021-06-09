@@ -19,9 +19,14 @@ router.route('/:userId/orders').get(async (req, res) => {
 		return res.status(500);
 	}
 });
-router.put('/edit', async (req, res) => {
+router.put('/edit/:id', async (req, res) => {
   try {
-console.log(req.body, 'reeeeeeeeeeeeq');
+// console.log(req.body, 'reeeeeeeeeeeeq');
+const { id } = req.params;
+
+const { firstname, lastname, email, phone, company, about } = req.body
+
+const updatedUser = await User.findOneAndUpdate({_id: id}, {firstname, lastname, email, phone, company, about});
     return res.json({status: '200'});
   } catch (error) {
     console.log(error);

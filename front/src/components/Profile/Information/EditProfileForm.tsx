@@ -100,9 +100,8 @@ export const EditProfileForm = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("data");
-    console.log(data);
-    const response = await fetch("/api/v1/users/edit", {
+    console.log("data", data);
+    const response = await fetch(`/api/v1/users/edit/${user.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -166,6 +165,7 @@ export const EditProfileForm = () => {
             rows={4}
             defaultValue={user?.about ? user.about : ''}
             variant="outlined"
+            {...register("about")}
           />
 
           <MyButton type="submit" className={classes.saveBtn}>
