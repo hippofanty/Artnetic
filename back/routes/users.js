@@ -19,5 +19,13 @@ router.route('/:userId/orders').get(async (req, res) => {
 		return res.status(500);
 	}
 });
+router.put('/edit', async (req, res) => {
+  try {
+console.log(req.body, 'reeeeeeeeeeeeq');
+    return res.json({status: '200'});
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
