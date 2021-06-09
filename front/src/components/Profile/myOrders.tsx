@@ -22,7 +22,8 @@ const useStyles = makeStyles({
 		textTransform: 'uppercase',
 	},
 	titlePadd: {
-		paddingBottom: '25px',
+		// paddingBottom: '25px',
+    paddingLeft: '50px'
 	},
 	tablePadd: {
 		padding: '50px',
@@ -31,6 +32,7 @@ const useStyles = makeStyles({
     margin: '0px auto',
     padding: '40px 0px',
     width: '100%',
+    maxWidth: '1350px',
   },
   link: {
     textDecoration: 'none',

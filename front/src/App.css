@@ -35,6 +35,8 @@
 .container__main {
 	background-color: #fff;
 	min-height: 100vh;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 15px !important;
 }
 
 .item-grid {
@@ -121,3 +123,7 @@
 * {
   text-decoration: none !important;
 }
+
+/* #root {
+  font-family: 'Montserrat', sans-serif;
+} */

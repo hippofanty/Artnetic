@@ -16,8 +16,19 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		linkDrop: {
 			textDecoration: 'none',
-			color: 'grey',
+			color: '#222',
+			textTransform: 'uppercase',
+			fontSize: '.99em',
+      fontFamily: `'Montserrat', sans-serif`,
 		},
+		navText: {
+			fontFamily: `'Josefin Sans', sans-serif`,
+			fontSize: '.9em',
+			letterSpacing: '1px',
+		},
+    navMargin: {
+      margin: '0px 5px',
+    }
 	})
 );
 
@@ -39,10 +50,10 @@ export default function DropdownCategories() {
 				aria-controls="simple-menu"
 				aria-haspopup="true"
 				onClick={handleClick}
-				className={classes.link}
-        size="large"
+				className={[classes.link, classes.navMargin].join(' ')}
+				size="large"
 			>
-				Категории
+				<span className={classes.navText}>Categories</span>
 			</Button>
 			<Menu
 				id="simple-menu"
@@ -52,39 +63,27 @@ export default function DropdownCategories() {
 				onClose={handleClose}
 				anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
 				transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        getContentAnchorEl={null}
+				getContentAnchorEl={null}
 			>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/all" className={classes.linkDrop}>
-						Все категории
-					</Link>
-				</MenuItem>
+				<Link to="/categories/all" >
+					<MenuItem onClick={handleClose} className={classes.linkDrop}>All</MenuItem>
+				</Link>
 				<Divider />
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/fineArt" className={classes.linkDrop}>
-						Живопись
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/graphics" className={classes.linkDrop}>
-						Графика
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/abstraction" className={classes.linkDrop}>
-						Абстракция
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/sculptures" className={classes.linkDrop}>
-						Скульптура
-					</Link>
-				</MenuItem>
-				<MenuItem onClick={handleClose}>
-					<Link to="/categories/other" className={classes.linkDrop}>
-						Иное
-					</Link>
-				</MenuItem>
+				<Link to="/categories/fineArt">
+					<MenuItem onClick={handleClose} className={classes.linkDrop}>Fineart</MenuItem>
+				</Link>
+				<Link to="/categories/graphics">
+					<MenuItem onClick={handleClose} className={classes.linkDrop}>Graphics</MenuItem>
+				</Link>
+				<Link to="/categories/abstraction">
+					<MenuItem onClick={handleClose} className={classes.linkDrop}>Abstraction</MenuItem>
+				</Link>
+				<Link to="/categories/sculptures">
+					<MenuItem onClick={handleClose} className={classes.linkDrop}>Sculptures</MenuItem>
+				</Link>
+				<Link to="/categories/other">
+					<MenuItem onClick={handleClose} className={classes.linkDrop}>Other</MenuItem>
+				</Link>
 			</Menu>
 		</div>
 	);

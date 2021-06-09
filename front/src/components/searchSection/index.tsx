@@ -9,7 +9,7 @@ import { CategoryButton } from './categoriesButtons';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	mainSection: {
-		maxWidth: '1300px',
+		maxWidth: '1350px',
 		margin: '0 auto',
 		display: 'flex',
 		flexWrap: 'wrap',
@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 		textAlign: 'center',
 		margin: '45px 0',
 		textTransform: 'uppercase',
+    fontFamily: `'Montserrat', sans-serif`,
+    fontSize: '36px',
 	},
 	searchTitleDivider: {
 		borderTop: '1px solid rgb(238, 238, 238)',
@@ -109,6 +111,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 		overflow: 'hidden',
 		zIndex: -1,
 	},
+  clearButtFont: {
+    fontFamily: `'Josefin Sans', sans-serif`,
+  },
+  leftColTitles: {
+    fontFamily: `'Josefin Sans', sans-serif`,
+    fontSize: '16px',
+  }
 }));
 
 export const SearchSection: React.FC = (props) => {
@@ -123,7 +132,9 @@ export const SearchSection: React.FC = (props) => {
 	const { category } = useParams<ParamTypes>();
 
 	const worksAmount = useSelector((state: rootState) => state.works.works);
-  const artistsWorksAmount = useSelector((state: rootState) => state.oneArtistWorks.oneArtistWorks);
+	const artistsWorksAmount = useSelector(
+		(state: rootState) => state.oneArtistWorks.oneArtistWorks
+	);
 
 	const getCategories = useCallback(async () => {
 		const response = await fetch('/api/v1/categories');
@@ -138,7 +149,7 @@ export const SearchSection: React.FC = (props) => {
 	return (
 		<section className={classes.mainSection}>
 			<div className={classes.searchTitleBlock}>
-				<Typography variant="h3" className={classes.searchtitle}>
+				<Typography variant="h4" className={classes.searchtitle}>
 					{category ? category : undefined}
 				</Typography>
 				<hr className={classes.searchTitleDivider} />
@@ -156,9 +167,9 @@ export const SearchSection: React.FC = (props) => {
 							classes.refineBlockTitle,
 						].join(' ')}
 					>
-						<span>Refine</span>
-						<Link to="#" className={classes.clearButt}>
-							Clear
+						<span className={classes.leftColTitles}>Refine</span>
+						<Link to="/categories/all" className={classes.clearButt}>
+							<span className={classes.clearButtFont}>Clear</span>
 						</Link>
 					</Typography>
 				</div>
@@ -167,12 +178,11 @@ export const SearchSection: React.FC = (props) => {
 						variant="subtitle1"
 						className={classes.searchContentBlockText}
 					>
-						<span>Categories</span>
+						<span className={classes.leftColTitles}>Categories</span>
 					</Typography>
 					<ul className={classes.categoriesButtonsBlock}>
 						{sortedCategoriesNames?.map((item) => (
 							<CategoryButton
-								categoryId={item._id}
 								categoryName={item.name}
 								key={item._id}
 							/>
@@ -184,7 +194,10 @@ export const SearchSection: React.FC = (props) => {
 			<div className={classes.searchContentBlock}>
 				<div className={classes.searchResults}>
 					<div className={classes.searchResultsText}>
-            {artistsWorksAmount.length ? (artistsWorksAmount.length) : (worksAmount.length)} results
+						{artistsWorksAmount.length
+							? artistsWorksAmount.length
+							: worksAmount.length}{' '}
+						results
 					</div>
 				</div>
 

@@ -5,26 +5,35 @@ import { useSelector } from 'react-redux';
 import { rootState } from '../../redux/init';
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-  }),
+	createStyles({
+		root: {
+			'& > *': {
+				margin: theme.spacing(1),
+			},
+		},
+		badge: {
+			opacity: 0.6,
+		},
+	})
 );
 
 export const FavouriteIcon = () => {
-  const classes = useStyles();
+	const classes = useStyles();
 
-  const userFavourites = useSelector((state: rootState) => state.userState.favourites);
-  const favLength = userFavourites.length;
+	const userFavourites = useSelector(
+		(state: rootState) => state.userState.favourites
+	);
+	const favLength = userFavourites.length;
 
-  return (
-    <div className={classes.root}>
-      <Badge badgeContent={favLength} color="secondary">
-        <FavoriteBorderIcon />
-      </Badge>
-    </div>
-  );
-}
+	return (
+		<div className={classes.root}>
+			<Badge
+				badgeContent={favLength}
+				color="secondary"
+				className={classes.badge}
+			>
+				<FavoriteBorderIcon />
+			</Badge>
+		</div>
+	);
+};
