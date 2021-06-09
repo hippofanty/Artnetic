@@ -6,7 +6,13 @@ import Divider from '@material-ui/core/Divider';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-
+import styled from 'styled-components';
+// MuiMenu-list MuiList-padding
+const MyMenu = styled(Menu)`
+.MuiList-root {
+		min-width: 115px;
+	}
+`;
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
@@ -59,9 +65,10 @@ export default function DropdownProfileIcon({
 			>
 				{getUsername}
 			</Button>
-			<Menu
+			<MyMenu
 				id="simple-menu"
 				anchorEl={anchorEl}
+
 				keepMounted
 				open={Boolean(anchorEl)}
 				onClose={handleClose}
@@ -98,7 +105,7 @@ export default function DropdownProfileIcon({
 				>
 					Log out
 				</MenuItem>
-			</Menu>
+			</MyMenu>
 		</div>
 	);
 }
