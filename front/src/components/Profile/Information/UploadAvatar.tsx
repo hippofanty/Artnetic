@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "green",
     },
     customFileUpload: {
-      border: "1px solid #ccc",
+      // border: "1px solid #ccc",
       borderRadius: "5px",
       // display: "inline-block",
       padding: "6px 12px",
@@ -43,9 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "black",
       color: "white",
       width: "150px",
-      marginTop: "30px",
-      marginRight: "30px",
-      alignSelf: "flex-end",
+      // marginTop: "30px",
+      // marginRight: "30px",
+      alignSelf: "center",
     },
   })
 );
@@ -102,7 +102,7 @@ export const UploadAvatar = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={classes.imgPDiv}   style={{position: 'relative'}} >
+          <div className={classes.imgPDiv}   style={{position: 'relative', display: 'flex'}} >
         <label htmlFor="fileUpload" className={classes.customFileUpload}>
             <img src={prew} ></img>
             {loader && <CircularProgress disableShrink  color="secondary" style={{position: 'absolute', top: '20%'}}  />}

@@ -169,4 +169,4 @@ export type Actions =
   | SetAvatarAction
   | getAllOrders
   | SetSubscriptionsAction
-  | EditProfileAction;
+  | EditProfileAction

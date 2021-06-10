@@ -92,7 +92,6 @@ export default function VerticalTabs() {
       <TabPanel value={value} index={1}>
         <Container  style={{ fontFamily: `'Montserrat', sans-serif`}}>
           {/* PROFILE PHOTO */}
-          <Divider />
           <UploadAvatar />
         </Container>
       </TabPanel>
