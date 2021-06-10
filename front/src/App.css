@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Unica+One&display=swap');
+@import "react-alice-carousel/lib/alice-carousel.css";
 
 .App {
 	text-align: center;
@@ -122,6 +123,58 @@
 
 * {
   text-decoration: none !important;
+}
+
+/* Carousel styles */
+/* .alice-carousel {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+} */
+
+.alice-carousel__stage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alice-carousel__stage-item {
+  margin: auto 2vw;
+}
+
+.carousel-img {
+  max-height: 250px;
+  max-width: fit-content;
+}
+
+.alice-carousel__prev-btn {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  z-index: 2;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 5px 5px 5px;
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: x-large;
+  color: black;
+  padding: 0 10px;
+}
+
+.alice-carousel__next-btn {
+  position: absolute;
+  top: 40%;
+  right: 0;
+  z-index: 2;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 5px 5px 5px;
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: x-large;
+  color: black;
+  padding: 0 10px;
 }
 
 /* #root {

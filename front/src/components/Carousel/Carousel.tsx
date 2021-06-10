@@ -1,6 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
+import { Link } from 'react-router-dom';
 import { Work } from '../../redux/init';
 
 const handleDragStart = (e: any) => e.preventDefault();
@@ -12,28 +13,32 @@ const items: ReactNode[] = [
 ];
 
 export const Gallery = () => {
-  const [works, setWorks] = useState<Work[]>();
+  // const [works, setWorks] = useState<Work[]>();
   const [workItems, setWorkItems] = useState<ReactNode[]>();
-  // const [items, setItems] = useState();
   // Get posts for carousel
   const itemsLoader = async () => {
     const response = await fetch('/api/v1/categories/carousel/works');
     const { works } = await response.json();
-    setWorks(works);
+    works?.map((el: Work) =>
+      items.push(
+        <Link to={`/categories/works/${el._id}`}>
+          <div>
+            <img
+              className="carousel-img"
+              src={el.image}
+              onDragStart={handleDragStart}
+              alt={el.title}
+            />
+          </div>
+        </Link>
+      )
+    );
+    setWorkItems(items);
   };
 
   useEffect(() => {
-    itemsLoader();
-    works?.map((el: Work) => items.push(<img src={`${el.image}`} onDragStart={handleDragStart} alt={`${el.title}`} />));
+    itemsLoader();   
   }, []);
-
-  useEffect(() => {
-    setWorkItems(items);
-  }, [items])
-
-
-  console.log(works);
-  
 
   return (
     <AliceCarousel
@@ -48,10 +53,12 @@ export const Gallery = () => {
         0: {
           items: 1,
         },
-        1024: {
-          items: 3,
+        1440: {
+          items: 6,
         },
       }}
+      paddingLeft={10}
+      paddingRight={10}
     />
   );
 };
