@@ -1,8 +1,6 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Categories } from '../Categories/Categories';
 import { AboutUsMain } from '../AboutUsMain/AboutUsMain';
-// import { Login } from '../Login';
-// import { Signup } from '../SignUp';
 import Profile from '../Profile/Profile';
 import { Hero } from '../Hero';
 import { Container } from '@material-ui/core';

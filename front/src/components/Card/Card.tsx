@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { deleteWorkAC } from '../../redux/actionCreators/deleteWorkAC';
 import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from '../../redux/init';
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		titlePadd: {
 			padding: '0 12px',
-      opacity: 0.6,
+			opacity: 0.6,
 		},
 		buttonsDeleteEdit: {
 			position: 'absolute',
@@ -57,14 +57,14 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		delete_edit: {},
 		textCenter: {
-      fontFamily: `'Josefin Sans', sans-serif`,
-      fontSize: '15px',
+			fontFamily: `'Josefin Sans', sans-serif`,
+			fontSize: '15px',
 			textAlign: 'center',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      color: '#484848',
-      width: '100%',
+			whiteSpace: 'nowrap',
+			overflow: 'hidden',
+			textOverflow: 'ellipsis',
+			color: '#484848',
+			width: '100%',
 		},
 	})
 );
@@ -96,6 +96,8 @@ export default function CardItem({
 	image,
 	user,
 }: CardProps) {
+	const location = useLocation();
+	console.log(location);
 	//dialog
 
 	const [open, setOpen] = React.useState(false);
@@ -144,22 +146,26 @@ export default function CardItem({
 					className="card-wrapper"
 					style={{ position: 'relative' }}
 				>
-					{user?._id === getUserID && showButtons && (
-						<div
-							className={classes.buttonsDeleteEdit}
-							onMouseEnter={() => setShowButtons(true)}
-							onMouseLeave={() => setShowButtons(false)}
-						>
-							<Button variant="contained" onClick={handleClickOpen}>
-								Delete
-							</Button>
-							<br />
-							<Button style={{ marginTop: '5px' }} variant="contained">
-								Edit
-							</Button>
-							<br></br>
-						</div>
-					)}
+					{' '}
+					{location.pathname === '/myArts'
+						? user?._id === getUserID &&
+						  showButtons && (
+								<div
+									className={classes.buttonsDeleteEdit}
+									onMouseEnter={() => setShowButtons(true)}
+									onMouseLeave={() => setShowButtons(false)}
+								>
+									<Button variant="contained" onClick={handleClickOpen}>
+										Delete
+									</Button>
+									<br />
+									<Button style={{ marginTop: '5px' }} variant="contained">
+										Edit
+									</Button>
+									<br></br>
+								</div>
+						  )
+						: null}
 					<Link className={classes.link} to={`/categories/works/${id}`}>
 						<div
 							className="card-image-wrapper"
