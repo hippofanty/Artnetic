@@ -13,6 +13,7 @@ export const MyArts = () => {
 			maxWidth: '1350px',
 			margin: '0 auto',
       display: 'flex',
+      flexDirection: 'column'
 		},
 	}));
 

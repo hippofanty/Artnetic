@@ -13,7 +13,7 @@ export const Description = forwardRef<HTMLInputElement, DescriptionProps>((props
         id="outlined-multiline-static"
         label="Description"
         multiline
-        rows={4}
+        rows={6}
         variant="outlined"
         inputRef={ref}
         {...props}

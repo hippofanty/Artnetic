@@ -39,7 +39,7 @@ export const MyWorks = () => {
   return (
     <>
       {myWorksState.length === 0 ? (
-        <h3>You have not published any works yet</h3>
+        <h3 style={{ textAlign: 'center' }}>You have not published any works yet</h3>
       ) : (
         <Container className={classes.container}>
           {myWorksState.map((item, index) => (

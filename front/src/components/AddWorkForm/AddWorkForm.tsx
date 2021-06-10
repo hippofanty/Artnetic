@@ -13,6 +13,7 @@ import Divider from "@material-ui/core/Divider";
 import { useState } from "react";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import { addMyWorkAC } from "../../redux/actionCreators/addMyWork";
+import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,10 +31,11 @@ const useStyles = makeStyles((theme: Theme) =>
     description: {
       marginBottom: "40px",
       flexBasis: "500px",
-      marginRight: "30px",
+      marginRight: "20px",
     },
     select: {
-      marginLeft: "50px",
+      width: "225px",
+      marginLeft: "10px",
     },
     fileUploadInput: {},
     fileUploadBtn: {
@@ -46,6 +48,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     descrCat: {
       display: "flex",
+    },
+    widthHeightSelector: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    widthHeightRow: {
+      display: "flex",
+      flexDirection: "row",
     },
     fileInput: {
       display: "none",
@@ -143,86 +153,106 @@ export function AddWorkForm({ setShowForm }: Props) {
   };
 
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        encType="multipart/form-data"
-        style={{ marginBottom: "15px" }}
-      >
-        <div className={classes.formDiv}>
-          <div className={classes.titlePrice}>
-            <Input
-              label="title"
-              {...register("title", { required: true })}
-              className={classes.input}
-            />
-            {errors.title && <span>This field is required</span>}
-            <Input
-              className={classes.input}
-              type="number"
-              label="price"
-              {...register("price", { required: true })}
-            />
-            {errors.price && <span>This field is required</span>}
-          </div>
-          <div className={classes.descrCat}>
-            <Description
-              // label="description"
-              {...register("description", { required: true })}
-              className={classes.description}
-            />
-            <MySelect
-              // className={classes.select}
-              options={[
-                { label: "Живопись", value: "fineArt" },
-                { label: "Скульптуры", value: "sculptures" },
-                { label: "Абстракция", value: "abstraction" },
-                { label: "Графика", value: "graphics" },
-                { label: "Иное", value: "other" },
-              ]}
-              {...register("category", { required: true })}
-            />
-            {errors.category && <span>This field is required</span>}
-          </div>
-          {errors.description && (
-            <span style={{ marginBottom: "20px" }}>
-              Field 'Description' is required
-            </span>
-          )}
-
-          <label
-            className={classes.customFileUpload}
-            style={{ width: "230px" }}
-          >
-            <input
-              type="file"
-              onInput={() => setUploaded(true)}
-              {...register("image", { required: true })}
-              className={classes.fileInput}
-              style={{ backgroundColor: "deeppink", display: "none" }}
-            />
-            <div style={{ display: "flex" }}>
-              <PhotoLibraryIcon />
-              <span
-                style={{
-                  marginLeft: "15px",
-                }}
-              >
-                Upload photo
-              </span>{" "}
-              {uploaded && <DoneAllIcon />}
+    <Container>
+      <div style={{ flexDirection: "column" }}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          encType="multipart/form-data"
+          style={{ marginBottom: "15px", marginLeft: '110px' }}
+        >
+          <div className={classes.formDiv}>
+            <div className={classes.titlePrice}>
+              <Input
+                label="title"
+                {...register("title", { required: true })}
+                className={classes.input}
+              />
+              {errors.title && <span>This field is required</span>}
+              <Input
+                className={classes.input}
+                type="number"
+                label="price"
+                {...register("price", { required: true })}
+              />
+              {errors.price && <span>This field is required</span>}
             </div>
-          </label>
+            <div className={classes.descrCat}>
+              <Description
+                // label="description"
+                {...register("description", { required: true })}
+                className={classes.description}
+              />
+              <div className={classes.widthHeightSelector}>
+                <div className={classes.widthHeightRow}>
+                  <Input
+                    label="width"
+                    {...register("width", { required: true })}
+                    className={classes.input}
+                    style={{ marginRight: "50px" }}
+                  />{" "}
+                  <Input
+                    label="height"
+                    {...register("height", { required: true })}
+                    className={classes.input}
+                  />
+                </div>
 
-          <br></br>
-          <MyButton
-            type="submit"
-            className={classes.fileUploadBtn}
-            loading={loading}
-          />
-        </div>
-      </form>
-      <Divider />
-    </div>
+                <MySelect
+                  className={classes.select}
+                  options={[
+                    { label: "Живопись", value: "fineArt" },
+                    { label: "Скульптуры", value: "sculptures" },
+                    { label: "Абстракция", value: "abstraction" },
+                    { label: "Графика", value: "graphics" },
+                    { label: "Иное", value: "other" },
+                  ]}
+                  {...register("category", { required: true })}
+                />
+              </div>
+
+              {errors.category && <span>This field is required</span>}
+            </div>
+
+            {errors.description && (
+              <span style={{ marginBottom: "20px" }}>
+                Field 'Description' is required
+              </span>
+            )}
+
+            <label
+              className={classes.customFileUpload}
+              style={{ width: "230px" }}
+            >
+              <input
+                type="file"
+                onInput={() => setUploaded(true)}
+                {...register("image", { required: true })}
+                className={classes.fileInput}
+                style={{ backgroundColor: "deeppink", display: "none" }}
+              />
+              <div style={{ display: "flex" }}>
+                <PhotoLibraryIcon />
+                <span
+                  style={{
+                    marginLeft: "15px",
+                  }}
+                >
+                  Upload photo
+                </span>{" "}
+                {uploaded && <DoneAllIcon />}
+              </div>
+            </label>
+
+            <br></br>
+            <MyButton
+              type="submit"
+              className={classes.fileUploadBtn}
+              loading={loading}
+            />
+          </div>
+        </form>
+        <Divider />
+      </div>
+    </Container>
   );
 }
