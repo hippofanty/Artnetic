@@ -92,6 +92,9 @@ export const Work = () => {
   useEffect(() => {
     dispatch(getOneWorkAC(id));
     checkFavouriteHandler();
+    return () => {
+      console.log('cleaned!!')
+    }
   }, [id, dispatch, checkFavouriteHandler]);
 
   return (

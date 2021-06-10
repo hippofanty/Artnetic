@@ -292,7 +292,7 @@ export const setSubscriptionsAC =
   ): ThunkAction<void, rootState, unknown, SetSubscriptionsAction> =>
   async (dispatch) => {
     if (userId !== "") {
-      const response = await fetch(`/api/v1/users//subscription/${userId}`, {
+      const response = await fetch(`/api/v1/users/subscription/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
