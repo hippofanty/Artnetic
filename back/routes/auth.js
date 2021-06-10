@@ -21,6 +21,7 @@ function serializeUser(user) {
     phone: user.phone || undefined,
     company: user.company || undefined,
     about: user.about || undefined,
+    subscriptions: user.subscriptions || undefined,
   };
 }
 

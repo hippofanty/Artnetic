@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import { setAvatarAC } from "../../../redux/actionCreators/userActions";
 import Alert from "@material-ui/lab/Alert";
+import CircularProgress from '@material-ui/core/CircularProgress';
 const MyButton = styled(Button)`
   MuiButton-root {
     backgroundcolor: black;
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "green",
     },
     customFileUpload: {
-      border: "1px solid #ccc",
+      // border: "1px solid #ccc",
       borderRadius: "5px",
       // display: "inline-block",
       padding: "6px 12px",
@@ -42,9 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "black",
       color: "white",
       width: "150px",
-      marginTop: "30px",
-      marginRight: "30px",
-      alignSelf: "flex-end",
+      // marginTop: "30px",
+      // marginRight: "30px",
+      alignSelf: "center",
     },
   })
 );
@@ -64,8 +65,10 @@ export const UploadAvatar = () => {
   const user = useSelector((state: rootState) => state.userState?.user);
   const [prew, setPrew] = useState<string | undefined>(user.avatar);
   const [showGreenAlarm, setShowGreenAlarm] = useState<boolean>(false);
+  const [loader, setLoader] = useState<boolean>(false);
 
   const onChange = async (e: { target: { files: any[] } }) => {
+    setLoader(true)
     const file = e.target?.files[0];
     console.log("file", file);
     const formData = new FormData();
@@ -84,6 +87,7 @@ export const UploadAvatar = () => {
       );
       const result = await response.json();
       console.log(result, "resss");
+        setLoader(false);
       setPrew(result.url);
     }
   };
@@ -98,9 +102,10 @@ export const UploadAvatar = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={classes.imgPDiv}>
+          <div className={classes.imgPDiv}   style={{position: 'relative', display: 'flex'}} >
         <label htmlFor="fileUpload" className={classes.customFileUpload}>
-            <img src={prew} />
+            <img src={prew} ></img>
+            {loader && <CircularProgress disableShrink  color="secondary" style={{position: 'absolute', top: '20%'}}  />}
             <p>Change Profile Photo</p>
             <input
               type="file"

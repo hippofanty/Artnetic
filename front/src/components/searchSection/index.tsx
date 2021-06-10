@@ -1,8 +1,7 @@
 import { Breadcrumbs, makeStyles, Theme, Typography } from '@material-ui/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { HashRouter as Router, Route, Link, useParams } from 'react-router-dom';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { HashRouter as Router, Route, Link, useParams, useLocation } from 'react-router-dom';
 import { getWorksAC } from '../../redux/actionCreators/getWorks';
 import { rootState } from '../../redux/init';
 import { ParamTypes } from '../Categories/Categories';

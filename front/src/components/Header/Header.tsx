@@ -120,6 +120,7 @@ export const Header = () => {
 	const getUsername = useSelector(
 		(state: rootState) => state.userState.user.username
 	);
+
 	const dispatch = useDispatch();
 	console.log(userLoggedIn);
 
@@ -184,9 +185,10 @@ export const Header = () => {
 									</Link>
 
 									<DropdownProfileIcon
+                  
 										logoutHandler={() => logoutHandler()}
 										getUsername={getUsername}
-									/>
+									></DropdownProfileIcon>
 								</>
 							) : (
 								<>

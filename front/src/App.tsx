@@ -18,9 +18,9 @@ function App() {
 				headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
 			});
 			const result = await response.json();
-			const { id, username, email, role, avatar, phone, firstname, lastname, company, about  } = result.existedUser;
+			const { id, username, email, role, avatar, phone, firstname, lastname, company, about, subscriptions  } = result.existedUser;
 
-			dispatch(refreshUser(id, username, email, role, avatar, phone, firstname, lastname, company, about ));
+			dispatch(refreshUser(id, username, email, role, avatar, phone, firstname, lastname, company, about, subscriptions  ));
 
 			// dispatch(refreshUser(result.existedUser));
       dispatch(getFavouriteWorksFromBd(userId));

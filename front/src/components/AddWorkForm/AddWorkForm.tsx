@@ -9,9 +9,9 @@ import { MySelect } from "./Select";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Description } from "./Description";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
-import Divider from '@material-ui/core/Divider';
+import Divider from "@material-ui/core/Divider";
 import { useState } from "react";
-import DoneAllIcon from '@material-ui/icons/DoneAll';
+import DoneAllIcon from "@material-ui/icons/DoneAll";
 import { addMyWorkAC } from "../../redux/actionCreators/addMyWork";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: "30px",
     },
     select: {
-      marginLeft: '50px'
+      marginLeft: "50px",
     },
     fileUploadInput: {},
     fileUploadBtn: {
       backgroundColor: "black",
       width: "150px",
-      marginTop: '30px'
+      marginTop: "30px",
     },
     titlePrice: {
       display: "flex",
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     fileInput: {
       display: "none",
-      color: 'green'
+      color: "green",
     },
     customFileUpload: {
       border: "1px solid #ccc",
@@ -86,7 +86,7 @@ const schema = yup.object().shape({
 export function AddWorkForm({ setShowForm }: Props) {
   const [uploaded, setUploaded] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state: rootState) => state.userState.user);
@@ -102,17 +102,13 @@ export function AddWorkForm({ setShowForm }: Props) {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    
-    setLoading(true)
+    setLoading(true);
     const formData = new FormData();
     if (data.image) {
-  
-
       //@ts-ignore
       formData.append("file", data.image[0]);
 
       formData.append("upload_preset", "ewojqqyg");
-
 
       const response = await fetch(
         "https://api.cloudinary.com/v1_1/dcvhz3sqn/image/upload",
@@ -140,37 +136,41 @@ export function AddWorkForm({ setShowForm }: Props) {
       }),
     });
     const res = await addWork.json();
-    console.log(res.work, 'resworkkkkkkk');
-    
-    dispatch(addMyWorkAC(res.work))
+    console.log(res.work, "resworkkkkkkk");
+
+    dispatch(addMyWorkAC(res.work));
     setShowForm(false);
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" style={{marginBottom: '15px'}}>
+    <div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        encType="multipart/form-data"
+        style={{ marginBottom: "15px" }}
+      >
         <div className={classes.formDiv}>
           <div className={classes.titlePrice}>
             <Input
               label="title"
               {...register("title", { required: true })}
               className={classes.input}
-              />
-              {errors.title && <span>This field is required</span>}
+            />
+            {errors.title && <span>This field is required</span>}
             <Input
               className={classes.input}
               type="number"
               label="price"
               {...register("price", { required: true })}
-              />
-              {errors.price && <span>This field is required</span>}
+            />
+            {errors.price && <span>This field is required</span>}
           </div>
           <div className={classes.descrCat}>
             <Description
               // label="description"
               {...register("description", { required: true })}
               className={classes.description}
-              />
+            />
             <MySelect
               // className={classes.select}
               options={[
@@ -181,10 +181,14 @@ export function AddWorkForm({ setShowForm }: Props) {
                 { label: "Иное", value: "other" },
               ]}
               {...register("category", { required: true })}
-              />
+            />
             {errors.category && <span>This field is required</span>}
           </div>
-              {errors.description && <span style={{marginBottom: '20px'}}>Field 'Description' is required</span>}
+          {errors.description && (
+            <span style={{ marginBottom: "20px" }}>
+              Field 'Description' is required
+            </span>
+          )}
 
           <label
             className={classes.customFileUpload}
@@ -192,12 +196,12 @@ export function AddWorkForm({ setShowForm }: Props) {
           >
             <input
               type="file"
-              onInput={()=>setUploaded(true)}
-              {...register("image", {required: true})}
+              onInput={() => setUploaded(true)}
+              {...register("image", { required: true })}
               className={classes.fileInput}
-              style={{backgroundColor: 'deeppink', display: 'none'}}
+              style={{ backgroundColor: "deeppink", display: "none" }}
             />
-            <div style={{display: 'flex'}}>
+            <div style={{ display: "flex" }}>
               <PhotoLibraryIcon />
               <span
                 style={{
@@ -205,16 +209,20 @@ export function AddWorkForm({ setShowForm }: Props) {
                 }}
               >
                 Upload photo
-              </span>
-              {' '}{uploaded && <DoneAllIcon />}
+              </span>{" "}
+              {uploaded && <DoneAllIcon />}
             </div>
           </label>
 
           <br></br>
-          <MyButton type="submit" className={classes.fileUploadBtn} loading={loading}/>
+          <MyButton
+            type="submit"
+            className={classes.fileUploadBtn}
+            loading={loading}
+          />
         </div>
       </form>
       <Divider />
-    </>
+    </div>
   );
 }

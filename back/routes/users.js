@@ -45,5 +45,21 @@ const updatedUser = await User.findOneAndUpdate({_id: id}, {avatar});
     console.log(error);
   }
 });
+router.put('/subscription/:id', async (req, res) => {
+  try {
+    const { id} = req.params;
+    const { subscriptions} = req.body;
+    const { email } = await User.findById(id).lean();
+    console.log(email, 'email');
+
+    //отправить email 
+
+    await User.findOneAndUpdate({_id: id}, {subscriptions});
+
+    return res.json({status: '200'});
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
