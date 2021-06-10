@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Unica+One&display=swap');
+@import "react-alice-carousel/lib/alice-carousel.css";
 
 .App {
 	text-align: center;
@@ -122,6 +123,94 @@
 
 * {
   text-decoration: none !important;
+}
+
+/* Carousel styles */
+.alice-carousel {
+  display: block;
+  justify-content: space-between;
+  align-items: center;
+  width: 80vw;
+  padding: 3vw;
+}
+
+.alice-carousel__stage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alice-carousel__stage-item {
+  display: block;
+  width: fit-content;
+  margin: auto 2vw;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.carousel-item-wrapper {
+  display: block;
+  width: fit-content;
+  margin-right: 50px;
+  padding: 5px;
+}
+
+.carousel-item-wrapper:hover {
+  background-color: rgba(196, 190, 190, 0.534);
+  border-radius: 5px;
+  height: 100%;
+}
+
+.alice-carousel__stage-item.__active {
+  display: block;
+  padding: 0;
+} 
+
+.img-item {
+  display: block;
+  width: fit-content;
+  height: 100%;
+  padding: 10px;
+}
+
+
+.carousel-img {
+  display: block;
+  max-height: 250px;
+  width: 100%;
+  margin-right: 10vw;
+}
+
+.alice-carousel__prev-btn {
+  position: absolute;
+  top: 43%;
+  left: 2%;
+  z-index: 2;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 5px 5px 5px;
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: x-large;
+  font-weight: bold;
+  color: black;
+  padding: 0 10px;
+}
+
+.alice-carousel__next-btn {
+  position: absolute;
+  top: 43%;
+  right: 2%;
+  z-index: 2;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 5px 5px 5px;
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: x-large;
+  font-weight: bold;
+  color: black;
+  padding: 0 10px;
 }
 
 /* #root {
