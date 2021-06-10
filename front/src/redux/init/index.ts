@@ -1,7 +1,10 @@
 export type Category = string;
 
 export type Id = string;
-
+// export type Subscriptions = ['newspaper',
+// 'products',
+// 'research',
+// 'reminder']
 export interface Work {
   _id: string;
   title: string;
@@ -18,6 +21,19 @@ export interface Work {
     email: string;
     password: string;
   };
+}
+export interface OneOrder {
+  _id: string;
+  vendorCode: string;
+  date: string;
+  user: {
+    _id: string;
+    role: string;
+    username: string;
+    email: string;
+  };
+  work: Work;
+  status: string;
 }
 
 export interface ApprovedOrder {
@@ -53,6 +69,7 @@ export interface Artist {
 }
 
 export interface User {
+  subscriptions?: string[]
   lastname?: string;
   firstname?: string;
   phone?: string;
@@ -92,6 +109,7 @@ export interface ArtistsState {
 
 export interface OrdersState {
   allApprovedOrders: ApprovedOrder[];
+  allOrders: OneOrder[];
 }
 
 // тип для просмотра полей стора в useSelector()
@@ -118,6 +136,7 @@ export const initialUserState = {
     lastname: '',
     company: '',
     about: '',
+    subscriptions: [],
   },
   isAuth: false,
   favourites: [],
@@ -140,6 +159,7 @@ export const initialStateOneArtistWorks = {
 
 export const intitialStateOrders = {
   allApprovedOrders: [],
+  allOrders: [],
 }
 
 export const initialStateWork = {

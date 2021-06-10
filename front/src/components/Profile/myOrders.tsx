@@ -50,7 +50,6 @@ export const MyOrders = () => {
   const userId = useSelector((state: rootState) => state.userState.user.id);
 
 	useEffect(() => {
-    console.log('СРАБОТАЛ USE EFFECT')
 		dispatch(setApprovedOrdersAC(userId));
 	}, [dispatch, userId]);
 

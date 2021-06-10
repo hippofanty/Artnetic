@@ -10,11 +10,9 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 import { useState } from "react";
 
-
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
-import { editProfileAC } from "../../../redux/actionCreators/userActions";
 
 const MyButton = styled(Button)`
   MuiButton-root {
@@ -73,12 +71,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Inputs = {
-  firstname?: string;
-  lastname?: string;
-  email: string;
-  phone?: string;
-  company?: string;
-  about?: string;
+  former: string;
+  new: string;
+  repeatnew: string;
 };
 
 // const schema = yup.object().shape({
@@ -87,11 +82,12 @@ type Inputs = {
 //   price: yup.string().required("price is a required field"),
 // });
 
-export const EditProfileForm = () => {
+export const EditPassword = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state: rootState) => state.userState?.user);
   const [showGreenAlarm, setShowGreenAlarm] = useState<boolean>(false);
+  const [showRedAlarm, setShowRedAlarm] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -100,9 +96,20 @@ export const EditProfileForm = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log("data", data);
-    dispatch(editProfileAC({userId: user.id, firstname: data.firstname, lastname: data.lastname, email: data.email, phone: data.phone, company: data.company, about: data.about}))
-
-    setShowGreenAlarm(true)
+    const response = await fetch(`/api/v1/users/editpassword/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        former: data.former,
+        new: data.new,
+      }),
+    });
+    const result = await response.json();
+    if (result.status === "200") {
+      setShowGreenAlarm(true);
+    }
   };
   return (
     <>
@@ -113,49 +120,28 @@ export const EditProfileForm = () => {
         <div className={classes.inputs}>
           <MyInput
             className={classes.input}
-            defaultValue={user?.firstname ? user.firstname : ""}
-            label="firstname"
-            {...register("firstname")}
+            label="Former password"
+            {...register("former", { required: true })}
           />
           <MyInput
             className={classes.input}
-            defaultValue={user?.lastname ? user.lastname : ""}
-            label="lastname"
-            {...register("lastname")}
+            label="New password"
+            {...register("new", { required: true })}
           />
           <MyInput
             className={classes.input}
-            label="email"
-            defaultValue={user?.email}
-            {...register("email", { required: true })}
+            label="Repeat new password"
+            {...register("repeatnew", { required: true })}
           />
-          <MyInput
-            className={classes.input}
-            type="tel"
-            label="phone"
-            defaultValue={user?.phone ? user.phone : ""}
-            {...register("phone")}
-          />
-          <MyInput
-            className={classes.input}
-            label="company"
-            defaultValue={user?.company ? user.company : ""}
-            {...register("company")}
-          />
-
-          <TextField
-            className={classes.textarea}
-            id="outlined-multiline-static"
-            label="About you"
-            multiline
-            rows={4}
-            defaultValue={user?.about ? user.about : ""}
-            variant="outlined"
-            {...register("about")}
-          />
-          {showGreenAlarm && <Alert severity="success">
-            Thank you! Changes have been accepted!
-          </Alert>}
+         
+          {showRedAlarm && (
+            <Alert severity="error">Check the entered data!</Alert>
+          )}
+          {showGreenAlarm && (
+            <Alert severity="success">
+              Thank you! Changes have been accepted!
+            </Alert>
+          )}
           <MyButton type="submit" className={classes.saveBtn}>
             Save
           </MyButton>

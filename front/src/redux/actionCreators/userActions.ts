@@ -1,12 +1,16 @@
 // action creator
 import { ThunkAction } from "redux-thunk";
+// import { rootState, Subscriptions } from "../init";
 import { rootState } from "../init";
 import {
   addFavouriteWork,
+  EditProfileAction,
   removeFavouriteWork,
   SetApprovedOrders,
   SetAvatarAction,
   setFavouriteWorks,
+  SetSubscriptionsAction,
+  // SetSubscriptionsAction,
   SetUserAction,
   Types,
   unsetFavouriteWorks,
@@ -32,8 +36,8 @@ export const login =
 
     if (response.status === 200) {
       const result = await response.json();
-      console.log(result.existedUser, "resuuuuuuuuuuuult");
-
+      console.log('login SUBSCRIPTOINS FROM BACK', result.existedUser.subscriptions);
+      
       const {
         id,
         username,
@@ -44,6 +48,7 @@ export const login =
         phone,
         about,
         company,
+        subscriptions
       } = result.existedUser;
       const { token } = result; // либо result.token
       localStorage.setItem("token", token);
@@ -59,6 +64,7 @@ export const login =
           phone,
           about,
           company,
+          subscriptions
         },
       });
     }
@@ -125,7 +131,8 @@ export const refreshUser = (
   firstname?: string,
   lastname?: string,
   company?: string,
-  about?: string
+  about?: string,
+  subscriptions?: string[]
 ): SetUserAction => {
   return {
     type: Types.SET_USER,
@@ -140,6 +147,7 @@ export const refreshUser = (
       lastname,
       company,
       about,
+      subscriptions,
     },
   };
 };
@@ -261,13 +269,88 @@ export const setAvatarAC =
           avatar,
         }),
       });
-
+      
       const result = await response.json();
+      console.log(result, result.status, 'result, result.status');
       if (result.status === "200") {
+        console.log('dispatch');
+        console.log('before avatar dispatch', avatar);
+        
         dispatch({
           type: Types.SET_AVATAR,
-          payload: result.avatar,
+          payload: avatar,
         });
       }
+    }
+  };
+export const setSubscriptionsAC =
+  (
+    userId: string,
+
+    subscriptions: string[],
+
+  ): ThunkAction<void, rootState, unknown, SetSubscriptionsAction> =>
+  async (dispatch) => {
+    if (userId !== "") {
+      const response = await fetch(`/api/v1/users//subscription/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subscriptions,
+        }),
+      });
+      
+      const result = await response.json();
+      console.log(result, result.status, 'subscriptions result, result.status');
+      if (result.status === "200") {
+        dispatch({
+          type: Types.SET_SUBSCRIPTIONS,
+          payload: subscriptions,
+        });
+      }
+    }
+  };
+  export const editProfileAC =
+  ({userId, firstname, lastname, email, phone, company, about}: {
+    userId: string,
+    firstname?: string,
+    lastname?: string,
+    email: string,
+    phone?: string,
+    company?: string,
+    about?: string,
+
+  }): ThunkAction<void, rootState, unknown, EditProfileAction> =>
+  async (dispatch) => {
+    const response = await fetch(`/api/v1/users/edit/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstname,
+        lastname,
+        email,
+        phone,
+        company,
+        about,
+      }),
+    });
+    const result = await response.json();
+    if (result.status === '200') {
+  
+        dispatch({
+          type: Types.EDIT_PROFILE,
+          payload: {
+            firstname,
+            lastname,
+            email,
+            phone,
+            company,
+            about,
+          },
+        });
     }
   };

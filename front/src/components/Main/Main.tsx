@@ -1,8 +1,6 @@
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Categories } from '../Categories/Categories';
 import { AboutUsMain } from '../AboutUsMain/AboutUsMain';
-// import { Login } from '../Login';
-// import { Signup } from '../SignUp';
 import Profile from '../Profile/Profile';
 import { Hero } from '../Hero';
 import { Container } from '@material-ui/core';
@@ -16,12 +14,16 @@ import { SearchSection } from '../searchSection';
 import { Information } from '../Profile/Information/Information';
 import { EditProfileForm } from '../Profile/Information/EditProfileForm';
 import { Gallery } from '../Carousel/Carousel';
+import { AdminPanel } from '../AdminPanel';
+import { useSelector } from 'react-redux';
+import { rootState } from '../../redux/init';
 
 export const Main = () => {
+	const userRole = useSelector((state: rootState) => state.userState.user.role);
+
 	return (
 		<>
 			<Switch>
-        
 				<Route exact path="/">
 					<Hero />
           <Gallery /> 
@@ -46,8 +48,6 @@ export const Main = () => {
 					</SearchSection>
 				</Route>
 
-
-
 				<Route exact path="/profile/favourites">
 					<MyFavourites />
 				</Route>
@@ -55,6 +55,11 @@ export const Main = () => {
 				<Route exact path="/profile/orders">
 					<MyOrders />
 				</Route>
+
+				<Route exact path="/profile/manage">
+					{userRole === 'Admin' ? <AdminPanel /> : <Redirect to="/" />}
+				</Route>
+
 				<Route exact path="/myArts">
 					<MyArts />
 				</Route>

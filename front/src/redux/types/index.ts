@@ -1,5 +1,5 @@
 // any types here
-import { Id, Work, Artist, ApprovedOrder } from "../init";
+import { Id, Work, Artist, ApprovedOrder, OneOrder } from "../init";
 
 export enum Types {
   GET_CATEGORIES = "GET_CATEGORIES",
@@ -19,9 +19,15 @@ export enum Types {
 
   SET_APPROVED_ORDERS = "SET_APPROVED_ORDERS",
   GET_APPROVED_ORDERS = "GET_APPROVED_ORDERS",
+  GET_ALL_ORDERS = "GET_ALL_ORDERS",
+  DELETE_ORDERS = "DELETE_ORDERS",
+  CHANGE_STATUS_ORDERS = "CHANGE_STATUS_ORDERS",
+
   GET_ONE_ARTIST_WORKS = "GET_ONE_ARTIST_WORKS",
   DELETE_ONE_ARTIST_WORKS = "DELETE_ONE_ARTIST_WORKS",
   SET_AVATAR = "SET_AVATAR",
+  SET_SUBSCRIPTIONS = "SET_SUBSCRIPTIONS",
+  EDIT_PROFILE = "EDIT_PROFILE",
 }
 
 export interface SetUserAction {
@@ -37,6 +43,7 @@ export interface SetUserAction {
     lastname?: string;
     company?: string;
     about?: string;
+    subscriptions?: string[]
   };
 }
 
@@ -53,8 +60,10 @@ export interface UnsetUserAction {
     lastname?: string;
     company?: string;
     about?: string;
+    subscriptions?: string[]
   };
 }
+
 export interface getWorksAction {
   type: Types.GET_CATEGORIES;
   payload: Work[];
@@ -115,11 +124,41 @@ export interface GetApprovedOrders {
 }
 export interface SetAvatarAction {
   type: Types.SET_AVATAR;
-  payload: string;
+  payload: string | undefined;
 }
+
+export interface getAllOrders {
+  type: Types.GET_ALL_ORDERS;
+  payload: OneOrder[];
+}
+
+export interface deleteOrders {
+  type: Types.DELETE_ORDERS;
+  payload: Id[];
+}
+
+export interface changeStatusOrders {
+  type: Types.CHANGE_STATUS_ORDERS;
+  payload: Id[];
+}
+export interface SetSubscriptionsAction {
+  type: Types.SET_SUBSCRIPTIONS;
+  payload: string[];
+}
+
 export interface deleteOneArtistWorksAction {
   type: Types.DELETE_ONE_ARTIST_WORKS;
-
+}
+export interface EditProfileAction {
+  type: Types.EDIT_PROFILE;
+  payload: {
+    firstname?: string;
+    lastname?: string;
+    email: string;
+    phone?: string;
+    company?: string;
+    about?: string;
+  };
 }
 
 export type Actions =
@@ -140,3 +179,8 @@ export type Actions =
   | GetOneArtistWorksAction
   | deleteOneArtistWorksAction
   | SetAvatarAction
+  | getAllOrders
+  | SetSubscriptionsAction
+  | EditProfileAction
+  | deleteOrders
+  | changeStatusOrders
