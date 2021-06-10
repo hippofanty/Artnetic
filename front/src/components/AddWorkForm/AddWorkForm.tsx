@@ -77,6 +77,8 @@ type Inputs = {
   price: string;
   category: { label: string; value: string };
   image?: File | string;
+  width?: string;
+  height?: string;
   user: {
     id: string;
     username: string;
