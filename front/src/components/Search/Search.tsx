@@ -71,12 +71,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
     searchResults: {
       position: 'absolute',
+      display: 'block',
       top: '100%',
       zIndex: 2,
       width: '100%',
       textDecoration: 'none',
       color: 'inherit',
+      backgroundColor: 'black',
     },
+    results: {
+      display: 'block',
+      width: '350px',
+      textOverflow: 'ellipsis',
+    }
   })
 );
 
@@ -160,16 +167,17 @@ export const Search = () => {
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
-                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}
+                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom', display: 'block', width: '100%'}}
               >
                 <Paper>
                   <ClickAwayListener onClickAway={handleClose}>
+                    <div className={classes.results}>
                     <MenuList
                       autoFocusItem={open}
                       id="menu-list-grow"
                       onKeyDown={handleListKeyDown}
                     >
-                        <b><i style={{padding: 10}}>Works</i></b>
+                        <div style={{backgroundColor: 'rgb(238, 238, 238)', width: '100%'}}><b><i style={{padding: 10}}>Works</i></b></div>
                       {searchResult?.workResults.length
                         ? searchResult?.workResults.map((elem) => (
                             <Link
@@ -178,14 +186,14 @@ export const Search = () => {
                               style={{ color: 'inherit', textDecoration: 'inherit' }}
                               to={`/categories/works/${elem._id}`}
                             >
-                              <MenuItem key={elem._id}>
+                              <MenuItem className={classes.results} key={elem._id}>
                                 {elem.title}
                               </MenuItem>
                             </Link>
                           ))
                         : <MenuItem><i>Nothing is found</i></MenuItem>
                       }
-                         <b><i style={{padding: 10}}>Categories</i></b>
+                         <div style={{backgroundColor: 'rgb(238, 238, 238)', width: '100%'}}><b><i style={{padding: 10}}>Categories</i></b></div>
                       {searchResult?.categoryResults.length
                         ? searchResult?.categoryResults.map((elem) => (
                             <Link
@@ -202,6 +210,7 @@ export const Search = () => {
                         : <MenuItem><i>Nothing is found</i></MenuItem>
                       }
                     </MenuList>
+                    </div>
                   </ClickAwayListener>
                 </Paper>
               </Grow>
