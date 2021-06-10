@@ -92,11 +92,8 @@ export const Work = () => {
   useEffect(() => {
     dispatch(getOneWorkAC(id));
     checkFavouriteHandler();
-    return () => {
-      console.log('cleaned!!')
-    }
   }, [id, dispatch, checkFavouriteHandler]);
-
+  
   return (
     <div style={{ width: "100%", padding: "75px 0" }}>
       <Box display="flex" justifyContent="center">

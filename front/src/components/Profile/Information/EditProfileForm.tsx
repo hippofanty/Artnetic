@@ -143,7 +143,7 @@ export const EditProfileForm = () => {
             {...register("company")}
           />
 
-          <TextField
+          <MyInput
             className={classes.textarea}
             id="outlined-multiline-static"
             label="About you *"
