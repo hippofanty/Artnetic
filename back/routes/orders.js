@@ -24,9 +24,9 @@ router.route('/approved').get(async (req, res) => {
 	try {
 		const allOrders = await Order.find().populate(['user', 'work']);
 		const allApprovedOrders = allOrders.filter(
-      (order) => order.status === 'Approved'
-      );
-    console.log('СТАТУС APPROVED:', allApprovedOrders)
+			(order) => order.status === 'Approved'
+		);
+		console.log('СТАТУС APPROVED:', allApprovedOrders);
 		res.status(200).json({ allApprovedOrders });
 	} catch (error) {
 		console.log(error);
@@ -34,16 +34,57 @@ router.route('/approved').get(async (req, res) => {
 	}
 });
 
-router.route('/').get(async (req, res) => {
-	try {
-		const allOrders = await Order.find().populate(['user', 'work']);
-    console.log('ВСЕ ЗАКАЗЫ:', allOrders)
-		res.status(200).json({ allOrders });
-	} catch (error) {
-		console.log(error);
-		return res.status(500);
-	}
-});
+router
+	.route('/')
+	.get(async (req, res) => {
+		try {
+			const allOrders = await Order.find().populate(['user', 'work']);
+			console.log('ВСЕ ЗАКАЗЫ:', allOrders);
+			res.status(200).json({ allOrders });
+		} catch (error) {
+			console.log(error);
+			return res.status(500);
+		}
+	})
+	.delete(async (req, res) => {
+		try {
+			const { ordersToDelete } = req.body;
+			console.log(
+				'🚀 ~ file: orders.js ~ line 52 ~ .delete ~ ordersToDelete',
+				ordersToDelete
+			);
+			await Order.deleteMany({
+				_id: {
+					$in: ordersToDelete,
+				},
+			});
+			res.status(200).json({ message: 'Successfully deleted!' });
+		} catch (error) {
+			return res.status(500);
+		}
+	})
+	.put(async (req, res) => {
+		try {
+			const { ordersToUpdate } = req.body;
+
+			await Order.updateMany(
+				{
+					_id: {
+						$in: ordersToUpdate,
+					},
+				},
+				{ status: 'Approved' }
+			);
+			const updatedOrders = await Order.find({
+				_id: {
+					$in: ordersToUpdate,
+				},
+			}).populate('work');
+			res.status(200).json({ updatedOrders });
+		} catch (error) {
+			return res.status(500);
+		}
+	});
 
 module.exports = router;
 

@@ -22,7 +22,7 @@ export interface Work {
     password: string;
   };
 }
-export interface Order {
+export interface OneOrder {
   _id: string;
   vendorCode: string;
   date: string;
@@ -109,7 +109,7 @@ export interface ArtistsState {
 
 export interface OrdersState {
   allApprovedOrders: ApprovedOrder[];
-  allOrders: Order[];
+  allOrders: OneOrder[];
 }
 
 // тип для просмотра полей стора в useSelector()

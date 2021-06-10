@@ -1,5 +1,5 @@
 // any types here
-import { Id, Work, Artist, ApprovedOrder, Order } from "../init";
+import { Id, Work, Artist, ApprovedOrder, OneOrder } from "../init";
 
 export enum Types {
   GET_CATEGORIES = "GET_CATEGORIES",
@@ -20,6 +20,8 @@ export enum Types {
   SET_APPROVED_ORDERS = "SET_APPROVED_ORDERS",
   GET_APPROVED_ORDERS = "GET_APPROVED_ORDERS",
   GET_ALL_ORDERS = "GET_ALL_ORDERS",
+  DELETE_ORDERS = "DELETE_ORDERS",
+  CHANGE_STATUS_ORDERS = "CHANGE_STATUS_ORDERS",
 
   GET_ONE_ARTIST_WORKS = "GET_ONE_ARTIST_WORKS",
   DELETE_ONE_ARTIST_WORKS = "DELETE_ONE_ARTIST_WORKS",
@@ -127,7 +129,17 @@ export interface SetAvatarAction {
 
 export interface getAllOrders {
   type: Types.GET_ALL_ORDERS;
-  payload: Order[];
+  payload: OneOrder[];
+}
+
+export interface deleteOrders {
+  type: Types.DELETE_ORDERS;
+  payload: Id[];
+}
+
+export interface changeStatusOrders {
+  type: Types.CHANGE_STATUS_ORDERS;
+  payload: Id[];
 }
 export interface SetSubscriptionsAction {
   type: Types.SET_SUBSCRIPTIONS;
@@ -170,3 +182,5 @@ export type Actions =
   | getAllOrders
   | SetSubscriptionsAction
   | EditProfileAction
+  | deleteOrders
+  | changeStatusOrders

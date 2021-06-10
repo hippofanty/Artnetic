@@ -112,7 +112,7 @@ export const UploadAvatar = () => {
               id="fileUpload"
               className={classes.fileInput}
               {...register("image", { required: true })}
-              onChange={onChange}
+              onChange={() => onChange}
             />
         </label>
         <MyButton type="submit" className={classes.saveBtn}>
