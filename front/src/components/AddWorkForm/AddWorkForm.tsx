@@ -14,11 +14,37 @@ import { useState } from "react";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import { addMyWorkAC } from "../../redux/actionCreators/addMyWork";
 import { Container } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {},
+    root: {
+      minWidth: 275,
+    },
+    bullet: {
+      display: "inline-block",
+      margin: "0 2px",
+      transform: "scale(0.8)",
+    },
+    title: {
+      fontSize: 14,
+    },
+    info: {
+      fontFamily: `'Montserrat', sans-serif`,
+      textAlign: "center",
+      marginBottom: 12,
+    },
+    tapHere: {
+      fontFamily: `'Montserrat', sans-serif`,
+      textAlign: "center",
+      marginBottom: 12,
+      justifyContent: "center",
+    },
     input: {
       marginRight: "20px",
       flexBasis: "500px",
@@ -97,6 +123,7 @@ const schema = yup.object().shape({
 });
 
 export function AddWorkForm({ setShowForm }: Props) {
+  let history = useHistory();
   const [uploaded, setUploaded] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -161,9 +188,14 @@ export function AddWorkForm({ setShowForm }: Props) {
   return (
     <Container>
       {/* {(showForm && user.firstname && user.firstname && user.about) ? (<AddWorkForm setShowForm={setShowForm}  />) : (<Alert severity="info">Check the entered data!</Alert>)} */}
-      {console.log(user.firstname, user.lastname, user.about, 'user.firstname, user.lastname, user.about')}
+      {console.log(
+        user.firstname,
+        user.lastname,
+        user.about,
+        "user.firstname, user.lastname, user.about"
+      )}
 
-      {([user.firstname, user.lastname, user.about].every(isTrue)) ? (
+      {[user.firstname, user.lastname, user.about].every(isTrue) ? (
         <div style={{ flexDirection: "column" }}>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -264,7 +296,24 @@ export function AddWorkForm({ setShowForm }: Props) {
           <Divider />
         </div>
       ) : (
-        <Alert severity="info">Check the entered data!</Alert>
+        <Card
+          className={classes.root}
+          style={{ fontFamily: `'Montserrat', sans-serif` }}
+        >
+          <CardContent>
+            <Typography variant="h5" component="h2" className={classes.info}>
+              We would like to know you a bit closer
+            </Typography>
+            <Typography variant="h5" component="h2" className={classes.info}>
+              Please tap below and fill the form
+            </Typography>
+          </CardContent>
+          <CardActions style={{ justifyContent: "center" }}>
+            <Button size="large" className={classes.tapHere}  onClick={()=>history.push("/profile")}>
+              Tap here
+            </Button>
+          </CardActions>
+        </Card>
       )}
     </Container>
   );
