@@ -126,11 +126,12 @@
 }
 
 /* Carousel styles */
-/* .alice-carousel {
-  display: flex;
-  justify-content: space-around;
+.alice-carousel {
+  display: block;
+  justify-content: space-between;
   align-items: center;
-} */
+  width: 75vw;
+}
 
 .alice-carousel__stage {
   display: flex;
@@ -139,18 +140,42 @@
 }
 
 .alice-carousel__stage-item {
+  display: block;
+  width: fit-content;
   margin: auto 2vw;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.carousel-item-wrapper {
+  display: block;
+  width: fit-content;
+  margin-right: 50px;
+  padding: 5px;
+}
+
+.alice-carousel__stage-item.__active {
+  display: block;
+  padding: 0;
+  margin: 0 25px;
+} 
+
+.img-item {
+  display: block;
+  width: fit-content;
 }
 
 .carousel-img {
+  display: block;
   max-height: 250px;
-  max-width: fit-content;
+  width: 100%;
+  margin-right: 10vw;
 }
 
 .alice-carousel__prev-btn {
   position: absolute;
   top: 40%;
-  left: 0;
+  left: -2%;
   z-index: 2;
   width: fit-content;
   height: fit-content;
@@ -158,6 +183,7 @@
   border-radius: 50%;
   background-color: #fff;
   font-size: x-large;
+  font-weight: bold;
   color: black;
   padding: 0 10px;
 }
@@ -165,7 +191,7 @@
 .alice-carousel__next-btn {
   position: absolute;
   top: 40%;
-  right: 0;
+  right: -2%;
   z-index: 2;
   width: fit-content;
   height: fit-content;
@@ -173,6 +199,7 @@
   border-radius: 50%;
   background-color: #fff;
   font-size: x-large;
+  font-weight: bold;
   color: black;
   padding: 0 10px;
 }

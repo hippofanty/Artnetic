@@ -21,16 +21,18 @@ export const Gallery = () => {
     const { works } = await response.json();
     works?.map((el: Work) =>
       items.push(
-        <Link to={`/categories/works/${el._id}`}>
-          <div>
-            <img
-              className="carousel-img"
-              src={el.image}
-              onDragStart={handleDragStart}
-              alt={el.title}
-            />
-          </div>
-        </Link>
+        <div className="carousel-item-wrapper">
+          <Link to={`/categories/works/${el._id}`}>
+            <div className="img-item">
+              <img
+                className="carousel-img"
+                src={el.image}
+                onDragStart={handleDragStart}
+                alt={el.title}
+              />
+            </div>
+          </Link>
+        </div>
       )
     );
     setWorkItems(items);
@@ -57,8 +59,7 @@ export const Gallery = () => {
           items: 6,
         },
       }}
-      paddingLeft={10}
-      paddingRight={10}
+      autoWidth={true}
     />
   );
 };
