@@ -46,7 +46,7 @@ export const userReducer = (
         approvedOrders: action.payload,
       }
     case Types.SET_AVATAR:
-      console.log(state, 'state', action.payload);
+
       return {
         ...state,
         user: {
@@ -55,6 +55,29 @@ export const userReducer = (
           
         }
       }
+    case Types.SET_SUBSCRIPTIONS:
+
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          subscriptions: action.payload,
+          
+        }
+      }
+      case Types.EDIT_PROFILE:
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            email: action.payload.email,
+            firstname: action.payload.firstname,
+            lastname: action.payload.lastname,
+            phone: action.payload.phone,
+            about: action.payload.about,
+            company: action.payload.company
+          }
+        }
     default:
       return state;
   }

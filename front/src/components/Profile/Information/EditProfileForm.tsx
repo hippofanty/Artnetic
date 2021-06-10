@@ -14,6 +14,7 @@ import { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
+import { editProfileAC } from "../../../redux/actionCreators/userActions";
 
 const MyButton = styled(Button)`
   MuiButton-root {
@@ -99,24 +100,9 @@ export const EditProfileForm = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log("data", data);
-    const response = await fetch(`/api/v1/users/edit/${user.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstname: data.firstname,
-        lastname: data.lastname,
-        email: data.email,
-        phone: data.phone,
-        company: data.company,
-        about: data.about,
-      }),
-    });
-    const result = await response.json();
-    if (result.status === '200') {
-      setShowGreenAlarm(true)
-    }
+    dispatch(editProfileAC({userId: user.id, firstname: data.firstname, lastname: data.lastname, email: data.email, phone: data.phone, company: data.company, about: data.about}))
+
+    setShowGreenAlarm(true)
   };
   return (
     <>

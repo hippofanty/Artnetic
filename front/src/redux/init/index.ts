@@ -69,7 +69,7 @@ export interface Artist {
 }
 
 export interface User {
-  // subscriptions: []
+  subscriptions?: string[]
   lastname?: string;
   firstname?: string;
   phone?: string;
@@ -136,8 +136,7 @@ export const initialUserState = {
     lastname: '',
     company: '',
     about: '',
-    // subscriptions: ['', ''],
-    // subscriptions: [],
+    subscriptions: [],
   },
   isAuth: false,
   favourites: [],
