@@ -14,6 +14,7 @@ import { useState } from "react";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import { addMyWorkAC } from "../../redux/actionCreators/addMyWork";
 import { Container } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -153,108 +154,118 @@ export function AddWorkForm({ setShowForm }: Props) {
     dispatch(addMyWorkAC(res.work));
     setShowForm(false);
   };
-
+  function isTrue(element?: string) {
+    return element != undefined;
+  }
+  [user.firstname, user.lastname, user.about].every(isTrue);
   return (
     <Container>
-      <div style={{ flexDirection: "column" }}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          encType="multipart/form-data"
-          style={{ marginBottom: "15px", marginLeft: '110px' }}
-        >
-          <div className={classes.formDiv}>
-            <div className={classes.titlePrice}>
-              <Input
-                label="title"
-                {...register("title", { required: true })}
-                className={classes.input}
-              />
-              {errors.title && <span>This field is required</span>}
-              <Input
-                className={classes.input}
-                type="number"
-                label="price"
-                {...register("price", { required: true })}
-              />
-              {errors.price && <span>This field is required</span>}
-            </div>
-            <div className={classes.descrCat}>
-              <Description
-                // label="description"
-                {...register("description", { required: true })}
-                className={classes.description}
-              />
-              <div className={classes.widthHeightSelector}>
-                <div className={classes.widthHeightRow}>
-                  <Input
-                    label="width"
-                    {...register("width", { required: true })}
-                    className={classes.input}
-                    style={{ marginRight: "50px" }}
-                  />{" "}
-                  <Input
-                    label="height"
-                    {...register("height", { required: true })}
-                    className={classes.input}
+      {/* {(showForm && user.firstname && user.firstname && user.about) ? (<AddWorkForm setShowForm={setShowForm}  />) : (<Alert severity="info">Check the entered data!</Alert>)} */}
+      {console.log(user.firstname, user.lastname, user.about, 'user.firstname, user.lastname, user.about')}
+
+      {([user.firstname, user.lastname, user.about].every(isTrue)) ? (
+        <div style={{ flexDirection: "column" }}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            encType="multipart/form-data"
+            style={{ marginBottom: "15px", marginLeft: "110px" }}
+          >
+            <div className={classes.formDiv}>
+              <div className={classes.titlePrice}>
+                <Input
+                  label="title"
+                  {...register("title", { required: true })}
+                  className={classes.input}
+                />
+                {errors.title && <span>This field is required</span>}
+                <Input
+                  className={classes.input}
+                  type="number"
+                  label="price"
+                  {...register("price", { required: true })}
+                />
+                {errors.price && <span>This field is required</span>}
+              </div>
+              <div className={classes.descrCat}>
+                <Description
+                  // label="description"
+                  {...register("description", { required: true })}
+                  className={classes.description}
+                />
+                <div className={classes.widthHeightSelector}>
+                  <div className={classes.widthHeightRow}>
+                    <Input
+                      label="width"
+                      {...register("width", { required: true })}
+                      className={classes.input}
+                      style={{ marginRight: "50px" }}
+                    />{" "}
+                    <Input
+                      label="height"
+                      {...register("height", { required: true })}
+                      className={classes.input}
+                    />
+                  </div>
+
+                  <MySelect
+                    className={classes.select}
+                    options={[
+                      { label: "Живопись", value: "fineArt" },
+                      { label: "Скульптуры", value: "sculptures" },
+                      { label: "Абстракция", value: "abstraction" },
+                      { label: "Графика", value: "graphics" },
+                      { label: "Иное", value: "other" },
+                    ]}
+                    {...register("category", { required: true })}
                   />
                 </div>
 
-                <MySelect
-                  className={classes.select}
-                  options={[
-                    { label: "Живопись", value: "fineArt" },
-                    { label: "Скульптуры", value: "sculptures" },
-                    { label: "Абстракция", value: "abstraction" },
-                    { label: "Графика", value: "graphics" },
-                    { label: "Иное", value: "other" },
-                  ]}
-                  {...register("category", { required: true })}
+                {errors.category && <span>This field is required</span>}
+              </div>
+
+              {errors.description && (
+                <span style={{ marginBottom: "20px" }}>
+                  Field 'Description' is required
+                </span>
+              )}
+
+              <label
+                className={classes.customFileUpload}
+                style={{ width: "230px" }}
+              >
+                <input
+                  type="file"
+                  onInput={() => setUploaded(true)}
+                  {...register("image", { required: true })}
+                  className={classes.fileInput}
+                  style={{ backgroundColor: "deeppink", display: "none" }}
                 />
-              </div>
+                <div style={{ display: "flex" }}>
+                  <PhotoLibraryIcon />
+                  <span
+                    style={{
+                      marginLeft: "15px",
+                    }}
+                  >
+                    Upload photo
+                  </span>{" "}
+                  {uploaded && <DoneAllIcon />}
+                </div>
+              </label>
 
-              {errors.category && <span>This field is required</span>}
-            </div>
-
-            {errors.description && (
-              <span style={{ marginBottom: "20px" }}>
-                Field 'Description' is required
-              </span>
-            )}
-
-            <label
-              className={classes.customFileUpload}
-              style={{ width: "230px" }}
-            >
-              <input
-                type="file"
-                onInput={() => setUploaded(true)}
-                {...register("image", { required: true })}
-                className={classes.fileInput}
-                style={{ backgroundColor: "deeppink", display: "none" }}
+              <br></br>
+              <MyButton
+                type="submit"
+                className={classes.fileUploadBtn}
+                loading={loading}
               />
-              <div style={{ display: "flex" }}>
-                <PhotoLibraryIcon />
-                <span
-                  style={{
-                    marginLeft: "15px",
-                  }}
-                >
-                  Upload photo
-                </span>{" "}
-                {uploaded && <DoneAllIcon />}
-              </div>
-            </label>
-
-            <br></br>
-            <MyButton
-              type="submit"
-              className={classes.fileUploadBtn}
-              loading={loading}
-            />
-          </div>
-        </form>
-        <Divider />
-      </div>
+            </div>
+          </form>
+          <Divider />
+        </div>
+      ) : (
+        <Alert severity="info">Check the entered data!</Alert>
+      )}
     </Container>
   );
 }
