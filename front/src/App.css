@@ -130,7 +130,8 @@
   display: block;
   justify-content: space-between;
   align-items: center;
-  width: 75vw;
+  width: 80vw;
+  padding: 3vw;
 }
 
 .alice-carousel__stage {
@@ -154,16 +155,28 @@
   padding: 5px;
 }
 
+.carousel-item-wrapper:hover {
+  background-color: rgba(196, 190, 190, 0.534);
+  border-radius: 10px;
+  height: 100%;
+}
+
 .alice-carousel__stage-item.__active {
   display: block;
   padding: 0;
-  margin: 0 25px;
 } 
 
 .img-item {
   display: block;
   width: fit-content;
+  height: 100%;
+  padding: 10px;
 }
+
+/* .img-item:hover {
+  background-color: rgba(182, 179, 179, 0.534);
+  border-radius: 10px;
+} */
 
 .carousel-img {
   display: block;
