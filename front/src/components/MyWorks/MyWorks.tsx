@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: "flex",
     flexDirection: "row",
-    // justifyContent: "space-around",
     flexWrap: "wrap",
     margin: 15,
+    paddingLeft: '150px',
   },
 }));
 
