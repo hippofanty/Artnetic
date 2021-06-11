@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
     },
     fileInput: {
-      // display: "none",
+      display: "none",
       color: "green",
     },
     customFileUpload: {
