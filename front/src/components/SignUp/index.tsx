@@ -56,13 +56,11 @@ export const Signup = ({setModal}: Props) => {
 	const [password, setPassword] = useState<string>('');
 	const [role, setRole] = useState('');
 
-	console.log(username, email, password, role);
 
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-		console.log('IS WORKED');
 		e.preventDefault();
 		dispatch(signup(username, email, password, role));
     setModal();

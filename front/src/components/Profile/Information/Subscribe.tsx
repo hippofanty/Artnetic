@@ -28,7 +28,6 @@ export function Subscribe() {
   const dispatch = useDispatch();
   const userid = useSelector((state: rootState) => state.userState.user.id);
   const userSubscriptions = useSelector((state: rootState) => state.userState.user?.subscriptions);
-  console.log(userSubscriptions, 'userSubscriptions');
   
   const falseObj = {
     newspaper: false,
@@ -36,14 +35,12 @@ export function Subscribe() {
     research: false,
     reminder: false,
   }
-  console.log(falseObj, 'falseObj1');
   if (userSubscriptions) {
     for (let key of userSubscriptions)
 //@ts-ignore
     {falseObj[key] = true}
     
   }
-  console.log(falseObj, 'falseObj2');
   
   const classes = useStyles();
   const [state, setState] = React.useState(falseObj);
@@ -52,7 +49,6 @@ export function Subscribe() {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
   const sendSubscription = () => {
-    console.log(state);
 
     const keys = Object.keys(state) as Array<keyof typeof state>;
     const subcriptions = keys.filter(key=> state[key])

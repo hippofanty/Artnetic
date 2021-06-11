@@ -81,7 +81,6 @@ export const Work = () => {
 		const isIdExists = getUserFavourites.filter(
 			(item) => item._id === oneWorkState._id
 		);
-		console.log('ПРОВЕРКА АЙДИ ЛАЙКА', isIdExists);
 		if (isIdExists.length) {
 			setLike(true);
 		} else {

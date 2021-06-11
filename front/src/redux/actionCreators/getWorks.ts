@@ -7,9 +7,7 @@ export const getWorksAC =
   async (dispatch) => {
 
     const response = await fetch(`/api/v1/categories/${category}`)
-    const result = await response.json();
-    console.log(result.works, 'result');
-    
+    const result = await response.json();    
 
     dispatch({
       type: Types.GET_CATEGORIES,

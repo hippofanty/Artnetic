@@ -23,7 +23,6 @@ router.route('/:userId/orders').get(async (req, res) => {
 });
 router.put('/edit/:id', async (req, res) => {
   try {
-// console.log(req.body, 'reeeeeeeeeeeeq');
 const { id } = req.params;
 
 const { firstname, lastname, email, phone, company, about } = req.body
@@ -36,7 +35,6 @@ const updatedUser = await User.findOneAndUpdate({_id: id}, {firstname, lastname,
 });
 router.put('/edit/avatar/:id', async (req, res) => {
   try {
-// console.log(req.body, 'reeeeeeeeeeeeq');
 const { id } = req.params;
 
 const { avatar } = req.body

@@ -136,7 +136,6 @@ export function AddWorkForm({ setShowForm }: Props) {
       }),
     });
     const res = await addWork.json();
-    console.log(res.work, "resworkkkkkkk");
 
     dispatch(addMyWorkAC(res.work));
     setShowForm(false);

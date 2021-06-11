@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const MyButton = ({  ...props }) => {
   const styles = useStyles();
-  console.log(props)
   return (
     <>
       <Button

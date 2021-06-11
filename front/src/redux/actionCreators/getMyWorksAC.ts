@@ -6,9 +6,7 @@ export const getMyWorksAC =(id: string): ThunkAction<void, rootState, unknown, g
   async (dispatch) => {
 
     const response = await fetch(`/api/v1/works/${id}`)
-    const result = await response.json();
-    console.log(result.works, 'result');
-    
+    const result = await response.json();    
 
     dispatch({
       type: Types.GET_MY_WORKS,

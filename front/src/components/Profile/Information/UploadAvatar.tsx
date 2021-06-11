@@ -70,7 +70,6 @@ export const UploadAvatar = () => {
   const onChange = async (e: { target: { files: any[] } }) => {
     setLoader(true)
     const file = e.target?.files[0];
-    console.log("file", file);
     const formData = new FormData();
     if (file) {
       //   //@ts-ignore
@@ -86,13 +85,11 @@ export const UploadAvatar = () => {
         }
       );
       const result = await response.json();
-      console.log(result, "resss");
         setLoader(false);
       setPrew(result.url);
     }
   };
   const onSubmit: SubmitHandler<Input> = async (data) => {
-    console.log("submit data", data);
     dispatch(setAvatarAC(user.id, prew))
     setShowGreenAlarm(true)
     setTimeout(()=>{

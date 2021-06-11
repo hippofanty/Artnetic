@@ -33,7 +33,6 @@ export const Artist = () => {
 		(state: rootState) => state.oneArtistWorks.oneArtistWorks
 	);
 	const avatar = useSelector((state: rootState) => state.userState.user.avatar);
-	console.log(getArtistWorks);
 
 	useEffect(() => {
 		dispatch(getOneArtistWorksAC(id));

@@ -99,7 +99,6 @@ export const EditProfileForm = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("data", data);
     dispatch(editProfileAC({userId: user.id, firstname: data.firstname, lastname: data.lastname, email: data.email, phone: data.phone, company: data.company, about: data.about}))
 
     setShowGreenAlarm(true)

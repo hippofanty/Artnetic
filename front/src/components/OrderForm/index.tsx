@@ -197,9 +197,6 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 	return (
 		<div style={{ padding: 16, margin: 'auto', maxWidth: 480 }}>
 			<CssBaseline />
-			{/* <button onClick={() => console.log('FILTERED ORDERS ===', getExactWorkOrders)}>
-				MOMENT
-			</button> */}
 			<Form<FormType>
 				onSubmit={sendForm}
 				// validate={validate}

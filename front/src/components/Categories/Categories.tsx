@@ -27,7 +27,6 @@ export const Categories = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const worksState = useSelector((state: rootState) => state.works.works);
-	console.log(worksState, 'worksState', typeof worksState);
 
 	const { category } = useParams<ParamTypes>();
 	useEffect(() => {

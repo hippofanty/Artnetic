@@ -9,7 +9,6 @@ export const deleteWorkAC =
       method: "DELETE",
     });
     const result = await response.json();
-    console.log(result.status, "result delete");
 
     if (result.status === "removed") {
       dispatch({
