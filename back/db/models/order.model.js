@@ -13,6 +13,7 @@ const Order = new Schema({
   },
   date: {
     type: String,
+    // type: Array,
   },
   user: {
     type: Schema.Types.ObjectId,

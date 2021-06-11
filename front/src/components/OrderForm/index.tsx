@@ -68,10 +68,14 @@ export const OrderForm = ({ setPrice, workId, setShowForm }: OrderProps) => {
 		(state: rootState) => state.ordersState.allApprovedOrders
 	);
 
+	// const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([new Date(), new Date()]);
+	// const [startDate, endDate] = dateRange;
+
 	interface FormType {
 		notes?: string;
 		city?: string;
-		date?: string;
+		// date?: string;
+		date?: [Date | null, Date | null];
 	}
 
 	interface CustomField {
@@ -84,7 +88,7 @@ export const OrderForm = ({ setPrice, workId, setShowForm }: OrderProps) => {
 		const getExactWorkOrders = allApprovedOrders.filter(
 			(item) => item.work?._id === workId
 		);
-		const getDates = getExactWorkOrders.map((item) => item.date);
+		const getDates = getExactWorkOrders.map((date) => date.date); // [[date, date],[date, date]]
 		const slicedTime = getDates.map((item) => new Date(item.slice(0, 10)));
 		return slicedTime;
 	}, [allApprovedOrders, workId]);
@@ -105,7 +109,7 @@ export const OrderForm = ({ setPrice, workId, setShowForm }: OrderProps) => {
 						vendorCode: cryptoRandomString({ length: 10, type: 'base64' }),
 						notes: values.notes,
 						city: values.city,
-						// date: values.date,
+						// date: dateRange,
 						date: startDate,
 						user: user.id,
 						work: workId,
@@ -113,6 +117,10 @@ export const OrderForm = ({ setPrice, workId, setShowForm }: OrderProps) => {
 				});
 				if (response.status === 200) {
 					const result = await response.json();
+					console.log(
+						'🚀 ~ file: index.tsx ~ line 124 ~ ТО ЧТО ЗАЛИЛ НА СЕРВЕР',
+						result
+					);
 					setTimeout(() => setShowForm(false), 1000);
 				}
 			} catch (e) {
@@ -186,8 +194,6 @@ export const OrderForm = ({ setPrice, workId, setShowForm }: OrderProps) => {
 			size: 12,
 			field: (
 				<DatePicker
-					selectsRange={true}
-          endDate={endDate}
 					className={classes.dateInput}
 					name="date"
 					dateFormat="dd/MM/yyyy"
@@ -198,6 +204,23 @@ export const OrderForm = ({ setPrice, workId, setShowForm }: OrderProps) => {
 					minDate={new Date()}
 					excludeDates={excludedDates}
 				/>
+
+				// для мультидаты
+				// <DatePicker
+				// 	selectsRange={true}
+				// 	className={classes.dateInput}
+				// 	startDate={startDate}
+				// 	endDate={endDate}
+				// 	onChange={(update) => {
+				// 		if (Array.isArray(update)) {
+				// 			setDateRange(update);
+				// 		}
+				// 	}}
+				// 	withPortal
+				// 	excludeDates={excludedDates}
+				// 	dateFormat="dd/MM/yyyy"
+				// 	isClearable={true}
+				// />
 			),
 		},
 	];
@@ -222,7 +245,6 @@ export const OrderForm = ({ setPrice, workId, setShowForm }: OrderProps) => {
 										{item.field}
 									</Grid>
 								))}
-								{/* <Grid item xs={12} style={{ marginTop: 16, textAlign: 'center'}}><span>Цена: {setPrice} руб</span></Grid> */}
 								<Grid
 									item
 									xs={12}
