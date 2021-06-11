@@ -24,7 +24,6 @@ router.get('/:name', async (req, res) => {
 			'user',
 		]);
 
-    console.log(works);
 		return res.status(200).json({ works });
 	} catch (error) {
 		console.log(error);
@@ -36,7 +35,6 @@ router.get('/carousel/works', async (req, res) => {
   try {
     const allWorks = await Work.find().populate('category');
     const works = allWorks.slice(0, 16);
-    console.log('works>>>>>>', works);
     return res.status(200).json({works});
   } catch (error) {
     console.log(error);

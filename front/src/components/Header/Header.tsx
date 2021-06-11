@@ -122,7 +122,6 @@ export const Header = () => {
 	);
 
 	const dispatch = useDispatch();
-	console.log(userLoggedIn);
 
 	const logoutHandler = () => {
 		dispatch(logout());

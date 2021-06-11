@@ -2,6 +2,8 @@ const { Router } = require('express');
 const Order = require('../db/models/order.model');
 const router = Router();
 const User = require('../db/models/user.model');
+const transporter = require('../emailConfig');
+const emailTemplate = require('../emailTemplate');
 
 router.route('/:userId/orders').get(async (req, res) => {
 	try {
@@ -21,7 +23,6 @@ router.route('/:userId/orders').get(async (req, res) => {
 });
 router.put('/edit/:id', async (req, res) => {
   try {
-// console.log(req.body, 'reeeeeeeeeeeeq');
 const { id } = req.params;
 
 const { firstname, lastname, email, phone, company, about } = req.body
@@ -34,7 +35,6 @@ const updatedUser = await User.findOneAndUpdate({_id: id}, {firstname, lastname,
 });
 router.put('/edit/avatar/:id', async (req, res) => {
   try {
-// console.log(req.body, 'reeeeeeeeeeeeq');
 const { id } = req.params;
 
 const { avatar } = req.body
@@ -50,9 +50,15 @@ router.put('/subscription/:id', async (req, res) => {
     const { id} = req.params;
     const { subscriptions} = req.body;
     const { email } = await User.findById(id).lean();
-    console.log(email, 'email');
 
-    //отправить email 
+    // Отправка email
+    await transporter.sendMail({
+      from: process.env.EMAIL_LOGIN,
+      to: email,
+      subject: 'Подписка на рассылку ARTNETIC',
+      text: 'Подписка на рассылку ARTNETIC',
+      html: emailTemplate,
+    });
 
     await User.findOneAndUpdate({_id: id}, {subscriptions});
 

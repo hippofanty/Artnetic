@@ -6,9 +6,7 @@ export const getArtistsAC =(): ThunkAction<void, rootState, unknown, getArtistsA
   async (dispatch) => {
 
     const response = await fetch(`/api/v1/artists/`)
-    const result = await response.json();
-    console.log(result.artistsArray, 'result artistsArray');
-    
+    const result = await response.json();    
 
     dispatch({
       type: Types.GET_ARTISTS,

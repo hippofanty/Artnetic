@@ -97,7 +97,6 @@ export default function CardItem({
 	user,
 }: CardProps) {
 	const location = useLocation();
-	console.log(location);
 	//dialog
 
 	const [open, setOpen] = React.useState(false);

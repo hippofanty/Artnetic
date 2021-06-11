@@ -24,7 +24,6 @@ export const ordersReducer = (
 				),
 			};
 		case Types.CHANGE_STATUS_ORDERS:
-			console.log(action.payload);
 
 			return {
 				...state,

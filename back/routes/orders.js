@@ -26,7 +26,6 @@ router.route('/approved').get(async (req, res) => {
 		const allApprovedOrders = allOrders.filter(
 			(order) => order.status === 'Approved'
 		);
-		console.log('СТАТУС APPROVED:', allApprovedOrders);
 		res.status(200).json({ allApprovedOrders });
 	} catch (error) {
 		console.log(error);
@@ -39,7 +38,6 @@ router
 	.get(async (req, res) => {
 		try {
 			const allOrders = await Order.find().populate(['user', 'work']);
-			console.log('ВСЕ ЗАКАЗЫ:', allOrders);
 			res.status(200).json({ allOrders });
 		} catch (error) {
 			console.log(error);
@@ -49,10 +47,6 @@ router
 	.delete(async (req, res) => {
 		try {
 			const { ordersToDelete } = req.body;
-			console.log(
-				'🚀 ~ file: orders.js ~ line 52 ~ .delete ~ ordersToDelete',
-				ordersToDelete
-			);
 			await Order.deleteMany({
 				_id: {
 					$in: ordersToDelete,

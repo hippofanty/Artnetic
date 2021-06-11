@@ -59,7 +59,6 @@ router
           token,
         });
       } catch (e) {
-        console.log(e)
         return res.send({message: "Server error"})
       }
     });
@@ -95,7 +94,6 @@ router
           token,
         });
       } catch (e) {
-        console.log(e)
         return res.json({message: "Server error"})
       }
     });
@@ -113,7 +111,6 @@ router
         token,
       });
     } catch (e) {
-      console.log(e);
       return res.send({message: "Server error"});
     }
   });
