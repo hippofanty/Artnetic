@@ -22,7 +22,7 @@ function App() {
 
 			dispatch(refreshUser(id, username, email, role, avatar, phone, firstname, lastname, company, about, subscriptions  ));
 
-			// dispatch(refreshUser(result.existedUser));
+
       dispatch(getFavouriteWorksFromBd(userId));
 		} catch (e) {
 			localStorage.removeItem('token');

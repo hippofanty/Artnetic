@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import { setAvatarAC } from "../../../redux/actionCreators/userActions";
 import Alert from "@material-ui/lab/Alert";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 const MyButton = styled(Button)`
   MuiButton-root {
     backgroundcolor: black;
@@ -53,7 +53,6 @@ type Input = {
   image: string | File;
 };
 export const UploadAvatar = () => {
-  
   const {
     register,
     handleSubmit,
@@ -61,14 +60,16 @@ export const UploadAvatar = () => {
   } = useForm<Input>();
 
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const user = useSelector((state: rootState) => state.userState?.user);
   const [prew, setPrew] = useState<string | undefined>(user.avatar);
   const [showGreenAlarm, setShowGreenAlarm] = useState<boolean>(false);
   const [loader, setLoader] = useState<boolean>(false);
 
   const onChange = async (e: { target: { files: any[] } }) => {
-    setLoader(true)
+    console.log("change");
+
+    setLoader(true);
     const file = e.target?.files[0];
     console.log("file", file);
     const formData = new FormData();
@@ -87,44 +88,51 @@ export const UploadAvatar = () => {
       );
       const result = await response.json();
       console.log(result, "resss");
-        setLoader(false);
+      setLoader(false);
       setPrew(result.url);
     }
   };
   const onSubmit: SubmitHandler<Input> = async (data) => {
     console.log("submit data", data);
-    dispatch(setAvatarAC(user.id, prew))
-    setShowGreenAlarm(true)
-    setTimeout(()=>{
-      setShowGreenAlarm(false)
-    }, 4000)
+    dispatch(setAvatarAC(user.id, prew));
+    setShowGreenAlarm(true);
+    setTimeout(() => {
+      setShowGreenAlarm(false);
+    }, 4000);
   };
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={classes.imgPDiv}   style={{position: 'relative', display: 'flex'}} >
-        <label htmlFor="fileUpload" className={classes.customFileUpload}>
-            <img src={prew} ></img>
-            {loader && <CircularProgress disableShrink  color="secondary" style={{position: 'absolute', top: '20%'}}  />}
+        <div
+          className={classes.imgPDiv}
+          style={{ position: "relative", display: "flex" }}
+        >
+          <label htmlFor="fileUpload" className={classes.customFileUpload}>
+            <img src={prew} alt="avatar"></img>
+            {loader && (
+              <CircularProgress
+                disableShrink
+                color="secondary"
+                style={{ position: "absolute", top: "20%" }}
+              />
+            )}
             <p>Change Profile Photo</p>
             <input
               type="file"
               id="fileUpload"
               className={classes.fileInput}
               {...register("image", { required: true })}
-              onChange={() => onChange}
+              onChange={onChange}
             />
-        </label>
-        <MyButton type="submit" className={classes.saveBtn}>
-          Save
-        </MyButton>
-        {showGreenAlarm && <Alert severity="success">
-            Avatar has been changed!
-          </Alert>}
-          </div>
+          </label>
+          <MyButton type="submit" className={classes.saveBtn}>
+            Save
+          </MyButton>
+          {showGreenAlarm && (
+            <Alert severity="success">Avatar has been changed!</Alert>
+          )}
+        </div>
       </form>
     </>
   );
 };
-
-
