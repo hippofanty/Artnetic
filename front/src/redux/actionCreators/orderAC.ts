@@ -15,10 +15,6 @@ export const getAllApprovedOrders =
 
 		if (response.status === 200) {
 			const { allApprovedOrders } = await response.json();
-			console.log(
-				'🚀 ~ file: userActions.ts ~ line 191 ~ ПРИНИМАЕМ APPROVED ЗАКАЗЫ',
-				allApprovedOrders
-			);
 
 			dispatch({
 				type: Types.GET_APPROVED_ORDERS,
@@ -34,10 +30,6 @@ export const getExistedOrders =
 
 		if (response.status === 200) {
 			const { allOrders } = await response.json();
-			console.log(
-				'🚀 ~ file: orderAC.ts ~ line 33 ~ getAllOrders ~ ПРИНИМАЕМ ВСЕ ЗАКАЗЫ',
-				allOrders
-			);
 
 			dispatch({
 				type: Types.GET_ALL_ORDERS,

@@ -66,39 +66,39 @@ export const UploadAvatar = () => {
   const [showGreenAlarm, setShowGreenAlarm] = useState<boolean>(false);
   const [loader, setLoader] = useState<boolean>(false);
 
-  const onChange = async (e: { target: { files: any[] } }) => {
+  const onChange = async (e: Event) => {
     console.log("change");
-
-    setLoader(true);
-    const file = e.target?.files[0];
-    console.log("file", file);
-    const formData = new FormData();
-    if (file) {
-      //   //@ts-ignore
-      formData.append("file", file);
-
-      formData.append("upload_preset", "zk6omlc3");
-      const response = await fetch(
-        "https://api.cloudinary.com/v1_1/dcvhz3sqn/image/upload",
-        {
-          method: "post",
-
-          body: formData,
-        }
-      );
-      const result = await response.json();
-      console.log(result, "resss");
-      setLoader(false);
-      setPrew(result.url);
+    const files = (e.target as HTMLInputElement).files
+    if (files !== null && files.length !== 0) {
+      setLoader(true);
+      const file = files[0];
+      const formData = new FormData();
+      if (file) {
+        //   //@ts-ignore
+        formData.append("file", file);
+  
+        formData.append("upload_preset", "zk6omlc3");
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dcvhz3sqn/image/upload",
+          {
+            method: "post",
+  
+            body: formData,
+          }
+        );
+        const result = await response.json();
+          setLoader(false);
+  
+        setPrew(result.url);
+      }
     }
   };
   const onSubmit: SubmitHandler<Input> = async (data) => {
-    console.log("submit data", data);
-    dispatch(setAvatarAC(user.id, prew));
-    setShowGreenAlarm(true);
-    setTimeout(() => {
-      setShowGreenAlarm(false);
-    }, 4000);
+    dispatch(setAvatarAC(user.id, prew))
+    setShowGreenAlarm(true)
+    setTimeout(()=>{
+      setShowGreenAlarm(false)
+    }, 4000)
   };
   return (
     <>
@@ -122,6 +122,7 @@ export const UploadAvatar = () => {
               id="fileUpload"
               className={classes.fileInput}
               {...register("image", { required: true })}
+//@ts-ignore
               onChange={onChange}
             />
           </label>

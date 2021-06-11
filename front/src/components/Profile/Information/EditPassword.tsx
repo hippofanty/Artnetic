@@ -95,7 +95,6 @@ export const EditPassword = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("data", data);
     const response = await fetch(`/api/v1/users/editpassword/${user.id}`, {
       method: "PUT",
       headers: {

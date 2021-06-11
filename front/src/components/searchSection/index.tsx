@@ -129,7 +129,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const SearchSection: React.FC = (props) => {
   const location = useLocation();
-  console.log("🚀 ~ file: index.tsx ~ line 125 ~ location", location)
   
 	const classes = useStyles();
 	const [allCategories, setAllCategories] =

@@ -4,7 +4,6 @@ const Categories = require("../db/models/category.model");
 const Works = require("../db/models/work.model");
 
 const dbConnectionURL = process.env.DB_URL;
-console.log(dbConnectionURL);
 async function main() {
   await connect(dbConnectionURL, {
     useNewUrlParser: true,

@@ -7,6 +7,11 @@ interface InputProps {
 	label: string;
 	type?: string;
   defaultValue?: string;
+  id?: string;
+  multiline?: boolean;
+  rows?: number;
+  variant?: "outlined";
+  // onChange?: () => Promise<void>;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {

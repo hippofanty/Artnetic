@@ -36,7 +36,6 @@ export const login =
 
     if (response.status === 200) {
       const result = await response.json();
-      console.log('login SUBSCRIPTOINS FROM BACK', result.existedUser.subscriptions);
       
       const {
         id,
@@ -241,10 +240,6 @@ export const setApprovedOrdersAC =
 
       if (response.status === 200) {
         const { approvedOrders } = await response.json();
-        console.log(
-          "🚀 ~ file: userActions.ts ~ line 191 ~ ПРИНИМАЕМ ЗАКАЗЫ",
-          approvedOrders
-        );
 
         dispatch({
           type: Types.SET_APPROVED_ORDERS,
@@ -271,10 +266,7 @@ export const setAvatarAC =
       });
       
       const result = await response.json();
-      console.log(result, result.status, 'result, result.status');
       if (result.status === "200") {
-        console.log('dispatch');
-        console.log('before avatar dispatch', avatar);
         
         dispatch({
           type: Types.SET_AVATAR,
@@ -303,7 +295,6 @@ export const setSubscriptionsAC =
       });
       
       const result = await response.json();
-      console.log(result, result.status, 'subscriptions result, result.status');
       if (result.status === "200") {
         dispatch({
           type: Types.SET_SUBSCRIPTIONS,

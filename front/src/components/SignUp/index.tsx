@@ -1,151 +1,214 @@
+import { Form } from 'react-final-form';
+import { Select, TextField } from 'mui-rff';
 import {
-	Button,
-	createStyles,
-	FormControlLabel,
-	FormGroup,
+	Paper,
 	Grid,
+	Button,
+	CssBaseline,
+	GridSize,
 	makeStyles,
-	// Paper,
-	Radio,
-	RadioGroup,
-	TextField,
 	Theme,
+	MenuItem,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+
+import { ReactNode, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { signup } from '../../redux/actionCreators/userActions';
-import { Props } from '../Login/index';
+import * as yup from 'yup';
+import { setIn } from 'final-form';
 
-import Paper from '@material-ui/core/Paper';
+export interface Props {
+	setModal: () => void;
+}
 
+const useStyles = makeStyles((theme: Theme) => ({
+	sendButt: {
+		color: 'white',
+		backgroundColor: 'black',
+	},
+	datePick: {
+		margin: 0,
+	},
+	dateInput: {
+		width: 'inherit',
+		height: '30px',
+	},
+	formTitle: {
+		fontSize: '22px',
+	},
+	formWrapper: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+	},
+}));
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			flexGrow: 1,
-		},
-		paper: {
-			padding: theme.spacing(6),
-			textAlign: 'center',
-			color: theme.palette.text.secondary,
-		},
-		// form: {
-		// 	width: '100ch',
-		// },
-		sumbBut: {
-			marginTop: '25px',
-		},
-		signupForm: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignContent: 'center',
-      justifyContent: 'center',
-		},
-    formTitle: {
-      fontSize: '22px',
-    }
-	})
-);
-
-export const Signup = ({setModal}: Props) => {
+export const SignupForm = ({ setModal }: Props) => {
 	const classes = useStyles();
-
-	const [username, setUsername] = useState<string>('');
-	const [email, setEmail] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
-	const [role, setRole] = useState('');
-
-	console.log(username, email, password, role);
-
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-		console.log('IS WORKED');
-		e.preventDefault();
-		dispatch(signup(username, email, password, role));
-    setModal();
-		history.push('/');
+	const sleep = (ms: number) =>
+		new Promise((resolve) => setTimeout(resolve, ms));
+
+	interface FormType {
+		username: string;
+		email: string;
+		password: string;
+		role: string;
+	}
+
+	interface validType {
+		username: string;
+		email: string;
+		password: string;
+		role: string;
+	}
+
+	interface CustomField {
+		size: GridSize;
+		field: ReactNode;
+	}
+
+	const sendForm = useCallback(
+		async (values: FormType) => {
+			await sleep(500);
+			console.log(
+				'ЖМУ РЕГИСТРАЦИЮ!',
+				values.username,
+				values.email,
+				values.password,
+				values.role
+			);
+			dispatch(
+				signup(values.username, values.email, values.password, values.role)
+			);
+			setModal();
+			history.push('/');
+		},
+		[dispatch, history, setModal]
+	);
+
+	const validationSchema = yup.object({
+		email: yup.string().email().required(),
+		username: yup.string().required(),
+		password: yup.string().min(4).required(),
+		role: yup.string().required(),
+	});
+
+	const validateFormValues = (schema: any) => async (values: validType) => {
+		if (typeof schema === 'function') {
+			schema = schema();
+		}
+		try {
+			await schema.validate(values, { abortEarly: false });
+		} catch (err) {
+			const errors = err.inner.reduce((formError: any, innerError: any) => {
+				return setIn(formError, innerError.path, innerError.message);
+			}, {});
+
+			return errors;
+		}
 	};
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setRole((event.target as HTMLInputElement).value);
-	};
+	const validate = validateFormValues(validationSchema);
+
+	const formFields: CustomField[] = [
+		{
+			size: 12,
+			field: (
+				<TextField
+					type="text"
+					label="Username"
+					name="username"
+					margin="none"
+					required={true}
+				/>
+			),
+		},
+		{
+			size: 12,
+			field: (
+				<TextField
+					type="email"
+					label="Email"
+					name="email"
+					margin="none"
+					required={true}
+				/>
+			),
+		},
+		{
+			size: 12,
+			field: (
+				<TextField
+					type="password"
+					label="Password"
+					name="password"
+					margin="none"
+					required={true}
+				/>
+			),
+		},
+		{
+			size: 12,
+			field: (
+				<Select
+					name="role"
+					label="What's your need"
+					formControlProps={{ margin: 'none' }}
+				>
+					<MenuItem value="Artist">Artist</MenuItem>
+					<MenuItem value="Customer">Customer</MenuItem>
+				</Select>
+			),
+		},
+	];
 
 	return (
-		<Paper className={classes.paper}>
-			<form  onSubmit={(e) => SubmitHandler(e)}>
-				<div className={classes.root}>
-					<Grid
-						container
-						spacing={3}
-						direction="column"
-						justify="center"
-						alignItems="center"
-					> 
-            <Grid item xs={12}><span className={classes.formTitle}>Please, register your account!</span></Grid>
-						<Grid item xs={12} className={classes.signupForm}>
-							<TextField
-								id="standard-basic"
-								type="text"
-								label="Username"
-								value={username}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-									setUsername(e.target.value)
-								}
-							/>
-							<TextField
-								id="standard-basic"
-								type="mail"
-								label="Email"
-								value={email}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-									setEmail(e.target.value)
-								}
-							/>
-							<TextField
-								id="standard-basic"
-								type="password"
-								label="Password"
-								value={password}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-									setPassword(e.target.value)
-								}
-							/>
-
-							<FormGroup row>
-								<RadioGroup
-									aria-label="userRole"
-									name="userRole"
-									value={role}
-									onChange={handleChange}
+		<div style={{ padding: 16, margin: 'auto', maxWidth: 480 }}>
+			<CssBaseline />
+			<Form<FormType>
+				onSubmit={sendForm}
+				validate={validate}
+				render={({ handleSubmit, form, submitting, pristine, values }) => (
+					<form onSubmit={handleSubmit} noValidate>
+						<div className={classes.formWrapper}>
+							<span className={classes.formTitle}>Welcome to Artnetic</span>
+							<Paper style={{ padding: 16 }}>
+								<Grid
+									container
+									alignItems="flex-start"
+									justify="center"
+									spacing={2}
 								>
-									<FormControlLabel
-										value="Artist"
-										control={<Radio />}
-										label="Artist"
-									/>
-									<FormControlLabel
-										value="Customer"
-										control={<Radio />}
-										label="Customer"
-									/>
-								</RadioGroup>
-							</FormGroup>
-
-							<Button
-								type="submit"
-								variant="outlined"
-								color="primary"
-								className={classes.sumbBut}
-							>
-								Register
-							</Button>
-						</Grid>
-					</Grid>
-				</div>
-			</form>
-		</Paper>
+									{formFields.map((item, idx) => (
+										<Grid item xs={item.size} key={idx}>
+											{item.field}
+										</Grid>
+									))}
+									<Grid
+										item
+										xs={12}
+										style={{ marginTop: 16, display: 'flex' }}
+										justify="center"
+									>
+										<Button
+											variant="contained"
+											type="submit"
+											className={classes.sendButt}
+											disabled={submitting}
+										>
+											Send
+										</Button>
+									</Grid>
+								</Grid>
+							</Paper>
+						</div>
+					</form>
+				)}
+			/>
+		</div>
 	);
 };
