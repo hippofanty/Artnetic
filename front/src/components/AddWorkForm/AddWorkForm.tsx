@@ -182,7 +182,7 @@ export function AddWorkForm({ setShowForm }: Props) {
     setShowForm(false);
   };
   function isTrue(element?: string | boolean) {
-    return element != false && element != '' && element != null  ;
+    return element != false && element != '' && element != null;
   }
   [user.firstname, user.lastname, user.about].every(isTrue);
   console.log([user.firstname, user.lastname, user.about].every(isTrue), 'is Trueeeeeeeeee');
