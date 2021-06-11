@@ -111,7 +111,7 @@ export const Work = () => {
             </Typography>
             {(oneWorkState?.width && oneWorkState?.height) &&
             <Typography variant="overline" display="block" gutterBottom>
-              {oneWorkState?.width} x {oneWorkState?.height}
+              {oneWorkState?.width} x {oneWorkState?.height} cm
             </Typography>
             }
             <Typography variant="h6" gutterBottom>
