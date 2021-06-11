@@ -11,6 +11,7 @@ interface PropsSelect {
 	options: { label: string; value: string }[];
 	onChange: ChangeHandler;
 	name: string;
+  className: string;
 }
 export function MySelect({ options, onChange, name }: PropsSelect) {
 	return (
