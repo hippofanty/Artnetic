@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const Work = () => {
+
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const oneWorkState = useSelector((state: rootState) => state.work.work);

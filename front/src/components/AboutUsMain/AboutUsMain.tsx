@@ -39,6 +39,7 @@ export const AboutUsMain = () => {
   const classes = useStyles();
 
 	return (
+
     <>
       <Container fixed>
         <div>
@@ -55,5 +56,6 @@ export const AboutUsMain = () => {
         <div><p>Art Division of Elbrus-Bootcamp, 2021.</p></div>
       </div>
     </>
+
 	);
 };
