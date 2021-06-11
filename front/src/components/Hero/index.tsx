@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		width: '100%',
-		height: '70vh',
+    marginBottom: '100px',
+		height: '56vh',
 		position: 'relative',
 		'& video': {
 			objectFit: 'cover',
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 		top: 0,
 		left: 0,
 		width: '100%',
-		height: '80%',
+		height: '100%',
 		backgroundColor: 'rgba(0, 0, 0, 0.5)',
 	},
 	title: {
@@ -46,7 +47,7 @@ export const Hero = () => {
 				loop
 				muted
 				width="100%"
-				height="80%"
+				height="100%"
 			/>
 			<div className={classes.overlay}>
 				<Box

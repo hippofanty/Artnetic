@@ -18,6 +18,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import styled from 'styled-components';
+import {
+	addToFavouritesList,
+	removeFromFavouriteList,
+} from '../../redux/actionCreators/userActions';
+import { ModalDialog } from '../ModalDialog';
 
 const CardImgWrapper = styled.div`
 	&:hover {
@@ -28,8 +33,6 @@ const CardImgWrapper = styled.div`
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
-			// maxWidth: 345,
-			// minWidth:340,
 			width: 249,
 			height: 337,
 			textDecoration: 'none',
@@ -37,6 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		link: {
 			textDecoration: 'none',
 			color: 'black',
+			height: '100%',
+			cursor: 'zoom-in',
+			// display: 'block', // только с линком на всю карточку
 		},
 		cardTitle: {
 			display: 'flex',
@@ -48,6 +54,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		titlePadd: {
 			padding: '0 12px',
 			opacity: 0.6,
+			position: 'absolute',
+			bottom: '45px',
+			left: '100px',
+			zIndex: 99,
 		},
 		buttonsDeleteEdit: {
 			position: 'absolute',
@@ -97,6 +107,10 @@ export default function CardItem({
 	user,
 }: CardProps) {
 	const location = useLocation();
+	const userLoggedIn = useSelector(
+		(state: rootState) => state.userState.isAuth
+	);
+
 	//dialog
 
 	const [open, setOpen] = React.useState(false);
@@ -118,6 +132,10 @@ export default function CardItem({
 	const dispatch = useDispatch();
 	const [isLiked, setLike] = useState<boolean>(false);
 	const [showButtons, setShowButtons] = useState<boolean>(false);
+  const [signupBut, setSignupBut] = useState(false);
+  const [loginBut, setLoginBut] = useState(false);
+  const [openModal, setModalState] = useState(false);
+
 	const getUserID = useSelector((state: rootState) => state.userState.user.id);
 
 	const getUserFavourites = useSelector(
@@ -133,6 +151,30 @@ export default function CardItem({
 			setLike(false);
 		}
 	}, [getUserFavourites, id]);
+
+  const undoLike = () => {
+    setLike(false);
+    dispatch(removeFromFavouriteList(id));
+  }
+
+  const doLike = () => {
+    setLike(true);
+		addToFavouritesHandler(id);
+  }
+
+  const toggleModal = () => {
+		setModalState(!openModal);
+		setSignupBut(false);
+	};
+
+  const isSignupBut = () => setSignupBut(true);
+
+	const addToFavouritesHandler = useCallback(
+		(id: string) => {
+			dispatch(addToFavouritesList(id));
+		},
+		[dispatch]
+	);
 
 	useEffect(() => {
 		checkFavouriteHandler();
@@ -174,29 +216,35 @@ export default function CardItem({
 						>
 							<img src={image} alt={title} className="card-image" />
 						</div>
+
 						<div className={classes.cardTitle}>
 							<Typography variant="subtitle1" className={classes.textCenter}>
 								{title}
 							</Typography>
-							{isLiked ? (
-								<IconButton
-									color="secondary"
-									aria-label="add to favorites"
-									className={classes.titlePadd}
-								>
-									<FavoriteIcon />
-								</IconButton>
-							) : (
-								<IconButton
-									// color="secondary"
-									aria-label="add to favorites"
-									className={classes.titlePadd}
-								>
-									<FavoriteBorderIcon />
-								</IconButton>
-							)}
 						</div>
 					</Link>
+          {userLoggedIn ? 
+						<IconButton
+							color="secondary"
+							aria-label="delete from fav list"
+							className={classes.titlePadd}
+							onClick={isLiked ? undoLike : doLike}
+						>
+							{isLiked? <FavoriteIcon /> : <FavoriteBorderIcon />}
+						</IconButton>
+            : 
+            <IconButton
+							color="secondary"
+							aria-label="delete from fav list"
+							className={classes.titlePadd}
+              onClick={() => {
+                toggleModal();
+                isSignupBut();
+              }}
+						>
+							<FavoriteBorderIcon />
+						</IconButton>
+            }
 				</CardImgWrapper>
 			</div>
 			<div>
@@ -224,38 +272,12 @@ export default function CardItem({
 					</DialogActions>
 				</Dialog>
 			</div>
+      <ModalDialog
+				isOpen={openModal}
+				onClose={toggleModal}
+        showLogin={loginBut}
+				showSignup={signupBut}
+			/>
 		</>
 	);
-
-	// return (
-	// 	<div className={classes.root}>
-	// 		<div className="card-wrapper">
-	// 			<Link className={classes.link} to={`/categories/works/${id}`}>
-	// 				<div className="card-image-wrapper">
-	// 					<img src={image} alt={title} className="card-image" />
-	// 				</div>
-	// 				<div className={classes.cardTitle}>
-	// 					<Typography variant="subtitle1">{title}</Typography>
-	// 					{isLiked ? (
-	// 						<IconButton
-	// 							color="secondary"
-	// 							aria-label="add to favorites"
-	// 							className={classes.titlePadd}
-	// 						>
-	// 							<FavoriteIcon />
-	// 						</IconButton>
-	// 					) : (
-	// 						<IconButton
-	// 							// color="secondary"
-	// 							aria-label="add to favorites"
-	// 							className={classes.titlePadd}
-	// 						>
-	// 							<FavoriteBorderIcon />
-	// 						</IconButton>
-	// 					)}
-	// 				</div>
-	// 			</Link>
-	// 		</div>
-	// 	</div>
-	// );
 }

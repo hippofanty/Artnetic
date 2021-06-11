@@ -13,7 +13,7 @@ router.route('/new').post(async (req, res) => {
 			user,
 			work,
 		});
-		res.status(200).json({ message: 'Successfully created!' });
+		res.status(200).json({ message: 'Successfully created!', newOrder });
 	} catch (error) {
 		console.log(error);
 		return res.status(500);

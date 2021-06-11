@@ -42,6 +42,7 @@ export interface ApprovedOrder {
   _id: string;
   vendorCode: string;
   date: string;
+  // date: string[];
   user: {
     _id: string;
     role: string;

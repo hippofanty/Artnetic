@@ -14,7 +14,15 @@ import {
 } from '@material-ui/core';
 
 import DateFnsUtils from '@date-io/date-fns';
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+	Dispatch,
+	ReactNode,
+	SetStateAction,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from '../../redux/init';
 import cryptoRandomString from 'crypto-random-string';
@@ -28,6 +36,7 @@ import { getAllApprovedOrders } from '../../redux/actionCreators/orderAC';
 interface OrderProps {
 	setPrice: number;
 	workId: string;
+	setShowForm: Dispatch<SetStateAction<boolean>>;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -44,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 }));
 
-export const OrderForm = ({ setPrice, workId }: OrderProps) => {
+export const OrderForm = ({ setPrice, workId, setShowForm }: OrderProps) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const [startDate, setStartDate] = useState<Date | null>(new Date());
@@ -59,10 +68,14 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 		(state: rootState) => state.ordersState.allApprovedOrders
 	);
 
+	// const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([new Date(), new Date()]);
+	// const [startDate, endDate] = dateRange;
+
 	interface FormType {
 		notes?: string;
-		city: string;
-		date?: string;
+		city?: string;
+		// date?: string;
+		date?: [Date | null, Date | null];
 	}
 
 	interface CustomField {
@@ -75,9 +88,9 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 		const getExactWorkOrders = allApprovedOrders.filter(
 			(item) => item.work?._id === workId
 		);
-		const getDates = getExactWorkOrders.map((item) => item.date);
+		const getDates = getExactWorkOrders.map((date) => date.date); // [[date, date],[date, date]]
 		const slicedTime = getDates.map((item) => new Date(item.slice(0, 10)));
-    return slicedTime;
+		return slicedTime;
 	}, [allApprovedOrders, workId]);
 
 	useEffect(() => {
@@ -96,7 +109,7 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 						vendorCode: cryptoRandomString({ length: 10, type: 'base64' }),
 						notes: values.notes,
 						city: values.city,
-						// date: values.date,
+						// date: dateRange,
 						date: startDate,
 						user: user.id,
 						work: workId,
@@ -105,30 +118,31 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 				if (response.status === 200) {
 					const result = await response.json();
 					console.log(
-						'🚀 ~ file: index.tsx ~ line 82 ~ sendForm ~ ОТВЕТ НА ЗАКАЗ',
+						'🚀 ~ file: index.tsx ~ line 124 ~ ТО ЧТО ЗАЛИЛ НА СЕРВЕР',
 						result
 					);
+					setTimeout(() => setShowForm(false), 1000);
 				}
 			} catch (e) {
 				console.log(e);
 			}
 		},
-		[startDate, user.id, workId]
+		[setShowForm, startDate, user.id, workId]
 	);
 
-	// const validate = (values: FormType) => {
-	// 	const errors: FormType = {};
-	// 	if (!values.firstName) {
-	// 		errors.firstName = 'Required';
-	// 	}
-	// 	if (!values.lastName) {
-	// 		errors.lastName = 'Required';
-	// 	}
-	// 	if (!values.email) {
-	// 		errors.email = 'Required';
-	// 	}
-	// 	return errors;
-	// };
+	const validate = (values: FormType) => {
+		const errors: FormType = {};
+		if (!values.notes) {
+			errors.notes = 'Required';
+		}
+		if (!values.city) {
+			errors.city = 'Required';
+		}
+		// if (!values.date) {
+		// 	errors.date = 'Required';
+		// }
+		return errors;
+	};
 
 	const formFields: CustomField[] = [
 		{
@@ -190,6 +204,23 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 					minDate={new Date()}
 					excludeDates={excludedDates}
 				/>
+
+				// для мультидаты
+				// <DatePicker
+				// 	selectsRange={true}
+				// 	className={classes.dateInput}
+				// 	startDate={startDate}
+				// 	endDate={endDate}
+				// 	onChange={(update) => {
+				// 		if (Array.isArray(update)) {
+				// 			setDateRange(update);
+				// 		}
+				// 	}}
+				// 	withPortal
+				// 	excludeDates={excludedDates}
+				// 	dateFormat="dd/MM/yyyy"
+				// 	isClearable={true}
+				// />
 			),
 		},
 	];
@@ -199,7 +230,7 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 			<CssBaseline />
 			<Form<FormType>
 				onSubmit={sendForm}
-				// validate={validate}
+				validate={validate}
 				render={({ handleSubmit, form, submitting, pristine, values }) => (
 					<form onSubmit={handleSubmit} noValidate>
 						<Paper style={{ padding: 16 }}>
@@ -214,7 +245,6 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 										{item.field}
 									</Grid>
 								))}
-								{/* <Grid item xs={12} style={{ marginTop: 16, textAlign: 'center'}}><span>Цена: {setPrice} руб</span></Grid> */}
 								<Grid
 									item
 									xs={12}
