@@ -14,7 +14,15 @@ import {
 } from '@material-ui/core';
 
 import DateFnsUtils from '@date-io/date-fns';
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+	Dispatch,
+	ReactNode,
+	SetStateAction,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from '../../redux/init';
 import cryptoRandomString from 'crypto-random-string';
@@ -28,6 +36,7 @@ import { getAllApprovedOrders } from '../../redux/actionCreators/orderAC';
 interface OrderProps {
 	setPrice: number;
 	workId: string;
+	setShowForm: Dispatch<SetStateAction<boolean>>;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -44,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 }));
 
-export const OrderForm = ({ setPrice, workId }: OrderProps) => {
+export const OrderForm = ({ setPrice, workId, setShowForm }: OrderProps) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const [startDate, setStartDate] = useState<Date | null>(new Date());
@@ -61,7 +70,7 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 
 	interface FormType {
 		notes?: string;
-		city: string;
+		city?: string;
 		date?: string;
 	}
 
@@ -77,7 +86,7 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 		);
 		const getDates = getExactWorkOrders.map((item) => item.date);
 		const slicedTime = getDates.map((item) => new Date(item.slice(0, 10)));
-    return slicedTime;
+		return slicedTime;
 	}, [allApprovedOrders, workId]);
 
 	useEffect(() => {
@@ -104,31 +113,28 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 				});
 				if (response.status === 200) {
 					const result = await response.json();
-					console.log(
-						'🚀 ~ file: index.tsx ~ line 82 ~ sendForm ~ ОТВЕТ НА ЗАКАЗ',
-						result
-					);
+					setTimeout(() => setShowForm(false), 1000);
 				}
 			} catch (e) {
 				console.log(e);
 			}
 		},
-		[startDate, user.id, workId]
+		[setShowForm, startDate, user.id, workId]
 	);
 
-	// const validate = (values: FormType) => {
-	// 	const errors: FormType = {};
-	// 	if (!values.firstName) {
-	// 		errors.firstName = 'Required';
-	// 	}
-	// 	if (!values.lastName) {
-	// 		errors.lastName = 'Required';
-	// 	}
-	// 	if (!values.email) {
-	// 		errors.email = 'Required';
-	// 	}
-	// 	return errors;
-	// };
+	const validate = (values: FormType) => {
+		const errors: FormType = {};
+		if (!values.notes) {
+			errors.notes = 'Required';
+		}
+		if (!values.city) {
+			errors.city = 'Required';
+		}
+		// if (!values.date) {
+		// 	errors.date = 'Required';
+		// }
+		return errors;
+	};
 
 	const formFields: CustomField[] = [
 		{
@@ -180,6 +186,8 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 			size: 12,
 			field: (
 				<DatePicker
+					selectsRange={true}
+          endDate={endDate}
 					className={classes.dateInput}
 					name="date"
 					dateFormat="dd/MM/yyyy"
@@ -197,12 +205,9 @@ export const OrderForm = ({ setPrice, workId }: OrderProps) => {
 	return (
 		<div style={{ padding: 16, margin: 'auto', maxWidth: 480 }}>
 			<CssBaseline />
-			{/* <button onClick={() => console.log('FILTERED ORDERS ===', getExactWorkOrders)}>
-				MOMENT
-			</button> */}
 			<Form<FormType>
 				onSubmit={sendForm}
-				// validate={validate}
+				validate={validate}
 				render={({ handleSubmit, form, submitting, pristine, values }) => (
 					<form onSubmit={handleSubmit} noValidate>
 						<Paper style={{ padding: 16 }}>

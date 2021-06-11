@@ -19,6 +19,7 @@ import {
 	addToFavouritesList,
 	removeFromFavouriteList,
 } from '../../redux/actionCreators/userActions';
+import { ModalDialog } from '../ModalDialog';
 
 interface ParamType {
 	id: string;
@@ -48,9 +49,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 	availButt: {
 		margin: '20px 0 10px',
 	},
-  iconButt: {
-    opacity: 0.6,
-  }
+	iconButt: {
+		opacity: 0.6,
+	},
 }));
 
 export const Work = () => {
@@ -59,6 +60,9 @@ export const Work = () => {
 	const oneWorkState = useSelector((state: rootState) => state.work.work);
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const [isLiked, setLike] = useState<boolean>(false);
+	const [signupBut, setSignupBut] = useState(false);
+	const [loginBut, setLoginBut] = useState(false);
+	const [openModal, setModalState] = useState(false);
 
 	const userLoggedIn = useSelector(
 		(state: rootState) => state.userState.isAuth
@@ -67,6 +71,23 @@ export const Work = () => {
 	const getUserFavourites = useSelector(
 		(state: rootState) => state.userState.favourites
 	);
+
+	const undoLike = () => {
+		setLike(false);
+		dispatch(removeFromFavouriteList(id));
+	};
+
+	const doLike = () => {
+		setLike(true);
+		addToFavouritesHandler(id);
+	};
+
+	const toggleModal = () => {
+		setModalState(!openModal);
+		setSignupBut(false);
+	};
+
+	const isSignupBut = () => setSignupBut(true);
 
 	const addToFavouritesHandler = useCallback(
 		(id: string) => {
@@ -106,7 +127,6 @@ export const Work = () => {
 						/>
 					</div>
 					<div className="right-col-grid">
-
 						<Typography color="textPrimary">
 							<h1 className={classes.gridTitle}>{oneWorkState?.title}</h1>
 						</Typography>
@@ -120,27 +140,24 @@ export const Work = () => {
 								{oneWorkState?.price} RUB
 							</Typography>
 
-							{isLiked ? (
+							{userLoggedIn ? (
 								<IconButton
 									color="secondary"
-									aria-label="delete to fav list"
-									onClick={() => {
-										setLike(false);
-										dispatch(removeFromFavouriteList(oneWorkState._id));
-									}}
-                  className={classes.iconButt}
+									aria-label="delete from fav list"
+									className={classes.iconButt}
+									onClick={isLiked ? undoLike : doLike}
 								>
-									<FavoriteIcon />
+									{isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
 								</IconButton>
 							) : (
 								<IconButton
 									color="secondary"
-									aria-label="add from fav list"
+									aria-label="delete from fav list"
+									className={classes.iconButt}
 									onClick={() => {
-										setLike(true);
-										addToFavouritesHandler(oneWorkState._id);
+										toggleModal();
+										isSignupBut();
 									}}
-                  className={classes.iconButt}
 								>
 									<FavoriteBorderIcon />
 								</IconButton>
@@ -159,8 +176,13 @@ export const Work = () => {
 								</Button>
 							) : null}
 						</div>
-						{showForm ? <OrderForm setPrice={oneWorkState.price} workId={oneWorkState._id} /> : null}
-            
+						{showForm ? (
+							<OrderForm
+								setPrice={oneWorkState.price}
+								workId={oneWorkState._id}
+                setShowForm={setShowForm}
+							/>
+						) : null}
 					</div>
 
 					<div className="grid-context">
@@ -173,6 +195,12 @@ export const Work = () => {
 					</div>
 				</div>
 			</Box>
+			<ModalDialog
+				isOpen={openModal}
+				onClose={toggleModal}
+				showLogin={loginBut}
+				showSignup={signupBut}
+			/>
 		</div>
 	);
 };

@@ -216,3 +216,8 @@
 /* #root {
   font-family: 'Montserrat', sans-serif;
 } */
+
+.modal-size {
+  max-width: 400px;
+  min-width: 400px;
+}

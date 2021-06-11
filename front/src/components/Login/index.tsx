@@ -1,110 +1,179 @@
+import { Form } from 'react-final-form';
+import { TextField } from 'mui-rff';
 import {
-	Button,
-	createStyles,
-	Grid,
-	makeStyles,
 	Paper,
-	TextField,
+	Grid,
+	Button,
+	CssBaseline,
+	GridSize,
+	makeStyles,
 	Theme,
 } from '@material-ui/core';
-import React, {  useState } from 'react';
+
+import { ReactNode, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { getFavouriteWorksFromBd, login } from '../../redux/actionCreators/userActions';
 import { rootState } from '../../redux/init';
-
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			flexGrow: 1,
-		},
-		paper: {
-			padding: theme.spacing(6),
-			textAlign: 'center',
-			color: theme.palette.text.secondary,
-
-		},
-		// form: {
-		// 	width: '100ch',
-		// },
-		sumbBut: {
-			marginTop: '25px',
-		},
-    formTitle: {
-      fontSize: '22px',
-      
-    }
-	})
-);
+import { useHistory } from 'react-router';
+import {
+	getFavouriteWorksFromBd,
+	login,
+} from '../../redux/actionCreators/userActions';
+import * as yup from 'yup';
+import { setIn } from 'final-form';
 
 export interface Props {
-  setModal: () => void,
+	setModal: () => void;
 }
 
-export const Login = ({setModal}:Props) => {
+const useStyles = makeStyles((theme: Theme) => ({
+	sendButt: {
+		color: 'white',
+		backgroundColor: 'black',
+	},
+	datePick: {
+		margin: 0,
+	},
+	dateInput: {
+		width: 'inherit',
+		height: '30px',
+	},
+	formTitle: {
+		fontSize: '22px',
+	},
+	formWrapper: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+	},
+}));
+
+export const LoginForm = ({ setModal }: Props) => {
 	const classes = useStyles();
-
-	const [email, setEmail] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
-
-  const userId = useSelector((state: rootState) => state.userState.user?.id);
 	const dispatch = useDispatch();
+	const userId = useSelector((state: rootState) => state.userState.user?.id);
 	const history = useHistory();
 
-	const SubmitHandler = (e : React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-		dispatch(login(email, password));
-    dispatch(getFavouriteWorksFromBd(userId));
-    setModal();
-		history.push('/');
+	const sleep = (ms: number) =>
+		new Promise((resolve) => setTimeout(resolve, ms));
+
+	interface FormType {
+		email: string;
+		password: string;
+	}
+
+	interface CustomField {
+		size: GridSize;
+		field: ReactNode;
+	}
+
+	const sendForm = useCallback(
+		async (values: FormType) => {
+			await sleep(500);
+			dispatch(login(values.email, values.password));
+			dispatch(getFavouriteWorksFromBd(userId));
+			setModal();
+			history.push('/');
+		},
+		[dispatch, history, setModal, userId]
+	);
+
+	interface validType {
+		email: string;
+		password: string;
+	}
+
+	const validationSchema = yup.object({
+		email: yup.string().email().required(),
+		password: yup.string().min(4).required(),
+	});
+
+	const validateFormValues = (schema: any) => async (values: validType) => {
+		if (typeof schema === 'function') {
+			schema = schema();
+		}
+		try {
+			await schema.validate(values, { abortEarly: false });
+		} catch (err) {
+			const errors = err.inner.reduce((formError: any, innerError: any) => {
+				return setIn(formError, innerError.path, innerError.message);
+			}, {});
+
+			return errors;
+		}
 	};
 
+	const validate = validateFormValues(validationSchema);
+
+	const formFields: CustomField[] = [
+		{
+			size: 12,
+			field: (
+				<TextField
+					type="email"
+					label="Email"
+					name="email"
+					margin="none"
+					required={true}
+				/>
+			),
+		},
+		{
+			size: 12,
+			field: (
+				<TextField
+					type="password"
+					label="Password"
+					name="password"
+					margin="none"
+					required={true}
+				/>
+			),
+		},
+	];
+
 	return (
-		<Paper className={classes.paper}>
-			{/* <form className={classes.form} onSubmit={(e) => SubmitHandler(e)}> */}
-      <form onSubmit={(e) => SubmitHandler(e)}>
-				<div className={classes.root}>
-					<Grid
-						container
-						spacing={3}
-						direction="column"
-						justify="center"
-						alignItems="center"
-					>
-            <Grid item xs={12}><span className={classes.formTitle}>Please, log in to your account!</span></Grid>
-						<Grid item xs={6}>
-							{/* <Paper className={classes.paper}> */}
-							<TextField
-								id="standard-basic"
-								type="mail"
-								label="Email"
-								value={email}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-									setEmail(e.target.value)
-								}
-							/>
-							<TextField
-								id="standard-basic"
-								type="password"
-								label="Password"
-								value={password}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-									setPassword(e.target.value)
-								}
-							/>
-							<Button
-                type="submit"
-								variant="outlined"
-								color="primary"
-								className={classes.sumbBut}
-							>
-								Login
-							</Button>
-							{/* </Paper> */}
-						</Grid>
-					</Grid>
-				</div>
-			</form>
-		</Paper>
+		<div style={{ padding: 16, margin: 'auto', maxWidth: 480 }}>
+			<CssBaseline />
+			<Form<FormType>
+				onSubmit={sendForm}
+				validate={validate}
+				render={({ handleSubmit, form, submitting, pristine, values }) => (
+					<form onSubmit={handleSubmit} noValidate>
+						<div className={classes.formWrapper}>
+							<span className={classes.formTitle}>Log into Artnetic</span>
+							<Paper style={{ padding: 16 }}>
+								<Grid
+									container
+									alignItems="flex-start"
+									justify="center"
+									spacing={2}
+								>
+									{formFields.map((item, idx) => (
+										<Grid item xs={item.size} key={idx}>
+											{item.field}
+										</Grid>
+									))}
+									<Grid
+										item
+										xs={12}
+										style={{ marginTop: 16, display: 'flex' }}
+										justify="center"
+									>
+										<Button
+											variant="contained"
+											type="submit"
+											className={classes.sendButt}
+											disabled={submitting}
+										>
+											Send
+										</Button>
+									</Grid>
+								</Grid>
+							</Paper>
+						</div>
+					</form>
+				)}
+			/>
+		</div>
 	);
 };
