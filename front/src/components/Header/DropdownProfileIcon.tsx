@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
 		linkDrop: {
 			textDecoration: 'none',
 			color: 'grey',
-
 		},
 		navMargin: {
 			margin: '0px 5px',
@@ -52,9 +51,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			borderRadius: '25px',
 			// border: "1px solid grey",
 		},
-    font: {
-      fontFamily: `'Montserrat', sans-serif`,
-    }
+		font: {
+			fontFamily: `'Montserrat', sans-serif`,
+		},
 	})
 );
 
@@ -108,17 +107,29 @@ export default function DropdownProfileIcon({
 				getContentAnchorEl={null}
 			>
 				<Link to="/profile" className={classes.linkDrop}>
-					<MenuItem onClick={handleClose} className={classes.font}>Profile</MenuItem>
+					<MenuItem onClick={handleClose} className={classes.font}>
+						Profile
+					</MenuItem>
 				</Link>
-				<Link to="/myArts" className={classes.linkDrop}>
-					<MenuItem onClick={handleClose} className={classes.font}>My Arts</MenuItem>
-				</Link>
-				<Link to="/profile/orders" className={classes.linkDrop}>
-					<MenuItem onClick={handleClose} className={classes.font} >Orders</MenuItem>
-				</Link>
+				{user.role === 'Artist' ? (
+					<Link to="/myArts" className={classes.linkDrop}>
+						<MenuItem onClick={handleClose} className={classes.font}>
+							My Arts
+						</MenuItem>
+					</Link>
+				) : null}
+				{user.role === 'Customer' ? (
+					<Link to="/profile/orders" className={classes.linkDrop}>
+						<MenuItem onClick={handleClose} className={classes.font}>
+							Orders
+						</MenuItem>
+					</Link>
+				) : null}
 				{user.role === 'Admin' ? (
 					<Link to="/profile/manage" className={classes.linkDrop}>
-						<MenuItem onClick={handleClose} className={classes.font}>Manage Orders</MenuItem>
+						<MenuItem onClick={handleClose} className={classes.font}>
+							Manage Orders
+						</MenuItem>
 					</Link>
 				) : null}
 				<Divider />

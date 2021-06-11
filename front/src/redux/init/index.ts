@@ -22,6 +22,8 @@ export interface Work {
     username: string;
     email: string;
     password: string;
+    firstname: string;
+    lastname: string;
   };
 }
 export interface OneOrder {
@@ -183,6 +185,8 @@ export const initialStateWork = {
       username: "",
       email: "",
       password: "",
+      firstname: "",
+      lastname: "",
     },
   },
 };

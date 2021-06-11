@@ -133,13 +133,14 @@ export const Work = () => {
 						</Typography>
 
 						{oneWorkState?.width && oneWorkState?.height && (
-							<Typography variant="overline" display="block" gutterBottom>
-								{oneWorkState?.width} x {oneWorkState?.height}
+							<Typography variant="subtitle1" display="block" gutterBottom>
+								{oneWorkState?.width} x {oneWorkState?.height} см
 							</Typography>
 						)}
 
 						<Typography variant="h6" gutterBottom>
-							Author: {oneWorkState.user?.username}
+							{/* Author: {oneWorkState.user?.username} */}
+              Author: {oneWorkState.user?.firstname} {oneWorkState.user?.lastname}
 						</Typography>
 
 						<div className="grid-price">
