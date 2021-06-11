@@ -154,11 +154,11 @@ export default function CardItem({
 									onMouseEnter={() => setShowButtons(true)}
 									onMouseLeave={() => setShowButtons(false)}
 								>
-									<Button variant="contained" onClick={handleClickOpen}>
+									<Button variant="contained" onClick={handleClickOpen} style={{ marginLeft: '5px', marginTop: '5px', width: '10px' }}>
 										Delete
 									</Button>
 									<br />
-									<Button style={{ marginTop: '5px' }} variant="contained">
+									<Button style={{ marginLeft: '5px', marginTop: '5px', width: '10px' }} variant="contained">
 										Edit
 									</Button>
 									<br></br>

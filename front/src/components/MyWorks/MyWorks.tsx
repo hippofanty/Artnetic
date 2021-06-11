@@ -1,10 +1,8 @@
 import { Container, makeStyles, Theme } from "@material-ui/core";
-import zIndex from "@material-ui/core/styles/zIndex";
-import { relative } from "path";
+
 import { useEffect, useState } from "react";
-import { set } from "react-hook-form";
+
 import { useDispatch, useSelector } from "react-redux";
-import { deleteWorkAC } from "../../redux/actionCreators/deleteWorkAC";
 
 import { getMyWorksAC } from "../../redux/actionCreators/getMyWorksAC";
 import { rootState } from "../../redux/init";
@@ -18,9 +16,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: "flex",
     flexDirection: "row",
-    // justifyContent: "space-around",
     flexWrap: "wrap",
     margin: 15,
+    paddingLeft: "150px",
   },
 }));
 
@@ -39,7 +37,9 @@ export const MyWorks = () => {
   return (
     <>
       {myWorksState.length === 0 ? (
-        <h3>You have not published any works yet</h3>
+        <h3 style={{ textAlign: "center" }}>
+          You have not published any works yet
+        </h3>
       ) : (
         <Container className={classes.container}>
           {myWorksState.map((item, index) => (

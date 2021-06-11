@@ -20,6 +20,12 @@ const Work = new Schema({
   image: {
     type: String,
   },
+  width: {
+    type: String,
+  },
+  height: {
+    type: String,
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'Users',

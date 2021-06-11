@@ -15,7 +15,7 @@ interface PropsSelect {
 export function MySelect({ options, onChange, name }: PropsSelect) {
 	return (
 		<>
-			<Box style={{ minWidth: '220px', marginLeft: '35px' }}>
+			<Box style={{ width: '225px', marginLeft: '10px' }}>
 				<FormControl fullWidth>
 					<InputLabel htmlFor="demo-simple-select-outlined-label">
 						Category

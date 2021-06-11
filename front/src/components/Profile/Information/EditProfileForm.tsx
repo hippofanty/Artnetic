@@ -113,13 +113,13 @@ export const EditProfileForm = () => {
           <MyInput
             className={classes.input}
             defaultValue={user?.firstname ? user.firstname : ""}
-            label="firstname"
+            label="firstname *"
             {...register("firstname")}
           />
           <MyInput
             className={classes.input}
             defaultValue={user?.lastname ? user.lastname : ""}
-            label="lastname"
+            label="lastname *"
             {...register("lastname")}
           />
           <MyInput
@@ -142,10 +142,10 @@ export const EditProfileForm = () => {
             {...register("company")}
           />
 
-          <TextField
+          <MyInput
             className={classes.textarea}
             id="outlined-multiline-static"
-            label="About you"
+            label="About you *"
             multiline
             rows={4}
             defaultValue={user?.about ? user.about : ""}

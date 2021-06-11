@@ -22,11 +22,11 @@ router.post('/',async (req, res) => {
 	try {
     const category = await Category.findOne({name: req.body.data.category})
     let user = await User.findOne({_id: req.body.data.user.id})
-    const w = await Work.create({title: req.body.data.title, description: req.body.data.description, price: req.body.data.price, image: req.body.data.image, user: user._id, category: category._id,})
+    const w = await Work.create({title: req.body.data.title, description: req.body.data.description, price: req.body.data.price, image: req.body.data.image, width: req.body.data.width, height: req.body.data.height, user: user._id, category: category._id,})
     user = await User.findOneAndUpdate({_id: req.body.data.user.id}, {$push: {works: w._id}})
      
     const work = await Work.findOne({_id: w._id}).populate(['category', 'user']);
-		return res.status(200).json({ work});
+		return res.status(200).json({ work });
 	} catch (error) {
 		console.log(error);
 	}

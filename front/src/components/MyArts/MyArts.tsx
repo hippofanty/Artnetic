@@ -6,13 +6,17 @@ import { MyWorks } from '../MyWorks/MyWorks';
 import { useState } from 'react';
 import { Container } from '@material-ui/core';
 
+
 export const MyArts = () => {
+
+
 	const useStyles = makeStyles((theme: Theme) => ({
 		button: {},
 		favContainer: {
 			maxWidth: '1350px',
 			margin: '0 auto',
       display: 'flex',
+      flexDirection: 'column'
 		},
 	}));
 
@@ -43,7 +47,11 @@ export const MyArts = () => {
 					</Button>
 				)}
 				<br></br>
-				{showForm && <AddWorkForm setShowForm={setShowForm} />}
+
+        
+				{showForm && <AddWorkForm setShowForm={setShowForm}  /> }
+				{/* {(showForm && user.firstname && user.firstname && user.about) ? (<AddWorkForm setShowForm={setShowForm}  />) : (<Alert severity="info">Check the entered data!</Alert>)} */}
+
 				<MyWorks />
 			</Container>
 		</div>

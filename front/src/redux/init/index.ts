@@ -14,6 +14,8 @@ export interface Work {
   };
   price: number;
   image: string;
+  width?: string;
+  height?: string;
   user: {
     _id: string;
     role: string;
@@ -172,6 +174,8 @@ export const initialStateWork = {
     },
     price: 0,
     image: "",
+    width: "",
+    height: "",
     user: {
       _id: "",
       role: "",

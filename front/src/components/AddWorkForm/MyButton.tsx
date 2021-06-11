@@ -23,6 +23,7 @@ export const MyButton = ({  ...props }) => {
         {...props}
       >
         Отправить
+        {props.loading && <SyncOutlined spin style={{marginLeft: '10px'}}/>}
       </Button>
     </>
   );

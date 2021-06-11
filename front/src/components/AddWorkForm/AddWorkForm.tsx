@@ -13,10 +13,38 @@ import Divider from "@material-ui/core/Divider";
 import { useState } from "react";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import { addMyWorkAC } from "../../redux/actionCreators/addMyWork";
+import { Container } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {},
+    root: {
+      minWidth: 275,
+    },
+    bullet: {
+      display: "inline-block",
+      margin: "0 2px",
+      transform: "scale(0.8)",
+    },
+    title: {
+      fontSize: 14,
+    },
+    info: {
+      fontFamily: `'Montserrat', sans-serif`,
+      textAlign: "center",
+      marginBottom: 12,
+    },
+    tapHere: {
+      fontFamily: `'Montserrat', sans-serif`,
+      textAlign: "center",
+      marginBottom: 12,
+      justifyContent: "center",
+    },
     input: {
       marginRight: "20px",
       flexBasis: "500px",
@@ -30,10 +58,11 @@ const useStyles = makeStyles((theme: Theme) =>
     description: {
       marginBottom: "40px",
       flexBasis: "500px",
-      marginRight: "30px",
+      marginRight: "20px",
     },
     select: {
-      marginLeft: "50px",
+      width: "225px",
+      marginLeft: "10px",
     },
     fileUploadInput: {},
     fileUploadBtn: {
@@ -46,6 +75,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     descrCat: {
       display: "flex",
+    },
+    widthHeightSelector: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    widthHeightRow: {
+      display: "flex",
+      flexDirection: "row",
     },
     fileInput: {
       display: "none",
@@ -67,6 +104,8 @@ type Inputs = {
   price: string;
   category: { label: string; value: string };
   image?: File | string;
+  width?: string;
+  height?: string;
   user: {
     id: string;
     username: string;
@@ -84,6 +123,7 @@ const schema = yup.object().shape({
 });
 
 export function AddWorkForm({ setShowForm }: Props) {
+  let history = useHistory();
   const [uploaded, setUploaded] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -140,88 +180,142 @@ export function AddWorkForm({ setShowForm }: Props) {
     dispatch(addMyWorkAC(res.work));
     setShowForm(false);
   };
-
+  function isTrue(element?: string | boolean) {
+    return element != false && element != '' && element != null;
+  }
+  [user.firstname, user.lastname, user.about].every(isTrue);
+  console.log([user.firstname, user.lastname, user.about].every(isTrue), 'is Trueeeeeeeeee');
+  
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        encType="multipart/form-data"
-        style={{ marginBottom: "15px" }}
-      >
-        <div className={classes.formDiv}>
-          <div className={classes.titlePrice}>
-            <Input
-              label="title"
-              {...register("title", { required: true })}
-              className={classes.input}
-            />
-            {errors.title && <span>This field is required</span>}
-            <Input
-              className={classes.input}
-              type="number"
-              label="price"
-              {...register("price", { required: true })}
-            />
-            {errors.price && <span>This field is required</span>}
-          </div>
-          <div className={classes.descrCat}>
-            <Description
-              // label="description"
-              {...register("description", { required: true })}
-              className={classes.description}
-            />
-            <MySelect
-              // className={classes.select}
-              options={[
-                { label: "Живопись", value: "fineArt" },
-                { label: "Скульптуры", value: "sculptures" },
-                { label: "Абстракция", value: "abstraction" },
-                { label: "Графика", value: "graphics" },
-                { label: "Иное", value: "other" },
-              ]}
-              {...register("category", { required: true })}
-            />
-            {errors.category && <span>This field is required</span>}
-          </div>
-          {errors.description && (
-            <span style={{ marginBottom: "20px" }}>
-              Field 'Description' is required
-            </span>
-          )}
+    <Container>
+      {/* {(showForm && user.firstname && user.firstname && user.about) ? (<AddWorkForm setShowForm={setShowForm}  />) : (<Alert severity="info">Check the entered data!</Alert>)} */}
+      {console.log(
+        user.firstname,
+        user.lastname,
+        user.about,
+        "user.firstname, user.lastname, user.about"
+      )}
 
-          <label
-            className={classes.customFileUpload}
-            style={{ width: "230px" }}
+      {[user.firstname, user.lastname, user.about].every(isTrue) ? (
+        <div style={{ flexDirection: "column" }}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            encType="multipart/form-data"
+            style={{ marginBottom: "15px", marginLeft: "110px" }}
           >
-            <input
-              type="file"
-              onInput={() => setUploaded(true)}
-              {...register("image", { required: true })}
-              className={classes.fileInput}
-              style={{ backgroundColor: "deeppink", display: "none" }}
-            />
-            <div style={{ display: "flex" }}>
-              <PhotoLibraryIcon />
-              <span
-                style={{
-                  marginLeft: "15px",
-                }}
-              >
-                Upload photo
-              </span>{" "}
-              {uploaded && <DoneAllIcon />}
-            </div>
-          </label>
+            <div className={classes.formDiv}>
+              <div className={classes.titlePrice}>
+                <Input
+                  label="title"
+                  {...register("title", { required: true })}
+                  className={classes.input}
+                />
+                {errors.title && <span>This field is required</span>}
+                <Input
+                  className={classes.input}
+                  type="number"
+                  label="price"
+                  {...register("price", { required: true })}
+                />
+                {errors.price && <span>This field is required</span>}
+              </div>
+              <div className={classes.descrCat}>
+                <Description
+                  // label="description"
+                  {...register("description", { required: true })}
+                  className={classes.description}
+                />
+                <div className={classes.widthHeightSelector}>
+                  <div className={classes.widthHeightRow}>
+                    <Input
+                      label="width"
+                      {...register("width", { required: true })}
+                      className={classes.input}
+                      style={{ marginRight: "50px" }}
+                    />{" "}
+                    <Input
+                      label="height"
+                      {...register("height", { required: true })}
+                      className={classes.input}
+                    />
+                  </div>
 
-          <br></br>
-          <MyButton
-            type="submit"
-            className={classes.fileUploadBtn}
-            loading={loading}
-          />
+                  <MySelect
+                    className={classes.select}
+                    options={[
+                      { label: "Живопись", value: "fineArt" },
+                      { label: "Скульптуры", value: "sculptures" },
+                      { label: "Абстракция", value: "abstraction" },
+                      { label: "Графика", value: "graphics" },
+                      { label: "Иное", value: "other" },
+                    ]}
+                    {...register("category", { required: true })}
+                  />
+                </div>
+
+                {errors.category && <span>This field is required</span>}
+              </div>
+
+              {errors.description && (
+                <span style={{ marginBottom: "20px" }}>
+                  Field 'Description' is required
+                </span>
+              )}
+
+              <label
+                className={classes.customFileUpload}
+                style={{ width: "230px" }}
+              >
+                <input
+                  type="file"
+                  onInput={() => setUploaded(true)}
+                  {...register("image", { required: true })}
+                  className={classes.fileInput}
+                  style={{ backgroundColor: "deeppink", display: "none" }}
+                />
+                <div style={{ display: "flex" }}>
+                  <PhotoLibraryIcon />
+                  <span
+                    style={{
+                      marginLeft: "15px",
+                    }}
+                  >
+                    Upload photo
+                  </span>{" "}
+                  {uploaded && <DoneAllIcon />}
+                </div>
+              </label>
+
+              <br></br>
+              <MyButton
+                type="submit"
+                className={classes.fileUploadBtn}
+                loading={loading}
+              />
+            </div>
+          </form>
+          <Divider />
         </div>
-      </form>
-      <Divider />
-    </div>
+      ) : (
+        <Card
+          className={classes.root}
+          style={{ fontFamily: `'Montserrat', sans-serif` }}
+        >
+          <CardContent>
+            <Typography variant="h5" component="h2" className={classes.info}>
+              We would like to know you a bit closer
+            </Typography>
+            <Typography variant="h5" component="h2" className={classes.info}>
+              Please tap below and fill the form
+            </Typography>
+          </CardContent>
+          <CardActions style={{ justifyContent: "center" }}>
+            <Button size="large" className={classes.tapHere}  onClick={()=>history.push("/profile")}>
+              Tap here
+            </Button>
+          </CardActions>
+        </Card>
+      )}
+    </Container>
   );
 }
